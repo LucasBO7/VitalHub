@@ -19,7 +19,7 @@ export const Main = () => {
   return (
 
     <bottomTab.Navigator
-      initialRouteName="PatientConsultation"
+      initialRouteName="DoctorConsultation"
       screenOptions={({ route }) => ({
         tabBarStyle: { backgroundColor: "#FFFFFF", height: 60, elevation: 10, paddingTop: 3 },
         // tabBarInactiveBackgroundColor: "transparent",

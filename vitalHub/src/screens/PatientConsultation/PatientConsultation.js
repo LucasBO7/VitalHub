@@ -85,7 +85,7 @@ export const PatientConsultation = ({ navigation }) => {
 
                 <StatusBar translucent backgroundColor="transparent" />
 
-                <BoxHome>
+                <BoxHome onPress={() => { navigation.navigate("PatientProfile") }}>
 
                     <ImagemHome source={require('../../assets/PatientHomeImage.png')} />
 
