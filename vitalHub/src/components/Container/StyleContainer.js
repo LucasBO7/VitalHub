@@ -64,7 +64,7 @@ export const BoxDataHome = styled.SafeAreaView`
   margin-top: 26%;
 `;
 
-export const BoxHome = styled.SafeAreaView`
+export const BoxHome = styled.TouchableOpacity`
   width: 200px;
   height: 100%;
   flex-direction: row;
