@@ -4,30 +4,34 @@ import { Logo } from "../../components/Images/StyleImages";
 import { Input } from "../../components/Input/Input";
 import { LinkMedium } from "../../components/TextMedium/TextMedium";
 import { LinkAccount } from "../../components/Link/Link";
-
 import { ButtonGoogle, ButtonNormal } from "../../components/Button/Button";
-import { StatusBar } from "react-native";
+import { ActivityIndicator, StatusBar } from "react-native";
 import { useState } from "react";
 
 import api from "../../services/Services";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { faL } from "@fortawesome/free-solid-svg-icons";
 
 export const Login = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   async function Login() {
+    setIsLoading(true); // Inicia animação de Loading
     api
       .post("/Login", {
         email: email,
         senha: senha,
       })
-      .then((response) => {
+      .then(async (response) => {
+        await AsyncStorage.setItem("token", JSON.stringify(response.data));
+        navigation.replace("Main");
         console.log(response.data);
       })
       .catch((error) => {
         console.log(error);
       });
-    navigation.replace("Main")
   }
   return (
     <Container>
@@ -62,6 +66,13 @@ export const Login = ({ navigation }) => {
       />
 
       <ButtonNormal onPress={(e) => Login()} text={"Entrar"} />
+      
+      {/* Indicador de Loading */}
+      <ActivityIndicator
+        animating={isLoading}
+        hidesWhenStopped={false}
+        size="large"
+      />
 
       <ButtonGoogle
         onPress={() => navigation.replace("DoctorMain")}
