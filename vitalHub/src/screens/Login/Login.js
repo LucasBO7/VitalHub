@@ -66,7 +66,7 @@ export const Login = ({ navigation }) => {
       />
 
       <ButtonNormal onPress={(e) => Login()} text={"Entrar"} />
-      
+
       {/* Indicador de Loading */}
       <ActivityIndicator
         animating={isLoading}

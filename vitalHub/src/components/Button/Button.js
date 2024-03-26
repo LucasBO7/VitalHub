@@ -12,7 +12,7 @@ export const ButtonNormal = ({
         <NormalButton
             onPress={onPress}>
             <ButtonText>{text}</ButtonText>
-            //metodo de disable Button
+            {/* metodo de disable Button */}
         </NormalButton>
     );
 }
@@ -124,7 +124,7 @@ export const ButtonLargeConfirmModal = ({
     return (
         <LargeButtonConfirmModal
             onPress={onPress}>
-                <ButtonText>{text}</ButtonText>
+            <ButtonText>{text}</ButtonText>
         </LargeButtonConfirmModal>
     );
 }
