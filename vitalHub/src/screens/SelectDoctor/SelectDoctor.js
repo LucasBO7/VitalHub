@@ -38,50 +38,39 @@ export const SelectDoctor = ({ navigation }) => {
         },
     ]
 
+    const [doctorList, setDoctorList] = useState([]); // Lista de medicos
 
-
-
-    // Dentro do componente
-
-    // Passar os dados do state(array) para o flatList
-
-    const [doctorList, setDoctorList] = useState([]);
-
+    // Busca todos os médicos do banco
     async function getAllDoctors() {
-        const doctors = await api.get('/Medico')
+        // Instanciação da nossa conexão da api
+        await api.get("/Medicos")
+            // Quando houver uma resposta...
+            .then(response => {
+                setDoctorList(response.data)
+                console.log(doctorList)
+            })
             .catch((error) => {
-                console.log(error);
+                console.log(error)
             });
-        setDoctorList(doctors);
-        console.log(doctors);
     }
 
     useEffect(() => {
         getAllDoctors();
     }, [])
 
-
-
-
-
-
-    const image = require("../../assets/ImageCard.png");
-
     return (
-
-
-
         <Container>
             <StatusBar translucent backgroundColor="transparent" barStyle="dark-content" />
 
             <TitleSelect>Selecionar Médico</TitleSelect>
 
             <FlatContainerSelect
-                data={doctorList}
-                keyExtractor={item => item.id}
-                renderItem={({ item }) =>
-                    <CardSelectDoctor doctor={item.item} />
-                }
+                data={doctorList} // Lista de dados
+                keyExtractor={(item) => item.id} // Ids de cada index
+                renderItem={({ item }) => (
+                    // Componente renderizado
+                    <CardSelectDoctor doctor={item} />
+                )}
 
                 showsVerticalScrollIndicator={false}
             />

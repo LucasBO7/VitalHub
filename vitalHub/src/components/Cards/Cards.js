@@ -125,14 +125,14 @@ export const CardSelectDoctor = ({ doctor }) => {
 
         <CardContainer>
 
-            {/* <ImageCard source={require("../../assets/ImageCard.png")} /> */}
+            <ImageCard source={require("../../assets/ImageCard.png")} />
 
             <BoxCard>
 
                 <BoxTextDoctorCard>
-                    <NameCardSelect>{doctor.name}</NameCardSelect>
+                    <NameCardSelect>{doctor.idNavigation.nome}</NameCardSelect>
 
-                    <DoctorArea>{doctor.area}</DoctorArea>
+                    <DoctorArea>{doctor.especialidade.especialidade1}</DoctorArea>
                 </BoxTextDoctorCard>
 
             </BoxCard>
