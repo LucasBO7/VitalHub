@@ -51,7 +51,7 @@ export const PatientConsultation = ({ navigation }) => {
 
   const image = require("../../assets/CardDoctorImage.png");
 
-  // CARD MOCADOS
+  
 
   const dataItens = [
     {
