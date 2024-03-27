@@ -119,20 +119,20 @@ export const Card = ({ url, name, age, routine, hour, status, onPressCancel, onP
     )
 }
 
-export const CardSelectDoctor = ({ url, name, doctorArea }) => {
+export const CardSelectDoctor = ({ doctor }) => {
 
     return (
 
         <CardContainer>
 
-            <ImageCard source={url} />
+            <ImageCard source={require("../../assets/ImageCard.png")} />
 
             <BoxCard>
 
                 <BoxTextDoctorCard>
-                    <NameCardSelect>{name}</NameCardSelect>
+                    <NameCardSelect>{doctor.idNavigation.nome}</NameCardSelect>
 
-                    <DoctorArea>{doctorArea}</DoctorArea>
+                    <DoctorArea>{doctor.especialidade.especialidade1}</DoctorArea>
                 </BoxTextDoctorCard>
 
             </BoxCard>

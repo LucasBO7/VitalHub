@@ -81,9 +81,19 @@ export const Login = ({ navigation }) => {
         onPress={() => navigation.navigate("ForgotPassword")}
       />
 
+<<<<<<< HEAD
       <ButtonNormal
         onPress={(e) => Login()}
         text={"Entrar"}
+=======
+      <ButtonNormal onPress={(e) => Login()} text={"Entrar"} />
+
+      {/* Indicador de Loading */}
+      <ActivityIndicator
+        animating={isLoading}
+        hidesWhenStopped={false}
+        size="large"
+>>>>>>> bc9f4573f1cf8dd20ad8b9aec81a2f8901075e8a
       />
 
       <ButtonGoogle

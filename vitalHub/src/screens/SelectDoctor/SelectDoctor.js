@@ -5,46 +5,72 @@ import { CardSelectDoctor } from "../../components/Cards/Cards"
 import { ButtonLarge, ButtonLargeSelect } from "../../components/Button/Button"
 import { CancelLessMargin } from "../../components/Descriptions/StyledDescriptions"
 import { CardCancelLessLocal } from "../../components/Descriptions/Descriptions"
+import { useEffect, useState } from "react"
+import api from "../../services/Services"
+// Fora do componente
+
+// Criar o state para receber a lista de médicos (Array) === OK
+// Criar a função para obter a lista de médicos da api e setar no state == OK
+// Criar um effect para chamada da função == OK
+
+
 
 
 export const SelectDoctor = ({ navigation }) => {
-
-    const image = require("../../assets/ImageCard.png");
     const dataItens = [
         {
             id: 'fsdfsfsdf',
-            doctorArea: 'Dermatóloga, Esteticista',
-            image: image,
+            area: 'Dermatóloga, Esteticista',
+            url: 'aar',
             name: 'Dr Alessandra'
         },
         {
             id: 'fsdfsf',
-            doctorArea: 'Cirurgião, Cardiologista',
-            image: image,
+            area: 'Cirurgião, Cardiologista',
+            url: 'siu',
             name: 'Dr Kumushiro'
         },
         {
             id: 'fsdf',
-            doctorArea: 'Clínico, Pediatra',
-            image: image,
+            area: 'Clínico, Pediatra',
+            url: 'aha',
             name: 'Dr Rodrigo Santos'
         },
     ]
 
+    const [doctorList, setDoctorList] = useState([]); // Lista de medicos
+
+    // Busca todos os médicos do banco
+    async function getAllDoctors() {
+        // Instanciação da nossa conexão da api
+        await api.get("/Medicos")
+            // Quando houver uma resposta...
+            .then(response => {
+                setDoctorList(response.data)
+                console.log(doctorList)
+            })
+            .catch((error) => {
+                console.log(error)
+            });
+    }
+
+    useEffect(() => {
+        getAllDoctors();
+    }, [])
+
     return (
-
-
-
         <Container>
             <StatusBar translucent backgroundColor="transparent" barStyle="dark-content" />
 
             <TitleSelect>Selecionar Médico</TitleSelect>
 
             <FlatContainerSelect
-                data={dataItens}
-                renderItem={({ item }) =>
-                    <CardSelectDoctor doctorArea={item.doctorArea} name={item.name} url={image} />}
-                keyExtractor={item => item.id}
+                data={doctorList} // Lista de dados
+                keyExtractor={(item) => item.id} // Ids de cada index
+                renderItem={({ item }) => (
+                    // Componente renderizado
+                    <CardSelectDoctor doctor={item} />
+                )}
 
                 showsVerticalScrollIndicator={false}
             />
