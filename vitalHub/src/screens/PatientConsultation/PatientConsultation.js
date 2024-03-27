@@ -91,7 +91,11 @@ export const PatientConsultation = ({ navigation }) => {
 
   const data = dataItens.filter(Check);
 
+<<<<<<< HEAD
   // STATES PARA OS MODAIS
+=======
+                <BoxHome onPress={() => { navigation.navigate("PatientProfile") }}>
+>>>>>>> 6c0796e199911e1271820cdfaf064b34e82c220a
 
   const [showModalCancel, setShowModalCancel] = useState(false);
   const [showModalAppointment, setShowModalAppointment] = useState(false);

@@ -81,6 +81,7 @@ export const DoctorConsultation = ({ navigation }) => {
 
   //FILTRO PARA CARD
 
+<<<<<<< HEAD
   const Check = (data) => {
     if (data.status === "a" && selected.agendadas) {
       return true;
@@ -93,10 +94,20 @@ export const DoctorConsultation = ({ navigation }) => {
     }
     return false;
   };
+=======
+    return (
+        <Container>
+            <StatusBar translucent backgroundColor="transparent" />
+            <Header>
+>>>>>>> 6c0796e199911e1271820cdfaf064b34e82c220a
 
   const data = dataItens.filter(Check);
 
+<<<<<<< HEAD
   // STATES PARA OS MODAIS
+=======
+                <BoxHome onPress={() => { navigation.navigate("PatientProfile") }}>
+>>>>>>> 6c0796e199911e1271820cdfaf064b34e82c220a
 
   const [showModalCancel, setShowModalCancel] = useState(false);
   const [showModalAppointment, setShowModalAppointment] = useState(false);
