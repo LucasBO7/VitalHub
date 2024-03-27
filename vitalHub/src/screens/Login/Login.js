@@ -13,8 +13,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { faL } from "@fortawesome/free-solid-svg-icons";
 
 export const Login = ({ navigation }) => {
-  const [email, setEmail] = useState("");
-  const [senha, setSenha] = useState("");
+  const [email, setEmail] = useState("Lucas@gmail.com");
+  const [senha, setSenha] = useState("Lucas123");
   const [isLoading, setIsLoading] = useState(false);
 
   async function Login() {

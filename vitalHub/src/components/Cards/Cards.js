@@ -143,7 +143,7 @@ export const CardSelectDoctor = ({ doctor }) => {
 
 }
 
-export const CardSelectClinic = ({ name, localization, rate, openTime }) => {
+export const CardSelectClinic = ({ clinic }) => {
 
     return (
 
@@ -152,24 +152,24 @@ export const CardSelectClinic = ({ name, localization, rate, openTime }) => {
             <BoxCard>
 
                 <BoxTextClinicCard>
-                    <NameCardClinic>{name}</NameCardClinic>
+                    <NameCardClinic>{clinic.nomeFantasia}</NameCardClinic>
 
-                    <LocalizationText>{localization}</LocalizationText>
+                    <LocalizationText>{clinic.endereco.logradouro}</LocalizationText>
                 </BoxTextClinicCard>
 
                 <BoxRateTime>
 
-                    <BoxRate>
+                    {/* <BoxRate>
                         <AntDesign name="star" size={18} color="#F9A620" />
 
-                        <RateText>{rate}</RateText>
-                    </BoxRate>
+                        <RateText>{rate}</RateText> 
+                    </BoxRate> */}
 
                     <ConsultDate>
 
                         <MaterialCommunityIcons name="calendar-outline" size={15} color="#49B3BA" />
 
-                        <HourText>{openTime}</HourText>
+                        <HourText>{'Seg-Sex'}</HourText>
 
                     </ConsultDate>
 

@@ -10,6 +10,8 @@ import {
 import { TitleSelect } from "../../components/Title/StyleTitle";
 import { CancelLessMargin } from "../../components/Descriptions/StyledDescriptions";
 import { CardCancelLess } from "../../components/Descriptions/Descriptions";
+import { useEffect, useState } from "react";
+import api from "../../services/Services";
 
 export const SelectCLinic = ({ navigation }) => {
   const dataItens = [
@@ -57,6 +59,22 @@ export const SelectCLinic = ({ navigation }) => {
     },
   ];
 
+  const [clinics, setClinics] = useState([]); // Lista de clínicas
+
+  async function getAllClinics() {
+    await api.get("/Clinica/ListarTodas")
+      .then(response => {
+        setClinics(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  useEffect(() => {
+    getAllClinics();
+  }, []);
+
   return (
     <Container>
       <StatusBar
@@ -68,16 +86,13 @@ export const SelectCLinic = ({ navigation }) => {
       <TitleSelect>Selecionar clínica</TitleSelect>
 
       <FlatContainerSelect
-        data={dataItens}
+        data={clinics}
+        keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <CardSelectClinic
-            openTime={item.openTime}
-            name={item.name}
-            rate={item.rate}
-            localization={item.localization}
+            clinic={item}
           />
         )}
-        keyExtractor={(item) => item.id}
         showsVerticalScrollIndicator={false}
       />
 
@@ -92,7 +107,7 @@ export const SelectCLinic = ({ navigation }) => {
         onPressCancel={() => navigation.replace("Main")}
         text={"Cancelar"}
       />
-      
+
     </Container>
   );
 };
