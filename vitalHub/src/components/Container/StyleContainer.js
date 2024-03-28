@@ -103,6 +103,10 @@ export const BoxCard = styled.SafeAreaView`
   /* border: 1px solid black; */
   align-items: flex-start;
 `;
+
+export const BoxCardDoctor = styled(BoxCard)`
+  padding: 10px;
+`;
 export const BoxTextCard = styled.SafeAreaView`
   flex-direction: column;
   width: 100%;

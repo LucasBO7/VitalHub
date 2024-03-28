@@ -1,4 +1,4 @@
-import { Title } from "../../components/Title/StyleTitle";
+import { Title, TitleInvalidInputAlert } from "../../components/Title/StyleTitle";
 import { Container } from "../../components/Container/StyleContainer";
 import { Logo } from "../../components/Images/StyleImages";
 import { Input } from "../../components/Input/Input";
@@ -6,53 +6,49 @@ import { LinkMedium } from "../../components/TextMedium/TextMedium";
 import { LinkAccount } from "../../components/Link/Link";
 
 import { ButtonGoogle, ButtonNormal } from "../../components/Button/Button";
-import { StatusBar } from "react-native";
+import { ActivityIndicator, StatusBar } from "react-native";
 import { useState } from "react";
 
 import api from "../../services/Services";
 
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { userDecodeToken } from "../../utils/Auth";
+import { faL } from "@fortawesome/free-solid-svg-icons";
 
 export const Login = ({ navigation }) => {
-<<<<<<< HEAD
   const [email, setEmail] = useState("Lucas@gmail.com");
   const [senha, setSenha] = useState("Lucas123");
   const [isLoading, setIsLoading] = useState(false);
-=======
-
-    const [email, setEmail] = useState('gabrielmaosleves@gmail.com')
-    const [senha, setSenha] = useState('maosleves')
->>>>>>> 8c6089c2434bcacebfd34a72ed8172cff838026b
+  const [isInputDataValid, setIsInputDataValid] = useState(true); // Guardo o estado do input (se estiver errado, mostrar mensagem de erro)
 
   async function Login() {
-
+    // Desativa o retorno de input inválido
     await api.post('/Login', {
-      email : email,
-      senha : senha
-    }).then( async response => {
+      email: email,
+      senha: senha
+    }).then(async response => {
+      setIsInputDataValid(true);
+      console.log(response.data.token)
 
-      console.log( response.data.token )
-
-      await AsyncStorage.setItem("token", JSON.stringify( response.data ))
+      await AsyncStorage.setItem("token", JSON.stringify(response.data))
 
       const token = await userDecodeToken()
 
-      if (token.role === "Paciente") {
+      if (token.role === "paciente") {
         navigation.replace("Main")
       }
       else {
         navigation.replace("DoctorMain")
       }
 
-    }).catch( error => {
-
+    }).catch(error => {
+      // Ativa o retorno de input inválido
+      setIsInputDataValid(false);
       console.log(error)
-
     })
 
   }
-  
+
   return (
     <Container>
       <StatusBar
@@ -65,12 +61,21 @@ export const Login = ({ navigation }) => {
 
       <Title>Entrar ou criar conta</Title>
 
+      {
+        isInputDataValid === false ?
+          <TitleInvalidInputAlert>Email ou senha inválidos!</TitleInvalidInputAlert>
+          :
+          null
+      }
+
       <Input
         placeholder={"Usuário ou E-mail"}
         placeholderTextColor={"#49B3BA"}
 
         fieldValue={email}
-        onChangeText={ txt => setEmail(txt)}
+        onChangeText={txt => setEmail(txt)}
+
+        isInsertedInputValid={isInputDataValid}
       />
 
       <Input
@@ -78,8 +83,10 @@ export const Login = ({ navigation }) => {
         placeholderTextColor={"#49B3BA"}
         secureTextEntry={true}
 
-        fieldValue={ senha }
+        fieldValue={senha}
         onChangeText={(txt) => setSenha(txt)}
+
+        isInsertedInputValid={isInputDataValid}
       />
 
       <LinkMedium
@@ -87,19 +94,16 @@ export const Login = ({ navigation }) => {
         onPress={() => navigation.navigate("ForgotPassword")}
       />
 
-<<<<<<< HEAD
       <ButtonNormal
         onPress={(e) => Login()}
         text={"Entrar"}
-=======
-      <ButtonNormal onPress={(e) => Login()} text={"Entrar"} />
+      />
 
       {/* Indicador de Loading */}
       <ActivityIndicator
         animating={isLoading}
         hidesWhenStopped={false}
         size="large"
->>>>>>> bc9f4573f1cf8dd20ad8b9aec81a2f8901075e8a
       />
 
       <ButtonGoogle

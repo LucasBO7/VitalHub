@@ -12,11 +12,7 @@ export const ButtonNormal = ({
         <NormalButton
             onPress={onPress}>
             <ButtonText>{text}</ButtonText>
-<<<<<<< HEAD
-           
-=======
             {/* metodo de disable Button */}
->>>>>>> bc9f4573f1cf8dd20ad8b9aec81a2f8901075e8a
         </NormalButton>
     );
 }

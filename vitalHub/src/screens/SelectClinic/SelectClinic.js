@@ -1,4 +1,4 @@
-import { StatusBar } from "react-native";
+import { StatusBar, Text } from "react-native";
 import { ButtonLargeSelect } from "../../components/Button/Button";
 import { LargeButtonSelect } from "../../components/Button/StyleButton";
 import { CardSelectClinic } from "../../components/Cards/Cards";
@@ -13,7 +13,7 @@ import { CardCancelLess } from "../../components/Descriptions/Descriptions";
 import { useEffect, useState } from "react";
 import api from "../../services/Services";
 
-export const SelectCLinic = ({ navigation }) => {
+export const SelectCLinic = ({ navigation, onCardClick }) => {
   const dataItens = [
     {
       id: "fsdfsfsdasdf",
@@ -61,6 +61,7 @@ export const SelectCLinic = ({ navigation }) => {
 
   const [clinics, setClinics] = useState([]); // Lista de clínicas
 
+
   async function getAllClinics() {
     await api.get("/Clinica/ListarTodas")
       .then(response => {
@@ -74,6 +75,14 @@ export const SelectCLinic = ({ navigation }) => {
   useEffect(() => {
     getAllClinics();
   }, []);
+
+  const [selectedCardId, setSelectedCardId] = useState();
+
+  // Guarda o id da clínica selecionada no state
+  const handleSelectedCard = (id) => {
+    setSelectedCardId(id);
+  };
+
 
   return (
     <Container>
@@ -91,6 +100,8 @@ export const SelectCLinic = ({ navigation }) => {
         renderItem={({ item }) => (
           <CardSelectClinic
             clinic={item}
+            selectedCardId={selectedCardId}
+            onCardPress={handleSelectedCard}
           />
         )}
         showsVerticalScrollIndicator={false}

@@ -16,7 +16,9 @@ export function Input({
     maxLength,
     placeholderTextColor,
     editable = true,
-    secureTextEntry = false
+    secureTextEntry = false,
+    // Input inválido
+    isInsertedInputValid = true
 }) {
     return (
         <InputText
@@ -28,6 +30,7 @@ export function Input({
             value={fieldValue}
             onChangeText={onChangeText}
             secureTextEntry={secureTextEntry}
+            isInsertedInputValid={isInsertedInputValid}
         />
     )
 }
@@ -208,7 +211,8 @@ export function LargeInput({
     maxLength,
     placeholderTextColor,
     editable = true,
-    secureTextEntry = false
+    secureTextEntry = false,
+    isInsertedInputValid = true
 }) {
     return (
         <InputTextLarge
@@ -220,6 +224,7 @@ export function LargeInput({
             value={fieldValue}
             onChangeText={onChangeText}
             secureTextEntry={secureTextEntry}
+            isInsertedInputValid={isInsertedInputValid}
         />
     )
 }

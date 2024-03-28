@@ -1,11 +1,12 @@
 
-import { BoxCard, BoxDateCancel, BoxRateTime, BoxTextCard, BoxTextClinicCard, BoxTextDoctorCard } from "../Container/StyleContainer"
+import { View } from "react-native"
+import { BoxCard, BoxCardDoctor, BoxDateCancel, BoxRateTime, BoxTextCard, BoxTextClinicCard, BoxTextDoctorCard } from "../Container/StyleContainer"
 import { ConsultDate, ConsultDateGray } from "../DateConsult/StyleDateConsult"
 import { CardCancel, SeeRecord } from "../Descriptions/Descriptions"
 import { AgeTextCard, DoctorArea, HourText, HourTextGray, HourTextGrey, LocalizationText, RateText, RoutineTextCard, SeeMedicalRecord } from "../Descriptions/StyledDescriptions"
 import { ImageCard, PointCard } from "../Images/StyleImages"
 import { NameCard, NameCardClinic, NameCardSelect } from "../Title/StyleTitle"
-import { AgeCard, BoxRate, CardContainer, CardContainerClinic } from "./StyleCards"
+import { AgeCard, BoxRate, CardContainer, CardContainerClinic, CardContentDoctor } from "./StyleCards"
 
 import { FontAwesome6 } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
@@ -119,35 +120,47 @@ export const Card = ({ url, name, age, routine, hour, status, onPressCancel, onP
     )
 }
 
-export const CardSelectDoctor = ({ doctor }) => {
+export const CardSelectDoctor = ({ doctor, selectedCardId, onCardPress }) => {
 
     return (
 
-        <CardContainer>
+        <CardContainerClinic
+            isSelected={selectedCardId == doctor.id ? true : false}
+            onPress={() => {
+                onCardPress(doctor.id);
+            }}
+        >
+            <BoxCardDoctor>
 
-            <ImageCard source={require("../../assets/ImageCard.png")} />
+                <ImageCard source={require("../../assets/ImageCard.png")} />
 
-            <BoxCard>
+                <BoxCard>
 
-                <BoxTextDoctorCard>
-                    <NameCardSelect>{doctor.idNavigation.nome}</NameCardSelect>
+                    <BoxTextDoctorCard>
+                        <NameCardSelect>{doctor.idNavigation.nome}</NameCardSelect>
 
-                    <DoctorArea>{doctor.especialidade.especialidade1}</DoctorArea>
-                </BoxTextDoctorCard>
+                        <DoctorArea>{doctor.especialidade.especialidade1}</DoctorArea>
+                    </BoxTextDoctorCard>
 
-            </BoxCard>
+                </BoxCard>
+            </BoxCardDoctor>
 
-        </CardContainer>
+        </CardContainerClinic>
 
     )
 
 }
 
-export const CardSelectClinic = ({ clinic }) => {
+export const CardSelectClinic = ({ clinic, selectedCardId, onCardPress }) => {
 
     return (
 
-        <CardContainerClinic>
+        <CardContainerClinic
+            isSelected={selectedCardId == clinic.id ? true : false}
+            onPress={() => {
+                onCardPress(clinic.id);
+            }}
+        >
 
             <BoxCard>
 

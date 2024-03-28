@@ -58,6 +58,13 @@ export const SelectDoctor = ({ navigation }) => {
         getAllDoctors();
     }, [])
 
+    const [selectedCardId, setSelectedCardId] = useState();
+
+    // Guarda o id da clínica selecionada no state
+    const handleSelectedCard = (id) => {
+        setSelectedCardId(id);
+    };
+
     return (
         <Container>
             <StatusBar translucent backgroundColor="transparent" barStyle="dark-content" />
@@ -69,7 +76,11 @@ export const SelectDoctor = ({ navigation }) => {
                 keyExtractor={(item) => item.id} // Ids de cada index
                 renderItem={({ item }) => (
                     // Componente renderizado
-                    <CardSelectDoctor doctor={item} />
+                    <CardSelectDoctor
+                        doctor={item}
+                        selectedCardId={selectedCardId}
+                        onCardPress={handleSelectedCard}
+                    />
                 )}
 
                 showsVerticalScrollIndicator={false}

@@ -15,8 +15,30 @@ export const CardContainer = styled.TouchableOpacity`
   flex-direction: row;
 `;
 
-export const CardContainerClinic = styled(CardContainer)`
-  height: 85px;
+export const SelectionCardContainer = styled.TouchableHighlight`
+  elevation: 4px;
+  margin-top: 12px;
+  margin-bottom: 5px;
+  align-self: center;
+  align-items: center;
+  background-color: #fff;
+  border-radius: 5px;
+  padding: 10px;
+  width: 90%;
+  height: 105px;
+  flex-direction: row;
+`;
+export const CardContainerClinic = styled(SelectionCardContainer).attrs({
+  underlayColor: "#EBEBEB"
+})`
+  ${(props) => (props.isSelected ? `border: 2px solid #496BBA` : ``)};
+  height: 90px;
+`;
+
+export const CardContentDoctor = styled`
+  width: 100%;
+  height: 100%;
+  flex-direction: row;
 `;
 
 export const AgeCard = styled.SafeAreaView`

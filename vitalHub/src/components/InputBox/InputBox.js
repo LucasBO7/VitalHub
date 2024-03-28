@@ -112,7 +112,8 @@ export const LargeInputTextBox = ({
     onChangeText = null,
     keyboardType = "default",
     maxLength,
-    placeholderTextColor
+    placeholderTextColor,
+    isInsertedInputValid = true
 }) => {
     return (
 
@@ -128,6 +129,7 @@ export const LargeInputTextBox = ({
                 fieldValue={fieldValue}
                 onChangeText={onChangeText}
                 placeholderTextColor={placeholderTextColor}
+                isInsertedInputValid={isInsertedInputValid}
             />
 
         </BoxInput>

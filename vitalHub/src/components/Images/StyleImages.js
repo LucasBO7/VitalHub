@@ -50,6 +50,9 @@ export const ImageCard = styled.Image`
     height: 86px;
     border-radius: 6px;
 `
+export const ImageCardDoctor = styled(ImageCard)`
+    height: 76px;
+`
 
 export const PointCard = styled.Image`
     margin-bottom: 5px;

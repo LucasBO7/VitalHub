@@ -7,6 +7,13 @@ export const Title = styled.Text`
     margin-bottom: 25px;
     color: #33303E;
 `
+export const TitleInvalidInputAlert = styled.Text`
+    text-align: center;
+    font-size: 10px;
+    font-family: MontserratAlternates_500Medium;
+    margin-bottom: 5px;
+    color: red;
+`
 
 export const TitleModal = styled(Title)`
     margin-bottom: 0px;
