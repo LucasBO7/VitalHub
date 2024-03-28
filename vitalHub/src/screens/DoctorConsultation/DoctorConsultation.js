@@ -15,7 +15,7 @@ import { Ionicons } from "@expo/vector-icons";
 import Calendar from "../../components/Calendar/Calendar";
 
 import { FilterButton } from "../../components/Button/Button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Card } from "../../components/Cards/Cards";
 import { CancellationModal } from "../../components/CancellationModal/CancellationModal";
 import { AppointmentModal } from "../../components/AppointmentModal/AppointmentModal";
