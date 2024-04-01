@@ -11,7 +11,7 @@ export const Header = styled(LinearGradient).attrs({
     height: 115px;
     background-color: #FF99CC;
     border-radius: 0px 0px 22px 22px;
-    elevation: 7px;
+    elevation: 7;
     flex-direction: row;
     justify-content: center;
     align-items: center; 

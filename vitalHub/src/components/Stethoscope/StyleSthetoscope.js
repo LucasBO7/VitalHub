@@ -5,7 +5,7 @@ export const Stethoscope = styled.TouchableOpacity`
     height: 60px;
     border-radius: 8px;
 
-    elevation: 4px;
+    elevation: 4;
     background-color: #49B3BA;
 
     position: fixed;

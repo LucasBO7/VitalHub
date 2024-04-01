@@ -11,8 +11,6 @@ namespace WebAPI.Interfaces
         public List<Consulta> BuscarCanceladas(Guid Id);
         public Paciente BuscarPorId(Guid Id);
         public Paciente AtualizarPerfil(Guid id, PacienteViewModel paciente);
-
-
-        public List<Consulta> BuscarPorData(DateTime dataConsulta, Guid id);
+        public List<Consulta> BuscarPorData(DateTime dataConsulta, Guid idPaciente);
     }
 }

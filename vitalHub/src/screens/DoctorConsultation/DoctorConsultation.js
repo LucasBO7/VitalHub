@@ -20,6 +20,8 @@ import { Card } from "../../components/Cards/Cards";
 import { CancellationModal } from "../../components/CancellationModal/CancellationModal";
 import { AppointmentModal } from "../../components/AppointmentModal/AppointmentModal";
 
+import api from "../../services/Services";
+
 export const DoctorConsultation = ({ navigation }) => {
   //STATE PARA O ESTADO DOS CARDS FLATLIST, BOTOES FILTRO
   const [selected, setSelected] = useState({
@@ -27,28 +29,38 @@ export const DoctorConsultation = ({ navigation }) => {
     realizadas: false,
     canceladas: false,
   });
+  const [consults, setConsults] = useState(); // Guarda todas as Consultas que estierem salvas no banco de dados
 
   const image = require("../../assets/ImageCard.png");
-
-  //   1 - Logout === ok
-  //   2 - dados na tela de perfil
-  //   3 - dados no Header quando logar
 
   async function profileLoad() {
     const token = await userDecodeToken();
 
-    console.log("BANANAAA!");
     if (token) {
       console.log(token.name);
     }
   }
 
+  // Busca as Consultas do banco e guarda na const consults
+  async function getAllConsults() {
+    console.log("TAMO AE");
+
+    await api.get("/Consultas")
+      .then(
+        response => {
+          setConsults(response.data);
+          console.log('Consultas: ' + response.data);
+        }
+      )
+      .catch(error => console.log(error));
+  }
+
   useEffect(() => {
-    profileLoad();
+    profileLoad(); // Buscar dados do Perfil do usuário
+    getAllConsults(); // Buscar dados das consultas
   }, []);
 
   // CARD MOCADOS
-
   const dataItens = [
     {
       id: 1,
@@ -94,7 +106,7 @@ export const DoctorConsultation = ({ navigation }) => {
     return false;
   };
 
-  const data = dataItens.filter(Check);
+  const data = consults.filter(Check);
 
   // STATES PARA OS MODAIS
 

@@ -24,23 +24,14 @@ import { ModalStethoscope } from "../../components/Stethoscope/ModalStethoscope"
 import { PatientAppointmentModal } from "../../components/PatientAppointmentModal/PatientAppointmentModal";
 import { userDecodeToken } from "../../utils/Auth";
 
+import api from "../../services/Services"
+
 export const PatientConsultation = ({ navigation }) => {
   const [user, setUser] = useState({
     name: '',
   });
-
-  async function profileLoad() {
-    const token = await userDecodeToken();
-
-    if (token) {
-      console.log("funcinou!");
-      setUser(token);
-    }
-  }
-
-  useEffect(() => {
-    profileLoad();
-  }, []);
+  const [consults, setConsults] = useState(); // Guarda todas as Consultas que estierem salvas no banco de dados
+  const [selectedDate, setSelectedDate] = useState(new Date());
 
   //STATE PARA O ESTADO DOS CARDS FLATLIST, BOTOES FILTRO
   const [selected, setSelected] = useState({
@@ -50,8 +41,6 @@ export const PatientConsultation = ({ navigation }) => {
   });
 
   const image = require("../../assets/CardDoctorImage.png");
-
-  
 
   const dataItens = [
     {
@@ -73,6 +62,52 @@ export const PatientConsultation = ({ navigation }) => {
       status: "r",
     },
   ];
+
+
+
+
+  async function profileLoad() {
+    const token = await userDecodeToken();
+
+    if (token) {
+      setUser(token);
+    }
+  }
+
+  // Busca as Consultas do banco e guarda na const consults
+  async function getAllConsults() {
+    console.log("TAMO AE: ");
+
+    // 2026-6-8
+    const day = selectedDate.getDay();
+    const month = selectedDate.getMonth();
+    const year = selectedDate.getFullYear();
+
+    // await api.get("/Pacientes/BuscarPorData", {
+    //   dataConsulta: `${year}-${month}-${day}`,
+    //   idPaciente: '8003066E-64CA-4DA7-9413-EEFFB10CBA6F'
+    // })
+    //   .then(
+    //     response => {
+    //       setConsults(response.data);
+    //       console.log('Consultas: ' + consults);
+    //     }
+    //   )
+    //   .catch(error => console.log(error));
+    await api.get(`/Pacientes/BuscarPorData?dataConsulta=${year}-${month}-${day}&idPaciente=${'8003066E-64CA-4DA7-9413-EEFFB10CBA6F'}`)
+      .then(
+        response => {
+          setConsults(response.data);
+          console.log('Consultas: ' + consults);
+        }
+      )
+      .catch(error => console.log(error));
+  }
+
+  useEffect(() => {
+    profileLoad();
+    getAllConsults();
+  }, []);
 
   //FILTRO PARA CARD
 
@@ -121,7 +156,7 @@ export const PatientConsultation = ({ navigation }) => {
         </MoveIconBell>
       </Header>
 
-      <Calendar />
+      <Calendar currentDate={selectedDate} />
 
       <ButtonHomeContainer>
         <FilterButton
