@@ -25,6 +25,7 @@ export const userDecodeToken = async () => {
     name: decode.name,
     email: decode.email,
     role: decode.role,
+    id : decode.jti,
     token: token
   };
 };
@@ -32,3 +33,9 @@ export const userTokenLogout = async () => {
   const token = await AsyncStorage.removeItem("token");
   console.log(token);
 };
+// export const registerConsult = async ({ idConsultInserted, bananaInserted }) => {
+//   await AsyncStorage.setItem("consult", {
+//     idConsult: idConsultInserted != null ? idConsultInserted,
+//     banana: bananaInserted != null ? bananaInserted :
+//   });
+// };

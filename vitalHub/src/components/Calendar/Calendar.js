@@ -6,7 +6,7 @@ import { StyleSheet } from 'react-native';
 
 
 // Componente de calendário
-const Calendar = ({ currentDate }) => {
+const Calendar = ({ setSelectedDate }) => {
 
     // Define o padrão para o calendário em Português do Brasil
     moment.updateLocale("pt-br", {
@@ -34,6 +34,7 @@ const Calendar = ({ currentDate }) => {
 
 
     // Cria uma instância da data atual
+    const currentDate = new Date();
 
     // Define a data inicial como sendo o primeiro dia do mês
     const startingDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
@@ -43,10 +44,12 @@ const Calendar = ({ currentDate }) => {
 
     return (
         <StyledCalendarStrip
+            onDateSelected={date => setSelectedDate(moment(date).format('YYYY-MM-DD'))}
+
             // Configuração da animação do calendário
             calendarAnimation={{ type: "sequence", duration: 30 }}
             // Estilo da animação de seleção do dia
-            daySelectionAnimation={styles.selectedAnimationStyle}
+            daySelectionAnimation={styles.selectedAnimationStyle}  
             // Estilo do ícone de navegação para a esquerda
             iconLeftStyle={styles.iconsStyle}
             // Estilo do ícone de navegação para a direita

@@ -14,9 +14,11 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 
 
-export const Card = ({ url, name, age, routine, hour, status, onPressCancel, onPressAppointment, onPressAppointmentCard, navigation }) => {
+export const Card = ({ roleUsuario, dataConsulta, prioridade, usuarioConsulta, url, name, age, routine, hour, status, onPressCancel, onPressAppointment, onPressAppointmentCard, navigation }) => {
 
     const Check = () => {
+        // { usuarioConsulta.idNavigation.nome }
+        // {roleUsuario == "Medico" ? "22 anos" : usuarioConsulta}
 
         if (status === "a") {
             return (

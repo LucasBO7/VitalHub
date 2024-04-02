@@ -29,9 +29,11 @@ import api from "../../services/Services"
 export const PatientConsultation = ({ navigation }) => {
   const [user, setUser] = useState({
     name: '',
+    role: '',
+    id: ''
   });
-  const [consults, setConsults] = useState(); // Guarda todas as Consultas que estierem salvas no banco de dados
-  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [consults, setConsults] = useState({}); // Guarda todas as Consultas que estierem salvas no banco de dados
+  const [selectedDate, setSelectedDate] = useState();
 
   //STATE PARA O ESTADO DOS CARDS FLATLIST, BOTOES FILTRO
   const [selected, setSelected] = useState({
@@ -71,34 +73,19 @@ export const PatientConsultation = ({ navigation }) => {
 
     if (token) {
       setUser(token);
+
+      setSelectedDate(moment().format('YYYY-MM-DD'));
     }
   }
 
   // Busca as Consultas do banco e guarda na const consults
   async function getAllConsults() {
-    console.log("TAMO AE: ");
-
-    // 2026-6-8
-    const day = selectedDate.getDay();
-    const month = selectedDate.getMonth();
-    const year = selectedDate.getFullYear();
-
-    // await api.get("/Pacientes/BuscarPorData", {
-    //   dataConsulta: `${year}-${month}-${day}`,
-    //   idPaciente: '8003066E-64CA-4DA7-9413-EEFFB10CBA6F'
-    // })
-    //   .then(
-    //     response => {
-    //       setConsults(response.data);
-    //       console.log('Consultas: ' + consults);
-    //     }
-    //   )
-    //   .catch(error => console.log(error));
-    await api.get(`/Pacientes/BuscarPorData?dataConsulta=${year}-${month}-${day}&idPaciente=${'8003066E-64CA-4DA7-9413-EEFFB10CBA6F'}`)
+    // const url = (profile.role == 'medico' ? 'Medicos' : 'Pacientes');
+    await api.get(`/Pacientes/BuscarPorData?dataConsulta=${selectedDate}&idPaciente=${user.id}`)
       .then(
         response => {
           setConsults(response.data);
-          console.log('Consultas: ' + consults);
+          console.log(response.data);
         }
       )
       .catch(error => console.log(error));
@@ -108,6 +95,10 @@ export const PatientConsultation = ({ navigation }) => {
     profileLoad();
     getAllConsults();
   }, []);
+
+  useEffect(() => {
+    getAllConsults();
+  }, [selectedDate])
 
   //FILTRO PARA CARD
 
@@ -124,7 +115,7 @@ export const PatientConsultation = ({ navigation }) => {
     return false;
   };
 
-  const data = dataItens.filter(Check);
+  // const data = consults.filter(Check);
 
   // STATES PARA OS MODAIS
 
@@ -156,7 +147,7 @@ export const PatientConsultation = ({ navigation }) => {
         </MoveIconBell>
       </Header>
 
-      <Calendar currentDate={selectedDate} />
+      <Calendar setSelectedDate={setSelectedDate} />
 
       <ButtonHomeContainer>
         <FilterButton
@@ -185,11 +176,16 @@ export const PatientConsultation = ({ navigation }) => {
       </ButtonHomeContainer>
 
       <FlatContainer
-        data={data}
+        data={consults}
         renderItem={({ item }) => (
           <Card
             navigation={navigation}
-            hour={item.hour}
+
+            // roleUsuario={user.role}  
+            // prioridade={item.prioridade.prioridade}
+            // usuarioConsulta={profile.role == "Medico" ? item.paciente : item.medicoClinica.medico}
+            
+            hour={item.dataConsulta}
             name={item.name}
             age={item.age}
             routine={item.routine}
