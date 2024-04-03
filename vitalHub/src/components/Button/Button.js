@@ -93,7 +93,7 @@ export const BlockedSmallButton = ({
     );
 }
 
-export const FilterButton = ({ selected = false, text, onPress = null }) => {
+export const FilterButton = ({ selected = 'agendada', text, onPress = null }) => {
     return (
         <>
             {selected ?

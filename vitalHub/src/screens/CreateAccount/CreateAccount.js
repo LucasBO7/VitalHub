@@ -12,25 +12,25 @@ import { LogoCreateAccount } from '../../components/Images/StyleImages'
 
 export const CreateAccount = ({ navigation }) => {
 
-    const[email, setEmail] = useState("")
-    const[senha, setSenha] = useState("")
-    const[nome, setNome] = useState("")
+    const [email, setEmail] = useState("")
+    const [senha, setSenha] = useState("")
+    const [nome, setNome] = useState("")
 
     async function HandleCadastro() {
         try {
-          const response =   await api.post("/Pacientes", {
-            email : email,
-            senha : senha,
-            nome: nome,
-            IdTipoUsuario : "570998FF-66A6-4752-A875-2001F6DD36B4"
-          })
+            const response = await api.post("/Pacientes", {
+                email: email,
+                senha: senha,
+                nome: nome,
+                IdTipoUsuario: "570998FF-66A6-4752-A875-2001F6DD36B4"
+            })
 
-          if (!response.data.success) {
-            throw new ('Cadastrado, yeah');
-        }
+            if (!response.data.success) {
+                throw new ('Cadastrado, yeah');
+            }
 
-        //Cadastrou-se e foi para a Login
-          
+            //Cadastrou-se e foi para a Login
+
             navigation.navigate('Login');
         } catch (error) {
             console.error('Erro ao cadastrar:', error);
@@ -52,6 +52,8 @@ export const CreateAccount = ({ navigation }) => {
             <Input
                 placeholder={"Usuário ou E-mail"}
                 placeholderTextColor={'#49B3BA'}
+                onChangeText={(text) => {
+                }}
             />
             <Input
                 placeholder={"Senha"}

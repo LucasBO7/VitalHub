@@ -29,7 +29,6 @@ import api from "../../services/Services"
 export const PatientConsultation = ({ navigation }) => {
   const [user, setUser] = useState({
     name: '',
-    role: '',
     id: ''
   });
   const [consults, setConsults] = useState({}); // Guarda todas as Consultas que estierem salvas no banco de dados
@@ -41,32 +40,9 @@ export const PatientConsultation = ({ navigation }) => {
     realizadas: false,
     canceladas: false,
   });
-
+  const [consultStatus, setConsultStatus] = useState('agendada');
   const image = require("../../assets/CardDoctorImage.png");
-
-  const dataItens = [
-    {
-      id: 1,
-      hour: "14:00",
-      image: image,
-      name: "Dr Claudio",
-      age: "22 anos",
-      routine: "Urgência",
-      status: "a",
-    },
-    {
-      id: 1,
-      hour: "14:00",
-      image: image,
-      name: "Dr josé",
-      age: "23 anos",
-      routine: "Urgência",
-      status: "r",
-    },
-  ];
-
-
-
+  const [selectedConsultDoctor, setSelectedConsultDoctor] = useState(null);
 
   async function profileLoad() {
     const token = await userDecodeToken();
@@ -75,17 +51,17 @@ export const PatientConsultation = ({ navigation }) => {
       setUser(token);
 
       setSelectedDate(moment().format('YYYY-MM-DD'));
+      console.log(user);
     }
   }
 
   // Busca as Consultas do banco e guarda na const consults
   async function getAllConsults() {
-    // const url = (profile.role == 'medico' ? 'Medicos' : 'Pacientes');
     await api.get(`/Pacientes/BuscarPorData?dataConsulta=${selectedDate}&idPaciente=${user.id}`)
       .then(
         response => {
           setConsults(response.data);
-          console.log(response.data);
+          // console.log(response.data);
         }
       )
       .catch(error => console.log(error));
@@ -100,32 +76,12 @@ export const PatientConsultation = ({ navigation }) => {
     getAllConsults();
   }, [selectedDate])
 
-  //FILTRO PARA CARD
-
-  const Check = (data) => {
-    if (data.status === "a" && selected.agendadas) {
-      return true;
-    }
-    if (data.status === "r" && selected.realizadas) {
-      return true;
-    }
-    if (data.status === "c" && selected.canceladas) {
-      return true;
-    }
-    return false;
-  };
-
-  // const data = consults.filter(Check);
-
   // STATES PARA OS MODAIS
-
   const [showModalCancel, setShowModalCancel] = useState(false);
   const [showModalAppointment, setShowModalAppointment] = useState(false);
   const [showModalStethoscope, setShowModalStethoscope] = useState(false);
 
   const [showModal, setShowModal] = useState(false);
-
-  // RETURN
 
   return (
     <Container>
@@ -152,7 +108,7 @@ export const PatientConsultation = ({ navigation }) => {
       <ButtonHomeContainer>
         <FilterButton
           onPress={() => {
-            setSelected({ agendadas: true });
+            setConsultStatus('agendada')
           }}
           selected={selected.agendadas}
           text={"Agendadas"}
@@ -160,7 +116,7 @@ export const PatientConsultation = ({ navigation }) => {
 
         <FilterButton
           onPress={() => {
-            setSelected({ realizadas: true });
+            setConsultStatus('realizada')
           }}
           selected={selected.realizadas}
           text={"Realizadas"}
@@ -168,7 +124,7 @@ export const PatientConsultation = ({ navigation }) => {
 
         <FilterButton
           onPress={() => {
-            setSelected({ canceladas: true });
+            setConsultStatus('cancelada')
           }}
           selected={selected.canceladas}
           text={"Canceladas"}
@@ -177,29 +133,28 @@ export const PatientConsultation = ({ navigation }) => {
 
       <FlatContainer
         data={consults}
-        renderItem={({ item }) => (
-          <Card
-            navigation={navigation}
+        renderItem={({ item }) =>
+          item.situacao.situacao == consultStatus &&
+          (
+            <Card
+              navigation={navigation}
+              hour={'02:33'}
+              name={item.medicoClinica.medico.idNavigation.nome}
+              age={item.medicoClinica.medico.crm}
+              routine={item.situacao.situacao}
+              url={image}
+              status={consultStatus}
+              onPressCancel={() => setShowModalCancel(true)}
+              onPressAppointment={() => {
+                navigation.navigate("ViewPrescription");
+              }}
 
-            // roleUsuario={user.role}  
-            // prioridade={item.prioridade.prioridade}
-            // usuarioConsulta={profile.role == "Medico" ? item.paciente : item.medicoClinica.medico}
-            
-            hour={item.dataConsulta}
-            name={item.name}
-            age={item.age}
-            routine={item.routine}
-            url={image}
-            status={item.status}
-            onPressCancel={() => setShowModalCancel(true)}
-            onPressAppointment={() => {
-              navigation.navigate("ViewPrescription");
-            }}
-            onPressAppointmentCard={() =>
-              setShowModal(item.status === "a" ? true : false)
-            }
-          />
-        )}
+              onPressAppointmentCard={() => {
+                setSelectedConsultDoctor(item.medicoClinica.medico);
+                setShowModal(item.situacao.situacao === "agendada" ? true : false);
+              }}
+            />
+          )}
         keyExtractor={(item) => item.id}
         showsVerticalScrollIndicator={false}
       />
@@ -220,6 +175,8 @@ export const PatientConsultation = ({ navigation }) => {
       />
 
       <PatientAppointmentModal
+        consulta={selectedConsultDoctor}
+        roleUsuario={user.role}
         navigation={navigation}
         visible={showModal}
         setShowModal={setShowModal}

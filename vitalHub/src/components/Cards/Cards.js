@@ -14,13 +14,10 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 
 
-export const Card = ({ roleUsuario, dataConsulta, prioridade, usuarioConsulta, url, name, age, routine, hour, status, onPressCancel, onPressAppointment, onPressAppointmentCard, navigation }) => {
+export const Card = ({ url, name, age, routine, hour, status, onPressCancel, onPressAppointment, onPressAppointmentCard, navigation }) => {
 
     const Check = () => {
-        // { usuarioConsulta.idNavigation.nome }
-        // {roleUsuario == "Medico" ? "22 anos" : usuarioConsulta}
-
-        if (status === "a") {
+        if (status === "agendada") {
             return (
                 <BoxDateCancel>
 
@@ -38,7 +35,7 @@ export const Card = ({ roleUsuario, dataConsulta, prioridade, usuarioConsulta, u
             )
 
 
-        } else if (status === "r") {
+        } else if (status === "realizada") {
             return (
                 <BoxDateCancel>
 
@@ -55,7 +52,7 @@ export const Card = ({ roleUsuario, dataConsulta, prioridade, usuarioConsulta, u
                 </BoxDateCancel>
             )
         }
-        else if (status === "c") {
+        else if (status === "cancelada") {
             return (
                 <BoxDateCancel>
 
@@ -71,22 +68,6 @@ export const Card = ({ roleUsuario, dataConsulta, prioridade, usuarioConsulta, u
             )
 
         }
-        // return (
-        //     <BoxDateCancel>
-
-        //     <ConsultDateGrey>
-
-        //         <FontAwesome6 name="clock" size={15} color="#4E4B59" />
-
-        //         <HourTextGrey>{hour}</HourTextGrey>
-
-        //     </ConsultDateGrey>
-
-        //     <CancelCard>Ver Prontuario</CancelCard>
-
-        // </BoxDateCancel>
-        // )
-
     }
 
     return (

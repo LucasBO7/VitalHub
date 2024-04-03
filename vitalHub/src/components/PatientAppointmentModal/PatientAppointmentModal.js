@@ -1,4 +1,4 @@
-import { Modal } from "react-native";
+import { ActivityIndicator, Modal } from "react-native";
 import {
   ButtonLargeConfirmModal,
   ButtonLargeModal,
@@ -15,39 +15,56 @@ import { TitleModal, TitleModalRecord } from "../Title/StyleTitle";
 import { BoxAgeEmailModal } from "./StylePatientAppointmentModal";
 
 export const PatientAppointmentModal = ({
+  consulta,
+  roleUsuario,
   navigation,
   visible,
   setShowModal = null,
   ...rest
 }) => {
+
+  function handlePress(rota) {
+
+    setShowModalAppointment(false)
+    navigation.replace(rota, { clinicaId: consulta.medicosClinicas.clinicaId })
+
+
+  }
+  console.log(consulta);
+
   return (
     <Modal {...rest} visible={visible} transparent={true} animationType="fade">
       <PatientModal>
-        <ModalContent>
-          <ImageModalRecord
-            source={require("../../assets/CardRecordPatient(doctorImage).png")}
-          />
+        {
+          consulta != null ? (
+            <ModalContent>
+              <ImageModalRecord
+                source={require("../../assets/CardRecordPatient(doctorImage).png")}
+              />
 
-          <TitleModalRecord>Dr Claudio</TitleModalRecord>
+              <TitleModalRecord>{consulta.idNavigation.nome}</TitleModalRecord>
 
-          <BoxAgeEmailModal>
-            <DescriptionModalRecord>Clínico Geral</DescriptionModalRecord>
-            <DescriptionModalRecord>CRM-15286</DescriptionModalRecord>
-          </BoxAgeEmailModal>
+              <BoxAgeEmailModal>
+                <DescriptionModalRecord>Clínico Geral</DescriptionModalRecord>
+                <DescriptionModalRecord>{consulta.crm}</DescriptionModalRecord>
+              </BoxAgeEmailModal>
 
-          <ButtonLargeConfirmModal
-            onPress={() => {
-              navigation.navigate("ConsultLocalization");
-              setShowModal(false);
-            }}
-            text={"Ver Local da Consulta"}
-          />
+              <ButtonLargeConfirmModal
+                onPress={() => {
+                  handlePress("MedicalRecords");
+                }}
+                text={"Ver Local da Consulta"}
+              />
 
-          <CardCancelLess
-            onPressCancel={() => setShowModal(false)}
-            text={"Cancelar"}
-          />
-        </ModalContent>
+              <CardCancelLess
+                onPressCancel={() => setShowModal(false)}
+                text={"Cancelar"}
+              />
+            </ModalContent>
+          ) : (
+            <ActivityIndicator />
+          )
+        }
       </PatientModal>
     </Modal>
   );

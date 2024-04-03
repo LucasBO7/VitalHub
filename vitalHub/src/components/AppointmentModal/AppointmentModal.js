@@ -9,11 +9,21 @@ import { BoxAgeEmailModal } from "./StyleAppointmentModal"
 
 
 export const AppointmentModal = ({
+    consulta,
+    roleUsuario,
     navigation,
     visible,
     setShowModalAppointment = null,
     ...rest
 }) => {
+
+    function handlePress( rota ) {
+
+        setShowModalAppointment(false)
+        navigation.replace(rota, {clinicaId : consulta.medicoClinica.clinicaId})
+
+
+    }
     return (
         <Modal
             {...rest}
@@ -36,7 +46,10 @@ export const AppointmentModal = ({
 
                     </BoxAgeEmailModal>
 
-                    <ButtonLargeSelect onPress={() => {navigation.navigate("MedicalRecords")}} text={"Inserir Prontuário"} />
+                    <ButtonLargeSelect 
+                    onPress={() => handlePress("MedicalRecords")} 
+                    text={"Inserir Prontuário"} 
+                    />
 
                     <CardCancelLess onPressCancel={() => setShowModalAppointment(false)} text={"Cancelar"} />
 
