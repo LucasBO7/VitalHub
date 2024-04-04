@@ -21,42 +21,54 @@ import {
   ButtonLarge,
 } from "../../components/Button/Button";
 import { userDecodeToken, userTokenLogout } from "../../utils/Auth";
+import moment from "moment";
 
 export const PatientProfile = ({ navigation }) => {
   const [cep, setCep] = useState("");
   const [logradouro, setLogradouro] = useState("");
   const [cidade, setCidade] = useState("");
-  const [user, setUser] = useState({});
+  const [patientUser, setPatientUser] = useState({});
 
   async function profileLoad() {
     const token = await userDecodeToken();
 
     if (token) {
-      console.log("funcionou!");
-      setUser(token);
+      getUser(token);
     }
   }
 
   useEffect(() => {
     const getCep = async () => {
       if (cep !== "" && cep.length === 8) {
-        try {
-          const response = await api.get(`${cep}/json/`);
-
-          if (response.data) {
+        await api.get(`${cep}/json/`)
+          .then(response => {
             setLogradouro(response.data.logradouro);
             setCidade(response.data.localidade);
-          } else {
-            alert("Verifique o CEP digitado !!!");
-          }
-        } catch (error) {
-          console.log("Ocorreu um erro ao buscar o CEP", error);
-        }
+          })
+          .catch(error => console.log(error));
       }
     };
 
     getCep();
   }, [cep]);
+
+  async function getUser(userTaken) {
+    // console.log(userTaken);
+    // console.log(`/Pacientes/BuscarPorId?id=${userTaken.id}`);
+    await api.get(`/Pacientes/BuscarPorId?id=${userTaken.id}`)
+      .then(response => {
+        // Dados usuário paciente
+        setPatientUser(response.data);
+
+        // Dados endereço
+        setCep(response.data.endereco.cep)
+        setCidade(response.data.endereco.cidade);
+        setLogradouro(response.data.endereco.logradouro);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
 
   useEffect(() => {
     profileLoad();
@@ -67,9 +79,9 @@ export const PatientProfile = ({ navigation }) => {
       <Container>
         <ImagemPerfilPaciente source={require("../../assets/ney.webp")} />
 
-        <TitleProfile>{user.name}</TitleProfile>
+        <TitleProfile>{patientUser.name}</TitleProfile>
 
-        <DescriptionPassword description={user.email} />
+        <DescriptionPassword description={patientUser.email} />
 
         <InputBox
           placeholderTextColor={"#A1A1A1"}
@@ -78,6 +90,7 @@ export const PatientProfile = ({ navigation }) => {
           keyboardType="numeric"
           editable={true}
           fieldWidth={90}
+          fieldValue={patientUser.dataNascimento && moment(patientUser.dataNascimento).format('DD-MM-YYYY')}
         />
         <InputBox
           placeholderTextColor={"#A1A1A1"}
@@ -87,6 +100,7 @@ export const PatientProfile = ({ navigation }) => {
           maxLength={11}
           editable={true}
           fieldWidth={90}
+          fieldValue={patientUser.cpf}
         />
         <InputBox
           placeholderTextColor={"#A1A1A1"}
@@ -125,7 +139,7 @@ export const PatientProfile = ({ navigation }) => {
 
         <BlockedSmallButton
           text={"Sair do app"}
-          onPress={() => {userTokenLogout(); navigation.replace("Login"); }}
+          onPress={() => { userTokenLogout(); navigation.replace("Login"); }}
         />
       </Container>
     </ScrollContainer>

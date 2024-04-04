@@ -25,12 +25,12 @@ export const PatientAppointmentModal = ({
 
   function handlePress(rota) {
 
-    setShowModalAppointment(false)
-    navigation.replace(rota, { clinicaId: consulta.medicosClinicas.clinicaId })
+    // setShowModalAppointment(false)
+    navigation.replace(rota, { clinicaId: consulta.clinicaId })
 
 
   }
-  console.log(consulta);
+  console.log(`VALORES: ${consulta}`);
 
   return (
     <Modal {...rest} visible={visible} transparent={true} animationType="fade">
@@ -42,16 +42,16 @@ export const PatientAppointmentModal = ({
                 source={require("../../assets/CardRecordPatient(doctorImage).png")}
               />
 
-              <TitleModalRecord>{consulta.idNavigation.nome}</TitleModalRecord>
+              <TitleModalRecord>{consulta.medico.idNavigation.nome}</TitleModalRecord>
 
               <BoxAgeEmailModal>
-                <DescriptionModalRecord>Clínico Geral</DescriptionModalRecord>
-                <DescriptionModalRecord>{consulta.crm}</DescriptionModalRecord>
+                <DescriptionModalRecord>{ }</DescriptionModalRecord>
+                <DescriptionModalRecord>{consulta.medico.crm}</DescriptionModalRecord>
               </BoxAgeEmailModal>
 
               <ButtonLargeConfirmModal
                 onPress={() => {
-                  handlePress("MedicalRecords");
+                  handlePress("ConsultLocalization");
                 }}
                 text={"Ver Local da Consulta"}
               />

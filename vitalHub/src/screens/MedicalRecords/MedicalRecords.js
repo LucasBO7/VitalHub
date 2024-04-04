@@ -8,7 +8,7 @@ import { TitleProfile } from "../../components/Title/StyleTitle"
 
 
 
-export const MedicalRecords = ({ navigation }) => {
+export const MedicalRecords = ({ navigation, clinicaId }) => {
     return (
 
         <ScrollContainer>

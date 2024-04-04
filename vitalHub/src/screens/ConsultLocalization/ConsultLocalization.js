@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Container,
   ContainerCepCidade,
@@ -25,6 +25,7 @@ export const ConsultLocalization = ({ navigation, route }) => {
     await api.get(`/Clinica/BuscarPorId?id=${route.params.clinicaId}`)
       .then(response => {
         setClinica(response.data);
+        console.log(response.data);
       }).catch(error => {
         console.log(error);
       });
@@ -35,19 +36,20 @@ export const ConsultLocalization = ({ navigation, route }) => {
       {
         clinica != null ? (
           <>
-            <Maps />
+            <Maps finalLatitude={clinica.endereco.latitude} finalLongitude={clinica.endereco.longitude} />
 
             <TitleLocalization>{clinica.nomeFantasia}</TitleLocalization>
 
-            <AgeTextCard>São Paulo, SP</AgeTextCard>
+            <AgeTextCard>{clinica.cidade}</AgeTextCard>
 
             <InputBox
               placeholderTextColor={"#33303E"}
-              textLabel={"Endreço"}
+              textLabel={"Endereço"}
               placeholder={"Ex. Rua Vicenso Silva, 58"}
               // keyboardType="numeric"
               editable={true}
               fieldWidth={90}
+              fieldValue={clinica.endereco.logradouro}
             />
 
             <ContainerCepCidade>
@@ -58,6 +60,7 @@ export const ConsultLocalization = ({ navigation, route }) => {
                 keyboardType="numeric"
                 editable={true}
                 fieldWidth={40}
+                fieldValue={`${clinica.endereco.numero}`}
               />
               <InputBox
                 placeholderTextColor={"#33303E"}
@@ -65,6 +68,7 @@ export const ConsultLocalization = ({ navigation, route }) => {
                 placeholder={"Ex. Vila Ema"}
                 editable={true}
                 fieldWidth={40}
+                fieldValue={clinica.endereco.cidade}
               />
             </ContainerCepCidade>
 

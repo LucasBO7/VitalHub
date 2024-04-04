@@ -110,7 +110,7 @@ export const PatientConsultation = ({ navigation }) => {
           onPress={() => {
             setConsultStatus('agendada')
           }}
-          selected={selected.agendadas}
+          selected={consultStatus == 'agendada' ? true : false}
           text={"Agendadas"}
         />
 
@@ -118,7 +118,7 @@ export const PatientConsultation = ({ navigation }) => {
           onPress={() => {
             setConsultStatus('realizada')
           }}
-          selected={selected.realizadas}
+          selected={consultStatus == 'realizada' ? true : false}
           text={"Realizadas"}
         />
 
@@ -126,7 +126,7 @@ export const PatientConsultation = ({ navigation }) => {
           onPress={() => {
             setConsultStatus('cancelada')
           }}
-          selected={selected.canceladas}
+          selected={consultStatus == 'cancelada' ? true : false}
           text={"Canceladas"}
         />
       </ButtonHomeContainer>
@@ -150,7 +150,7 @@ export const PatientConsultation = ({ navigation }) => {
               }}
 
               onPressAppointmentCard={() => {
-                setSelectedConsultDoctor(item.medicoClinica.medico);
+                setSelectedConsultDoctor(item.medicoClinica);
                 setShowModal(item.situacao.situacao === "agendada" ? true : false);
               }}
             />
