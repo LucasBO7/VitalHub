@@ -34,12 +34,6 @@ export const PatientConsultation = ({ navigation }) => {
   const [consults, setConsults] = useState({}); // Guarda todas as Consultas que estierem salvas no banco de dados
   const [selectedDate, setSelectedDate] = useState();
 
-  //STATE PARA O ESTADO DOS CARDS FLATLIST, BOTOES FILTRO
-  const [selected, setSelected] = useState({
-    agendadas: true,
-    realizadas: false,
-    canceladas: false,
-  });
   const [consultStatus, setConsultStatus] = useState('agendada');
   const image = require("../../assets/CardDoctorImage.png");
   const [selectedConsultDoctor, setSelectedConsultDoctor] = useState(null);
@@ -51,7 +45,6 @@ export const PatientConsultation = ({ navigation }) => {
       setUser(token);
 
       setSelectedDate(moment().format('YYYY-MM-DD'));
-      console.log(user);
     }
   }
 
@@ -61,7 +54,6 @@ export const PatientConsultation = ({ navigation }) => {
       .then(
         response => {
           setConsults(response.data);
-          // console.log(response.data);
         }
       )
       .catch(error => console.log(error));

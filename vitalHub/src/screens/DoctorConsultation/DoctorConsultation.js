@@ -26,13 +26,8 @@ import { userDecodeToken } from "../../utils/Auth";
 export const DoctorConsultation = ({ navigation }) => {
   const [consults, setConsults] = useState(); // Guarda todas as Consultas que estierem salvas no banco de dados
   const [consultStatus, setConsultStatus] = useState('agendada');
-  const [selected, setSelected] = useState({
-    agendadas: true,
-    realizadas: false,
-    canceladas: false,
-  });
   const [selectedDate, setSelectedDate] = useState();
-  const [selectConsult, setSelectConsult] = useState(null);
+  const [selectedPatient, setSelectedPatient] = useState(null);
 
   const [user, setUser] = useState({
     name: '',
@@ -49,13 +44,12 @@ export const DoctorConsultation = ({ navigation }) => {
       setUser(token);
 
       setSelectedDate(moment().format('YYYY-MM-DD'));
-      console.log(token.name);
     }
   }
 
   // Busca as Consultas do banco e guarda na const consults
   async function getAllConsults() {
-    await api.get(`/Medicos/BuscarPorData?dataConsulta=${selectedDate}&idPaciente=${user.id}`)
+    await api.get(`/Medicos/BuscarPorData?data=${selectedDate}&id=${user.id}`)
       .then(
         response => {
           setConsults(response.data);
@@ -77,6 +71,7 @@ export const DoctorConsultation = ({ navigation }) => {
 
   const [showModalCancel, setShowModalCancel] = useState(false);
   const [showModalAppointment, setShowModalAppointment] = useState(false);
+  // const [showModal, setShowModal] = useState(false);
 
   // RETURN
 
@@ -106,7 +101,7 @@ export const DoctorConsultation = ({ navigation }) => {
           onPress={() => {
             setConsultStatus('agendada');
           }}
-          selected={selected.agendadas}
+          selected={consultStatus == 'agendada' ? true : false}
           text={"Agendadas"}
         />
 
@@ -114,7 +109,7 @@ export const DoctorConsultation = ({ navigation }) => {
           onPress={() => {
             setConsultStatus('realizada');
           }}
-          selected={selected.realizadas}
+          selected={consultStatus == 'realizada' ? true : false}
           text={"Realizadas"}
         />
 
@@ -122,7 +117,7 @@ export const DoctorConsultation = ({ navigation }) => {
           onPress={() => {
             setConsultStatus('cancelada');
           }}
-          selected={selected.canceladas}
+          selected={consultStatus == 'cancelada' ? true : false}
           text={"Canceladas"}
         />
       </ButtonHomeContainer>
@@ -135,9 +130,8 @@ export const DoctorConsultation = ({ navigation }) => {
             <Card
               navigation={navigation}
               hour={'02:33'}
-              name={item.medicoClinica.medico.idNavigation.nome}
-              // item.medicoClinica.medico.idNavigation.nome
-              age={item.medicoClinica.medico.age}
+              name={item.paciente.idNavigation.nome}
+              age={'22 anos'}
               routine={item.situacao.situacao}
               url={image}
               status={consultStatus}
@@ -146,10 +140,10 @@ export const DoctorConsultation = ({ navigation }) => {
                 navigation.navigate("ViewPrescription");
               }}
 
-              onPressAppointmentCard={() =>
-                setSelectedConsult(item) &&
-                setShowModal(item.status === "a" ? true : false)
-              }
+              onPressAppointmentCard={() => {
+                setSelectedPatient(item);
+                setShowModalAppointment(item.situacao.situacao === "agendada" ? true : false); // Mostrar Modal
+              }}
             />
           )}
         keyExtractor={(item) => item.id}
@@ -162,7 +156,7 @@ export const DoctorConsultation = ({ navigation }) => {
       />
 
       <AppointmentModal
-        consulta={selectConsult}
+        consult={selectedPatient}
         roleUsuario={user.role}
         navigation={navigation}
         visible={showModalAppointment}

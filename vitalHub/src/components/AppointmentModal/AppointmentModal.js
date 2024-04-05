@@ -1,4 +1,4 @@
-import { Modal } from "react-native"
+import { ActivityIndicator, Modal } from "react-native"
 import { ButtonLargeSelect } from "../Button/Button"
 import { ModalContent, PatientModal } from "../CancellationModal/StyleCancelationModal"
 import { CardCancelLess } from "../Descriptions/Descriptions"
@@ -6,10 +6,12 @@ import { DescriptionModalRecord } from "../Descriptions/StyledDescriptions"
 import { ImageModalRecord } from "../Images/StyleImages"
 import { TitleModal, TitleModalRecord } from "../Title/StyleTitle"
 import { BoxAgeEmailModal } from "./StyleAppointmentModal"
+import { useEffect } from "react"
+import { getAge } from "../../utils/Auth"
 
 
 export const AppointmentModal = ({
-    consulta,
+    consult,
     roleUsuario,
     navigation,
     visible,
@@ -17,43 +19,56 @@ export const AppointmentModal = ({
     ...rest
 }) => {
 
-    function handlePress( rota ) {
+    // useEffect(() => {
+    //     // Busca a idade do paciente
+    //     // if (consult != null)
+    //     //     getAge(consult.paciente.dataNascimento);
+    // }, [consult])
 
+    function handlePress(rota) {
+        // Fecha o modal
         setShowModalAppointment(false)
-        navigation.replace(rota, {clinicaId : consulta.medicoClinica.clinicaId})
-
-
+        // Redireciona para página Inserir Prontuário
+        // navigation.replace();
+        // navigation.replace(rota, { clinicaId: consult.medicoClinica.clinicaId })
     }
+
     return (
         <Modal
             {...rest}
             visible={visible}
             transparent={true}
             animationType="fade">
-                
+
             <PatientModal>
+                {
+                    consult != null ? (
+                        <ModalContent>
 
-                <ModalContent>
+                            <ImageModalRecord source={require('../../assets/ImageModalRecord.png')} />
 
-                    <ImageModalRecord source={require('../../assets/ImageModalRecord.png')} />
+                            <TitleModalRecord>{consult.paciente.idNavigation.nome}</TitleModalRecord>
 
-                    <TitleModalRecord>Niccole Sarga</TitleModalRecord>
+                            <BoxAgeEmailModal>
 
-                    <BoxAgeEmailModal>
+                                <DescriptionModalRecord>{getAge(consult.paciente.dataNascimento)}</DescriptionModalRecord>
+                                <DescriptionModalRecord>{consult.paciente.idNavigation.email}</DescriptionModalRecord>
 
-                        <DescriptionModalRecord>22 anos</DescriptionModalRecord>
-                        <DescriptionModalRecord>niccole.sarga@gmail.com</DescriptionModalRecord>
+                            </BoxAgeEmailModal>
 
-                    </BoxAgeEmailModal>
+                            <ButtonLargeSelect
+                                onPress={() => handlePress("MedicalRecords")}
+                                text={"Inserir Prontuário"}
+                            />
 
-                    <ButtonLargeSelect 
-                    onPress={() => handlePress("MedicalRecords")} 
-                    text={"Inserir Prontuário"} 
-                    />
+                            <CardCancelLess onPressCancel={() => setShowModalAppointment(false)} text={"Cancelar"} />
 
-                    <CardCancelLess onPressCancel={() => setShowModalAppointment(false)} text={"Cancelar"} />
+                        </ModalContent>
+                    ) : (
+                        <ActivityIndicator />
+                    )
+                }
 
-                </ModalContent>
 
             </PatientModal>
 

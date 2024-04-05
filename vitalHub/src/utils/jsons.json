@@ -1,0 +1,37 @@
+[
+    {
+        "dataConsulta": "2024-04-02T00:00:00",
+        "descricao": "Consulta de rotina, com acompanhamento constante de três em três mêses.",
+        "diagnostico": "Em evolução",
+        "exames": [],
+        "id": "7d6ab10e-21c7-4d49-baa0-02e98ecfb6c3",
+        "medicoClinicaId": "0af5cadf-6063-4dbf-9ed2-2a3d44acaba7",
+        "paciente": {
+            "consulta": [Array
+            ],
+            "cpf": "54820613880",
+            "dataNascimento": "2024-06-15T00:00:00",
+            "enderecoId": "218a930b-f130-4fc9-96f7-224e8e53a421",
+            "id": "8003066e-64ca-4da7-9413-eeffb10cba6f",
+            "idNavigation": [Object
+            ],
+            "rg": "351885468"
+        },
+        "pacienteId": "8003066e-64ca-4da7-9413-eeffb10cba6f",
+        "prioridade": {
+            "consulta": [Array
+            ],
+            "id": "cf8e1c18-ead1-4d08-abcf-84f7a0564e55",
+            "prioridade": 0
+        },
+        "prioridadeId": "cf8e1c18-ead1-4d08-abcf-84f7a0564e55",
+        "receitaId": "27ff44c2-7988-48da-9b54-85c664801d95",
+        "situacao": {
+            "consulta": [Array
+            ],
+            "id": "a3139466-853b-434b-928d-8aa58cc8c2d0",
+            "situacao": "agendada"
+        },
+        "situacaoId": "a3139466-853b-434b-928d-8aa58cc8c2d0"
+    }
+]
