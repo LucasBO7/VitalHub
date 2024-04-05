@@ -38,6 +38,7 @@ export const PatientConsultation = ({ navigation }) => {
     }
   }
 
+  
   useEffect(() => {
     profileLoad();
   }, []);

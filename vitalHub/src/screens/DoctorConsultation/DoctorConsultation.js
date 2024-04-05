@@ -47,6 +47,20 @@ export const DoctorConsultation = ({ navigation }) => {
     profileLoad();
   }, []);
 
+  const [selectConsult, setSelectConsult] = useState(null)
+  
+  function MostrarModal(modal, consulta) {
+    setConsultaSelecionada(consulta)
+
+    if (modal == 'cancelar') {
+        setShowModalCancel(true)
+    } else if (modal == 'prontuario') {
+        setShowModalAppointment(true)
+    } else {
+        setShowModalSchedule(true)
+    }
+}
+
   // CARD MOCADOS
 
   const dataItens = [

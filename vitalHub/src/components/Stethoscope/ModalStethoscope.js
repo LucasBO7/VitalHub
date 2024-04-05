@@ -1,3 +1,4 @@
+
 import { Modal } from "react-native";
 import { TitleModal } from "../Title/StyleTitle";
 import {
@@ -32,6 +33,8 @@ export const ModalStethoscope = ({
     urgencia: false,
   });
 
+  const [consultStatus, setConsultStatus] = useState(0)
+
   return (
     <Modal {...rest} visible={visible} transparent={true} animationType="fade">
       <StethoscopeModal>
@@ -44,6 +47,7 @@ export const ModalStethoscope = ({
               <FilterButtonStet
                 onPress={() => {
                   setSelected({ rotina: true });
+                  setConsultStatus(0);
                 }}
                 selected={selected.rotina}
                 text={"Rotina"}
@@ -52,6 +56,7 @@ export const ModalStethoscope = ({
               <FilterButtonStet
                 onPress={() => {
                   setSelected({ exame: true });
+                  setConsultStatus(1);
                 }}
                 selected={selected.exame}
                 text={"Exame"}
@@ -60,6 +65,7 @@ export const ModalStethoscope = ({
               <FilterButtonStet
                 onPress={() => {
                   setSelected({ urgencia: true });
+                  setConsultStatus(2);
                 }}
                 selected={selected.urgencia}
                 text={"Urgencia"}
@@ -94,3 +100,4 @@ export const ModalStethoscope = ({
     </Modal>
   );
 };
+

@@ -62,6 +62,7 @@ namespace WebAPI.Controllers
             return Ok(pacienteRepository.BuscarPorId(id));
         }
 
+   
         [HttpPost]
         public IActionResult Post(PacienteViewModel pacienteModel)
         {

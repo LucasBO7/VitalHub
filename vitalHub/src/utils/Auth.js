@@ -32,3 +32,21 @@ export const userTokenLogout = async () => {
   const token = await AsyncStorage.removeItem("token");
   console.log(token);
 };
+
+const [savedItems, setSavedItems] = useState([]);
+
+const handleSaveItem = async (newItem) => {
+  const updatedItems = [...savedItems];
+  updatedItems.push(newItem);
+  setSavedItems(updatedItems);
+
+  // Optionally, handle the API call here if needed
+};
+
+
+
+
+export const consultStatus = async ({}) => {
+  const prioridade = await AsyncStorage.getItem("status");
+  console.log(prioridade);
+};
