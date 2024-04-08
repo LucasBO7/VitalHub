@@ -10,7 +10,7 @@ font-family: Quicksand_600SemiBold;
 color:#33303E;
 `
 
-export  const InputSelectLabel = styled(InputLabel)`
+export const InputSelectLabel = styled(InputLabel)`
     margin-left: 0;
 `
 

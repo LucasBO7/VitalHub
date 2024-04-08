@@ -42,11 +42,31 @@ border-radius: 8px;
 margin-top: 10px;
 margin-bottom: 5px; */
 font-size: 16px;
+${(props) => (props.editable === false
+        ? `background-color: #F5F3F3;
+        border: none; 
+        color: #4E4B59;
+        font-family: MontserratAlternates_500Medium;`
+        : `background-color: #ffffff;
+        color: #34898F;
+        font-family: MontserratAlternates_600SemiBold;
+        border: 2px solid #49B3BA
+        `)};
 `
 export const InputHigh = styled(InputText)`
     padding-bottom: 82px;
     height: 125px;
     width: 100%;
+    ${(props) => (props.isInsertedInputValid ? `border: 2px solid #49B3BA` : `border: 2px solid red`)};
+    ${(props) => (props.editable === false
+        ? `background-color: #F5F3F3;
+        border: none; 
+        color: #4E4B59;
+        font-family: MontserratAlternates_500Medium;`
+        : `background-color: #ffffff;
+        color: #34898F;
+        font-family: MontserratAlternates_600SemiBold;
+        `)};
 `
 export const InputHighGrey = styled(InputHigh)`
     border:1px solid #F5F3F3;
@@ -57,4 +77,13 @@ export const InputHighGrey = styled(InputHigh)`
 
 export const InputTextLarge = styled(InputText)`
     width: 100%;
+    ${(props) => (props.editable === false
+        ? `background-color: #F5F3F3;
+        border: none; 
+        color: #4E4B59;
+        font-family: MontserratAlternates_500Medium;`
+        : `background-color: #ffffff;
+        color: #34898F;
+        font-family: MontserratAlternates_600SemiBold;
+        `)};
 `

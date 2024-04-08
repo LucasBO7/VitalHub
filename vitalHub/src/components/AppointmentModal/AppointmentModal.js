@@ -19,18 +19,32 @@ export const AppointmentModal = ({
     ...rest
 }) => {
 
-    // useEffect(() => {
-    //     // Busca a idade do paciente
-    //     // if (consult != null)
-    //     //     getAge(consult.paciente.dataNascimento);
-    // }, [consult])
+    // Atualiza a idade assim que consult tiver um valor e sempre que for alterada
+    useEffect(() => {
+        if (consult != null) {
+            consult.paciente.age = getAge(consult.paciente.dataNascimento);
+        }
+    }, [consult])
 
+    // Redireciona para a página de Inserir Prontuário (MedialRecords)
     function handlePress(rota) {
         // Fecha o modal
-        setShowModalAppointment(false)
+        setShowModalAppointment(false);
+
         // Redireciona para página Inserir Prontuário
-        // navigation.replace();
+        // navigation.replace(rota, { consultInfos,  });
+        // navigation.replace("MedicalRecords", { navigation: navigation, consultInfos: consult });
         // navigation.replace(rota, { clinicaId: consult.medicoClinica.clinicaId })
+
+        // navigation.replace(rota, { consultInfos: consult });
+        navigation.replace(rota,
+            {
+                patientName: consult.paciente.idNavigation.nome,
+                patientAge: consult.paciente.age,
+                patientEmail: consult.paciente.idNavigation.email,
+                consultDescricao: consult.descricao,
+                consultDiagnostico: consult.diagnostico,
+            });
     }
 
     return (
@@ -51,7 +65,7 @@ export const AppointmentModal = ({
 
                             <BoxAgeEmailModal>
 
-                                <DescriptionModalRecord>{getAge(consult.paciente.dataNascimento)}</DescriptionModalRecord>
+                                <DescriptionModalRecord>{consult.paciente.age}</DescriptionModalRecord>
                                 <DescriptionModalRecord>{consult.paciente.idNavigation.email}</DescriptionModalRecord>
 
                             </BoxAgeEmailModal>

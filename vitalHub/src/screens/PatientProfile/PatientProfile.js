@@ -29,12 +29,21 @@ export const PatientProfile = ({ navigation }) => {
   const [cidade, setCidade] = useState("");
   const [patientUser, setPatientUser] = useState({});
 
+  const [editable, setEditable] = useState(false);
+
   async function profileLoad() {
     const token = await userDecodeToken();
 
     if (token) {
       getUser(token);
     }
+  }
+
+  // Controle do valor do editable: controla se os inputs estarão editáveis ou não
+  function handleIsInputsEditable(inputsEditableStats, setInputsEditableStats) {
+    // Se estiverem editáveis, desativar
+    // Se estiverem desativados, ativar
+    inputsEditableStats === true ? setInputsEditableStats(false) : setInputsEditableStats(true);
   }
 
   useEffect(() => {
@@ -88,7 +97,7 @@ export const PatientProfile = ({ navigation }) => {
           textLabel={"Data de nascimento:"}
           placeholder={"Ex. 04/05/1999"}
           keyboardType="numeric"
-          editable={true}
+          editable={editable}
           fieldWidth={90}
           fieldValue={patientUser.dataNascimento && moment(patientUser.dataNascimento).format('DD-MM-YYYY')}
         />
@@ -98,7 +107,7 @@ export const PatientProfile = ({ navigation }) => {
           placeholder={"CPF..."}
           keyboardType="numeric"
           maxLength={11}
-          editable={true}
+          editable={editable}
           fieldWidth={90}
           fieldValue={patientUser.cpf}
         />
@@ -106,7 +115,7 @@ export const PatientProfile = ({ navigation }) => {
           placeholderTextColor={"#A1A1A1"}
           textLabel={"Endereço"}
           placeholder={"Endereço..."}
-          editable={false}
+          editable={editable}
           fieldValue={logradouro}
           fieldWidth={90}
         />
@@ -119,7 +128,7 @@ export const PatientProfile = ({ navigation }) => {
             maxLength={8}
             onChangeText={(text) => setCep(text)}
             keyboardType="numeric"
-            editable={true}
+            editable={editable}
             fieldWidth={40}
             fieldValue={cep}
           />
@@ -127,7 +136,7 @@ export const PatientProfile = ({ navigation }) => {
             placeholderTextColor={"#A1A1A1"}
             textLabel={"Cidade"}
             placeholder={"Cidade..."}
-            editable={false}
+            editable={editable}
             fieldWidth={40}
             fieldValue={cidade}
           />
@@ -135,7 +144,9 @@ export const PatientProfile = ({ navigation }) => {
 
         <ButtonLarge text={"Salvar"} />
 
-        <ButtonLarge text={"Editar"} />
+        <ButtonLarge text={"Editar"} onPress={() => {
+          handleIsInputsEditable(editable, setEditable);
+        }} />
 
         <BlockedSmallButton
           text={"Sair do app"}

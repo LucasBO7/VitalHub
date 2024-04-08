@@ -50,6 +50,7 @@ export const PatientConsultation = ({ navigation }) => {
 
   // Busca as Consultas do banco e guarda na const consults
   async function getAllConsults() {
+    // console.log(`/Pacientes/BuscarPorData?dataConsulta=${selectedDate}&idPaciente=${user.id}`);
     await api.get(`/Pacientes/BuscarPorData?dataConsulta=${selectedDate}&idPaciente=${user.id}`)
       .then(
         response => {
@@ -138,7 +139,14 @@ export const PatientConsultation = ({ navigation }) => {
               status={consultStatus}
               onPressCancel={() => setShowModalCancel(true)}
               onPressAppointment={() => {
-                navigation.navigate("ViewPrescription");
+                navigation.navigate("ViewPrescription", {
+                  doctorId: item.medicoClinica.medico.id,
+                  doctorName: item.medicoClinica.medico.idNavigation.nome,
+                  doctorEspecialidade: 'item.medicoClinica.medico.idNavigation.especialidade',
+                  doctorCrm: item.medicoClinica.medico.crm,
+                  consultDescricao: item.descricao,
+                  consultDiagnostico: item.diagnostico,
+                });
               }}
 
               onPressAppointmentCard={() => {

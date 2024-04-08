@@ -135,11 +135,14 @@ export const DoctorConsultation = ({ navigation }) => {
               routine={item.situacao.situacao}
               url={image}
               status={consultStatus}
+              // Botão cancelar
               onPressCancel={() => setShowModalCancel(true)}
+              // Botão ver prescricão
               onPressAppointment={() => {
                 navigation.navigate("ViewPrescription");
               }}
 
+              // Clique no card
               onPressAppointmentCard={() => {
                 setSelectedPatient(item);
                 setShowModalAppointment(item.situacao.situacao === "agendada" ? true : false); // Mostrar Modal
