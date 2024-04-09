@@ -42,8 +42,7 @@ export const AppointmentModal = ({
                 patientName: consult.paciente.idNavigation.nome,
                 patientAge: consult.paciente.age,
                 patientEmail: consult.paciente.idNavigation.email,
-                consultDescricao: consult.descricao,
-                consultDiagnostico: consult.diagnostico,
+                consultId: consult.id
             });
     }
 

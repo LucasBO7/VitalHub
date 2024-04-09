@@ -28,8 +28,7 @@ export const Login = ({ navigation }) => {
       senha: senha
     }).then(async response => {
       setIsInputDataValid(true);
-      console.log(response.data.token)
-
+      
       await AsyncStorage.setItem("token", JSON.stringify(response.data))
 
       const token = await userDecodeToken()

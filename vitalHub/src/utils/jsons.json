@@ -1,37 +1,97 @@
-[
-    {
+//_____________________________________CONSULT DATA______________________________________________
+{
+    "dataConsulta": "2024-04-02T00:00:00",
+    "descricao": "Consulta de rotina, com acompanhamento constante de três em três mêses.",
+    "diagnostico": "Em evolução",
+    "exames": [],
+    "id": "7d6ab10e-21c7-4d49-baa0-02e98ecfb6c3",
+    "medicoClinicaId": "0af5cadf-6063-4dbf-9ed2-2a3d44acaba7",
+    "pacienteId": "8003066e-64ca-4da7-9413-eeffb10cba6f",
+    "prioridadeId": "cf8e1c18-ead1-4d08-abcf-84f7a0564e55",
+    "receita": {
+        "consulta": [],
+        "id": "27ff44c2-7988-48da-9b54-85c664801d95",
+        "medicamento": "Alenia 20g",
+        "observacoes": "Realizar somente em caso de um início de uma possível crise."
+    },
+    "receitaId": "27ff44c2-7988-48da-9b54-85c664801d95",
+    "situacaoId": "a3139466-853b-434b-928d-8aa58cc8c2d0"
+}
+{
+    // ______________________________________CONSULT_______________________________________________
+    "consultId": "7d6ab10e-21c7-4d49-baa0-02e98ecfb6c3",
+    "patientAge": 6,
+    "patientEmail": "Lucas@gmail.com",
+    "patientName": "Lucas Oliveira"
+}
+// ________________________________OBJ FINAL________________________________
+{
+    "consultData": {
         "dataConsulta": "2024-04-02T00:00:00",
         "descricao": "Consulta de rotina, com acompanhamento constante de três em três mêses.",
         "diagnostico": "Em evolução",
         "exames": [],
         "id": "7d6ab10e-21c7-4d49-baa0-02e98ecfb6c3",
         "medicoClinicaId": "0af5cadf-6063-4dbf-9ed2-2a3d44acaba7",
-        "paciente": {
-            "consulta": [Array
-            ],
-            "cpf": "54820613880",
-            "dataNascimento": "2024-06-15T00:00:00",
-            "enderecoId": "218a930b-f130-4fc9-96f7-224e8e53a421",
-            "id": "8003066e-64ca-4da7-9413-eeffb10cba6f",
-            "idNavigation": [Object
-            ],
-            "rg": "351885468"
-        },
         "pacienteId": "8003066e-64ca-4da7-9413-eeffb10cba6f",
-        "prioridade": {
-            "consulta": [Array
-            ],
-            "id": "cf8e1c18-ead1-4d08-abcf-84f7a0564e55",
-            "prioridade": 0
-        },
         "prioridadeId": "cf8e1c18-ead1-4d08-abcf-84f7a0564e55",
-        "receitaId": "27ff44c2-7988-48da-9b54-85c664801d95",
-        "situacao": {
+        "receita": {
             "consulta": [Array
             ],
-            "id": "a3139466-853b-434b-928d-8aa58cc8c2d0",
-            "situacao": "agendada"
+            "id": "27ff44c2-7988-48da-9b54-85c664801d95",
+            "medicamento": "Alenia 20g",
+            "observacoes": "Realizar somente em caso de um início de uma possível crise."
         },
+        "receitaId": "27ff44c2-7988-48da-9b54-85c664801d95",
         "situacaoId": "a3139466-853b-434b-928d-8aa58cc8c2d0"
-    }
-]
+    },
+    "consultId": "7d6ab10e-21c7-4d49-baa0-02e98ecfb6c3",
+    "patientAge": 6,
+    "patientEmail": "Lucas@gmail.com",
+    "patientName": "Lucas Oliveira"
+}
+// _________________________________BUSCARPORID - PATIENT_____________________________________________
+{
+    "consulta": [],
+    "cpf": "54820613880",
+    "dataNascimento": "2018-09-29T00:00:00",
+    "endereco": {
+        "cep": "19890970",
+        "cidade": "string",
+        "clinicas": [],
+        "id": "218a930b-f130-4fc9-96f7-224e8e53a421",
+        "logradouro": "Rua Antônio Araújo Marques",
+        "medicos": [],
+        "numero": 700,
+        "pacientes": []
+    },
+    "enderecoId": "218a930b-f130-4fc9-96f7-224e8e53a421",
+    "id": "8003066e-64ca-4da7-9413-eeffb10cba6f",
+    "idNavigation": {
+        "email": "Lucas@gmail.com",
+        "foto": "string",
+        "id": "8003066e-64ca-4da7-9413-eeffb10cba6f",
+        "nome": "Lucas Oliveira",
+        "senha": "$2a$11$8wWTSydaIE/r03R2liRxKe4LFZe9YOpcGJSaZTWutOzzH3GIJwa8i",
+        "tipoUsuarioId": "fe373dec-3e52-4df5-b3b2-5a94865467e7"
+    },
+    "rg": "351885468"
+}
+
+
+// _________________________________BUSCARPORID - MEDICO_____________________________________________
+{
+    "id": "5031ee4c-424c-43ce-b0ae-834ba80faab0",
+    "especialidadeId": "f7e419b7-d2d4-451a-8287-ef7c8b37800b",
+    "crm": "1234567890",
+    "enderecoId": "130333dc-8a9f-4e89-ab64-0958737dd4ca",
+    "idNavigation": {
+        "id": "5031ee4c-424c-43ce-b0ae-834ba80faab0",
+        "tipoUsuarioId": "7f1da5a2-4935-4156-9efc-ca707bd21d37",
+        "nome": "Caroline Novaes",
+        "email": "Caroline@gmail.com",
+        "senha": "$2a$11$qHXmk.TLUf7ocXtKxD796uvC9IXciWqRXaXkuV173ue3TRnJjIVya",
+        "foto": "string"
+    },
+    "medicosClinicas": []
+}

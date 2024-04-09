@@ -19,6 +19,14 @@ namespace WebAPI.Controllers
             consultaRepository = new ConsultaRepository();
         }
 
+        
+        [HttpGet("BuscarPorId")]
+        public IActionResult BuscarPorId(Guid idConsulta)
+        {
+            Consulta consultaBuscada = consultaRepository.BuscarPorId(idConsulta);
+            return Ok(consultaBuscada);
+        }
+
         [Authorize]
         [HttpGet]
         public IActionResult BuscarConsultasPaciente()
@@ -29,7 +37,7 @@ namespace WebAPI.Controllers
             return Ok(consultas);
         }
 
-        [Authorize(Roles ="Medico")]
+        [Authorize(Roles = "Medico")]
         [HttpGet("ConsultasMedico")]
         public IActionResult BuscarConsultasMedico()
         {

@@ -26,11 +26,7 @@ export const ViewPrescription = ({ navigation, route }) => {
 
     // Busca os dados do médico da API (s)
     async function getDoctorInfos() {
-        console.log(`/Medicos/BuscarPorId?id=${route.params.doctorId}`);
         await api.get(`/Medicos/BuscarPorId?id=${route.params.doctorId}`)
-            .then(response => {
-                console.log(response.data);
-            })
             .catch(error => {
                 console.log(error);
             });

@@ -25,7 +25,6 @@ export const ConsultLocalization = ({ navigation, route }) => {
     await api.get(`/Clinica/BuscarPorId?id=${route.params.clinicaId}`)
       .then(response => {
         setClinica(response.data);
-        console.log(response.data);
       }).catch(error => {
         console.log(error);
       });

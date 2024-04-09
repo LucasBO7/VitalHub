@@ -33,7 +33,6 @@ export const userDecodeToken = async () => {
 };
 export const userTokenLogout = async () => {
   const token = await AsyncStorage.removeItem("token");
-  console.log(token);
 };
 // export const registerConsult = async ({ idConsultInserted, bananaInserted }) => {
 //   await AsyncStorage.setItem("consult", {

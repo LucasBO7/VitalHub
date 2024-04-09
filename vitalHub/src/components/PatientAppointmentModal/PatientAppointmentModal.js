@@ -30,7 +30,6 @@ export const PatientAppointmentModal = ({
 
 
   }
-  console.log(`VALORES: ${consulta}`);
 
   return (
     <Modal {...rest} visible={visible} transparent={true} animationType="fade">

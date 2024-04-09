@@ -22,29 +22,66 @@ import {
 } from "../../components/Button/Button";
 import { userDecodeToken, userTokenLogout } from "../../utils/Auth";
 import moment from "moment";
+import { ActivityIndicator } from "react-native";
 
 export const PatientProfile = ({ navigation }) => {
   const [cep, setCep] = useState("");
   const [logradouro, setLogradouro] = useState("");
   const [cidade, setCidade] = useState("");
-  const [patientUser, setPatientUser] = useState({});
+  const [patientUser, setPatientUser] = useState(null);
 
   const [editable, setEditable] = useState(false);
+  const [userRole, setUserRole] = useState();
+
+
+  async function getUser(userTaken) {
+    setUserRole(userTaken.role);
+
+    if (userTaken.role == 'medico') {
+      // Busca médico
+      await api.get(`/Medicos/BuscarPorId?id=${userTaken.id}`)
+        .then(response => {
+          setPatientUser(response.data);
+
+          // Dados endereço
+          setCep(response.data.endereco.cep)
+          setCidade(response.data.endereco.cidade);
+          setLogradouro(response.data.endereco.logradouro);
+        })
+        .catch(error => {
+          console.log(`HOUVE UM ERRO: ${error}`);
+        });
+
+    } else {
+      // Busca paciente
+      await api.get(`/Pacientes/BuscarPorId?id=${userTaken.id}`)
+        .then(response => {
+          // Dados usuário paciente
+          setPatientUser(response.data);
+
+          // Dados endereço
+          setCep(response.data.endereco.cep)
+          setCidade(response.data.endereco.cidade);
+          setLogradouro(response.data.endereco.logradouro);
+        })
+        .catch(error => {
+          console.log(error);
+        })
+    }
+  }
 
   async function profileLoad() {
     const token = await userDecodeToken();
 
     if (token) {
-      getUser(token);
+      console.log('TÁ AQUI');
+      await getUser(token);
     }
   }
 
-  // Controle do valor do editable: controla se os inputs estarão editáveis ou não
-  function handleIsInputsEditable(inputsEditableStats, setInputsEditableStats) {
-    // Se estiverem editáveis, desativar
-    // Se estiverem desativados, ativar
-    inputsEditableStats === true ? setInputsEditableStats(false) : setInputsEditableStats(true);
-  }
+  useEffect(() => {
+    profileLoad();
+  }, []);
 
   useEffect(() => {
     const getCep = async () => {
@@ -61,98 +98,115 @@ export const PatientProfile = ({ navigation }) => {
     getCep();
   }, [cep]);
 
-  async function getUser(userTaken) {
-    // console.log(userTaken);
-    // console.log(`/Pacientes/BuscarPorId?id=${userTaken.id}`);
-    await api.get(`/Pacientes/BuscarPorId?id=${userTaken.id}`)
-      .then(response => {
-        // Dados usuário paciente
-        setPatientUser(response.data);
-
-        // Dados endereço
-        setCep(response.data.endereco.cep)
-        setCidade(response.data.endereco.cidade);
-        setLogradouro(response.data.endereco.logradouro);
-      })
-      .catch(error => {
-        console.log(error);
-      });
+  // Controle do valor do editable: controla se os inputs estarão editáveis ou não
+  function handleIsInputsEditable(inputsEditableStats, setInputsEditableStats) {
+    // Se estiverem editáveis, desativar
+    // Se estiverem desativados, ativar
+    inputsEditableStats === true ? setInputsEditableStats(false) : setInputsEditableStats(true);
   }
 
-  useEffect(() => {
-    profileLoad();
-  }, []);
+  // PArou aqui
+  async function saveProfileChanges() {
+    await api.put(`/Pacientes/AtualizarPerfil?id=${patientUser.id}`, {
+      id: patientUser.id,
+      dataNascimento: patientUser.dataNascimento,
+      cpf: patientUser.cpf,
+      logradouro,
+      numero: 0,
+      cep,
+      foto: null
+    }).then(response => { console.log('FOI') })
+      .catch(error => console.log(error));
+  }
+
+
 
   return (
     <ScrollContainer>
-      <Container>
-        <ImagemPerfilPaciente source={require("../../assets/ney.webp")} />
+      {
+        patientUser != null ? (
+          <Container>
+            <ImagemPerfilPaciente source={require("../../assets/ney.webp")} />
 
-        <TitleProfile>{patientUser.name}</TitleProfile>
+            <TitleProfile>{patientUser.idNavigation.nome}</TitleProfile>
 
-        <DescriptionPassword description={patientUser.email} />
+            <DescriptionPassword description={userRole === 'medico' ? patientUser.crm : patientUser.idNavigation.email} />
 
-        <InputBox
-          placeholderTextColor={"#A1A1A1"}
-          textLabel={"Data de nascimento:"}
-          placeholder={"Ex. 04/05/1999"}
-          keyboardType="numeric"
-          editable={editable}
-          fieldWidth={90}
-          fieldValue={patientUser.dataNascimento && moment(patientUser.dataNascimento).format('DD-MM-YYYY')}
-        />
-        <InputBox
-          placeholderTextColor={"#A1A1A1"}
-          textLabel={"CPF"}
-          placeholder={"CPF..."}
-          keyboardType="numeric"
-          maxLength={11}
-          editable={editable}
-          fieldWidth={90}
-          fieldValue={patientUser.cpf}
-        />
-        <InputBox
-          placeholderTextColor={"#A1A1A1"}
-          textLabel={"Endereço"}
-          placeholder={"Endereço..."}
-          editable={editable}
-          fieldValue={logradouro}
-          fieldWidth={90}
-        />
+            <InputBox
+              placeholderTextColor={"#A1A1A1"}
+              textLabel={"Data de nascimento:"}
+              placeholder={"Ex. 04/05/1999"}
+              keyboardType="numeric"
+              editable={editable}
+              fieldWidth={90}
+              // fieldValue={patientUser.dataNascimento && moment(patientUser.dataNascimento).format('DD-MM-YYYY')}
+              fieldValue={patientUser.dataNascimento}
+              onChangeText={(text) => {
+                setPatientUser({ ...patientUser, dataNascimento: text });
+              }}
+            />
+            <InputBox
+              placeholderTextColor={"#A1A1A1"}
+              textLabel={"CPF"}
+              placeholder={"CPF..."}
+              keyboardType="numeric"
+              maxLength={11}
+              editable={editable}
+              fieldWidth={90}
+              fieldValue={patientUser.cpf}
+              onChangeText={(text) => {
+                setPatientUser({ ...patientUser, cpf: text });
+              }}
+            />
+            <InputBox
+              placeholderTextColor={"#A1A1A1"}
+              textLabel={"Endereço"}
+              placeholder={"Endereço..."}
+              editable={editable}
+              fieldWidth={90}
+              fieldValue={logradouro}
+            />
 
-        <ContainerCepCidade>
-          <InputBox
-            placeholderTextColor={"#A1A1A1"}
-            textLabel={"CEP"}
-            placeholder={"CEP..."}
-            maxLength={8}
-            onChangeText={(text) => setCep(text)}
-            keyboardType="numeric"
-            editable={editable}
-            fieldWidth={40}
-            fieldValue={cep}
-          />
-          <InputBox
-            placeholderTextColor={"#A1A1A1"}
-            textLabel={"Cidade"}
-            placeholder={"Cidade..."}
-            editable={editable}
-            fieldWidth={40}
-            fieldValue={cidade}
-          />
-        </ContainerCepCidade>
+            <ContainerCepCidade>
+              <InputBox
+                placeholderTextColor={"#A1A1A1"}
+                textLabel={"CEP"}
+                placeholder={"CEP..."}
+                maxLength={8}
+                keyboardType="numeric"
+                editable={editable}
+                fieldWidth={40}
+                fieldValue={cep}
+                onChangeText={(text) => setCep(text)}
+              />
+              <InputBox
+                placeholderTextColor={"#A1A1A1"}
+                textLabel={"Cidade"}
+                placeholder={"Cidade..."}
+                editable={editable}
+                fieldWidth={40}
+                fieldValue={cidade}
+              />
+            </ContainerCepCidade>
 
-        <ButtonLarge text={"Salvar"} />
+            <ButtonLarge text={"Salvar"} onPress={() => {
+              saveProfileChanges();
+            }} />
 
-        <ButtonLarge text={"Editar"} onPress={() => {
-          handleIsInputsEditable(editable, setEditable);
-        }} />
+            <ButtonLarge text={"Editar"} onPress={() => {
+              handleIsInputsEditable(editable, setEditable);
+            }} />
 
-        <BlockedSmallButton
-          text={"Sair do app"}
-          onPress={() => { userTokenLogout(); navigation.replace("Login"); }}
-        />
-      </Container>
+            <BlockedSmallButton
+              text={"Sair do app"}
+              onPress={() => { userTokenLogout(); navigation.replace("Login"); }}
+            />
+          </Container>
+        ) : (
+          <ActivityIndicator />
+        )
+      }
+
     </ScrollContainer>
   );
 };

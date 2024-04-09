@@ -96,5 +96,12 @@ namespace WebAPI.Controllers
         {
             return Ok(pacienteRepository.BuscarPorData(dataConsulta, idPaciente));
         }
+
+        [HttpPut("AtualizarPerfil")]
+        public IActionResult AtualizarPerfil(Guid Id, PacienteViewModel paciente)
+        {
+            pacienteRepository.AtualizarPerfil(Id, paciente);
+            return Ok();
+        }
     }
 }

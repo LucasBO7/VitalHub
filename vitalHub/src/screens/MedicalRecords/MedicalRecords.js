@@ -17,9 +17,16 @@ export const MedicalRecords = ({ navigation, route }) => {
         patientName: route.params.patientName,
         patientAge: route.params.patientAge,
         patientEmail: route.params.patientEmail,
-        consultDescricao: route.params.consultDescricao,
-        consultDiagnostico: route.params.consultDiagnostico,
+        consultId: route.params.consultId,
+        consultData: null
     });
+
+    useEffect(() => {
+        // Roda somente quando tiver o valor passado do Modal
+        if (consult) {
+            getConsultDataById();
+        }
+    }, [route.params])
 
     // Controle do valor do editable: controla se os inputs estarão editáveis ou não
     function handleIsInputsEditable(inputsEditableStats, setInputsEditableStats) {
@@ -28,21 +35,32 @@ export const MedicalRecords = ({ navigation, route }) => {
         inputsEditableStats === true ? setInputsEditableStats(false) : setInputsEditableStats(true);
     }
 
+    // Busca os dados da consulta com a receita (prescrição)
+    async function getConsultDataById() {
+        await api.get(`/Consultas/BuscarPorId?idConsulta=${consult.consultId}`)
+            .then(response => {
+                setConsults({ ...consult, consultData: response.data });
+            })
+            .catch(error => console.log(`Erro na MedicalRecords: ${error}`));
+    }
+
+    // Salva as alterações
     async function saveDataChanges() {
         // Aguardando alterações da API
         await api.put('/Consultas/Prontuario', {
-            
-        })
-            .catch(error => {
-                console.log(`Um erro ocorreu: ${error}`);
-            });
+            id: consult.consultData.id,
+            descricao: consult.consultData.descricao,
+            diagnostico: consult.consultData.diagnostico,
+        }).catch(error => {
+            console.log(`Um erro ocorreu: ${error}`);
+        });
     }
 
     return (
         <ScrollContainer>
             <ImagemPerfilPaciente source={require('../../assets/ney.webp')} />
 
-            {route.params != null && consult != null ? (
+            {route.params != null && consult.consultData != null ? (
                 <Container>
                     <TitleProfile>{consult.patientName}</TitleProfile>
 
@@ -62,9 +80,9 @@ export const MedicalRecords = ({ navigation, route }) => {
                         placeholder={"Descrição"}
                         editable={editable}
                         fieldWidth={90}
-                        fieldValue={consult.consultDescricao}
+                        fieldValue={consult.consultData.descricao}
                         onChangeText={(text) => {
-                            setConsults({ ...consult, consultDescricao: text })
+                            setConsults({ ...consult }, consult.consultData.descricao = text);
                         }}
                     />
 
@@ -74,9 +92,9 @@ export const MedicalRecords = ({ navigation, route }) => {
                         placeholder={"Diagnóstico"}
                         editable={editable}
                         fieldWidth={90}
-                        fieldValue={consult.consultDiagnostico}
+                        fieldValue={consult.consultData.diagnostico}
                         onChangeText={(text) => {
-                            setConsults({ ...consult, consultDiagnostico: text })
+                            setConsults({ ...consult }, consult.consultData.diagnostico = text)
                         }}
                     />
 
@@ -87,7 +105,10 @@ export const MedicalRecords = ({ navigation, route }) => {
                         placeholder={"Prescriçao médica"}
                         editable={editable}
                         fieldWidth={90}
-                        fieldValue={'Prescrição...'}
+                        fieldValue={consult.consultData.receita.observacoes}
+                        onChangeText={(text) => {
+                            setConsults({ ...consult }, consult.consultData.receita.observacoes = text)
+                        }}
                     />
 
                     <ButtonNormal text={"Salvar"} onPress={() => {

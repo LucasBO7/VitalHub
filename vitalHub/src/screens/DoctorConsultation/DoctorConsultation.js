@@ -29,6 +29,9 @@ export const DoctorConsultation = ({ navigation }) => {
   const [selectedDate, setSelectedDate] = useState();
   const [selectedPatient, setSelectedPatient] = useState(null);
 
+  // Guarda o Id da consulta para cancelá-la
+  const [cancelConsultId, setCancelConsultId] = useState();
+
   const [user, setUser] = useState({
     name: '',
     id: ''
@@ -49,13 +52,15 @@ export const DoctorConsultation = ({ navigation }) => {
 
   // Busca as Consultas do banco e guarda na const consults
   async function getAllConsults() {
-    await api.get(`/Medicos/BuscarPorData?data=${selectedDate}&id=${user.id}`)
-      .then(
-        response => {
-          setConsults(response.data);
-        }
-      )
-      .catch(error => console.log(error));
+    if (user.id && selectedDate) {
+      await api.get(`/Medicos/BuscarPorData?data=${selectedDate}&id=${user.id}`)
+        .then(
+          response => {
+            setConsults(response.data);
+          }
+        )
+        .catch(error => console.log(error));
+    }
   }
 
   useEffect(() => {
@@ -65,7 +70,7 @@ export const DoctorConsultation = ({ navigation }) => {
 
   useEffect(() => {
     getAllConsults();
-  }, [selectedDate])
+  }, [selectedDate, consults])
 
   // STATES PARA OS MODAIS
 
@@ -136,7 +141,10 @@ export const DoctorConsultation = ({ navigation }) => {
               url={image}
               status={consultStatus}
               // Botão cancelar
-              onPressCancel={() => setShowModalCancel(true)}
+              onPressCancel={() => {
+                setShowModalCancel(true);
+                setCancelConsultId(item.id);
+              }}
               // Botão ver prescricão
               onPressAppointment={() => {
                 navigation.navigate("ViewPrescription");
@@ -154,6 +162,7 @@ export const DoctorConsultation = ({ navigation }) => {
       />
 
       <CancellationModal
+        consultId={cancelConsultId}
         visible={showModalCancel}
         setShowModalCancel={setShowModalCancel}
       />
