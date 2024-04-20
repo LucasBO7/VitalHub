@@ -102,7 +102,10 @@ namespace WebAPI.Controllers
                 var containerName = "containervitalhubmatheusd";
 
                 //Definindo a string de conexão
-                var connectionString = "DefaultEndpointsProtocol=https;AccountName=blobvitalhubmatheusd;AccountKey=U+R/WL4jO+90TLOXcykF18666979z4yqxY0BGj+qNRDD2yW4aTC2JnQT6Z/dgbhraqNziHtYZ+zC+AStdUsGfA==;EndpointSuffix=core.windows.net";
+
+                // ARRUMAR AQUI COM USAS INFORMAÇÕES LUCAS
+
+                // var connectionString = "DefaultEndpointsProtocol=https;AccountName=blobvitalhubmatheusd;AccountKey=U+R/WL4jO+90TLOXcykF18666979z4yqxY0BGj+qNRDD2yW4aTC2JnQT6Z/dgbhraqNziHtYZ+zC+AStdUsGfA==;EndpointSuffix=core.windows.net";
 
                 user.Foto = await AzureBlobStorage.UploadImageBlobAsync(medicoModel.File!, connectionString, containerName);
 
