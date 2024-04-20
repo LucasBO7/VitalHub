@@ -19,7 +19,14 @@ namespace WebAPI.Controllers
         [HttpGet("ListarTodas")]
         public IActionResult Get()
         {
-            return Ok(clinicaRepository.Listar());
+            try
+            {
+                return Ok(clinicaRepository.Listar());
+            }
+            catch (Exception exc)
+            {
+                return BadRequest(exc.Message);
+            }
         }
 
         [HttpPost("Cadastrar")]
@@ -32,13 +39,28 @@ namespace WebAPI.Controllers
         [HttpGet("BuscarPorId")]
         public IActionResult GetById(Guid id)
         {
-            return Ok(clinicaRepository.BuscarPorId(id));
+            try
+            {
+                return Ok(clinicaRepository.BuscarPorId(id));
+            }
+            catch (Exception exc)
+            {
+                return BadRequest(exc.Message);
+            }
         }
 
         [HttpGet("BuscarPorCidade")]
         public IActionResult GetByCity(string cidade)
         {
-            return Ok(clinicaRepository.ListarPorCidade(cidade));
+            try
+            {
+                return Ok(clinicaRepository.ListarPorCidade(cidade));
+
+            }
+            catch (Exception exc)
+            {
+                return BadRequest(exc.Message);
+            }
         }
     }
 }

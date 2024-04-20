@@ -1,4 +1,6 @@
-﻿using WebAPI.Domains;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
+using WebAPI.Domains;
 
 namespace WebAPI.ViewModels
 {
@@ -26,6 +28,11 @@ namespace WebAPI.ViewModels
 
         public Guid IdTipoUsuario { get; set; }
 
+        //ignora qualquer json pois sera preciso apenas dcaptar a imagem
+        [NotMapped]
+        [JsonIgnore]
+        //É preciso de uma prop do tipo iformfile
+        public IFormFile? File { get; set; }
         public string? Foto { get; set; }
 
 

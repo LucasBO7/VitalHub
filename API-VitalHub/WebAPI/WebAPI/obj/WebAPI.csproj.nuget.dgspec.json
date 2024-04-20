@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\41365718875\\Desktop\\VitalHub\\API-VitalHub\\WebAPI\\WebAPI\\WebAPI.csproj": {}
+    "C:\\Users\\cleb_\\Desktop\\VitalHub\\API-VitalHub\\WebAPI\\WebAPI\\WebAPI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\41365718875\\Desktop\\VitalHub\\API-VitalHub\\WebAPI\\WebAPI\\WebAPI.csproj": {
+    "C:\\Users\\cleb_\\Desktop\\VitalHub\\API-VitalHub\\WebAPI\\WebAPI\\WebAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\41365718875\\Desktop\\VitalHub\\API-VitalHub\\WebAPI\\WebAPI\\WebAPI.csproj",
+        "projectUniqueName": "C:\\Users\\cleb_\\Desktop\\VitalHub\\API-VitalHub\\WebAPI\\WebAPI\\WebAPI.csproj",
         "projectName": "WebAPI",
-        "projectPath": "C:\\Users\\41365718875\\Desktop\\VitalHub\\API-VitalHub\\WebAPI\\WebAPI\\WebAPI.csproj",
-        "packagesPath": "C:\\Users\\41365718875\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\41365718875\\Desktop\\VitalHub\\API-VitalHub\\WebAPI\\WebAPI\\obj\\",
+        "projectPath": "C:\\Users\\cleb_\\Desktop\\VitalHub\\API-VitalHub\\WebAPI\\WebAPI\\WebAPI.csproj",
+        "packagesPath": "C:\\Users\\cleb_\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\cleb_\\Desktop\\VitalHub\\API-VitalHub\\WebAPI\\WebAPI\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\41365718875\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\cleb_\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -40,9 +40,17 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "dependencies": {
+            "Azure.Storage.Blobs": {
+              "target": "Package",
+              "version": "[12.19.1, )"
+            },
             "BCrypt.Net-Next": {
               "target": "Package",
               "version": "[4.0.3, )"
+            },
+            "MailKit": {
+              "target": "Package",
+              "version": "[4.5.0, )"
             },
             "Microsoft.AspNetCore.Authentication.JwtBearer": {
               "target": "Package",
@@ -66,6 +74,10 @@
               "target": "Package",
               "version": "[7.0.14, )"
             },
+            "MimeKit": {
+              "target": "Package",
+              "version": "[4.5.0, )"
+            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[6.5.0, )"
@@ -86,6 +98,24 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[7.0.14, 7.0.14]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Host.win-x64",
+              "version": "[7.0.14, 7.0.14]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[7.0.14, 7.0.14]"
+            },
+            {
+              "name": "Microsoft.WindowsDesktop.App.Ref",
+              "version": "[7.0.14, 7.0.14]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.AspNetCore.App": {
               "privateAssets": "none"
@@ -94,7 +124,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     }
