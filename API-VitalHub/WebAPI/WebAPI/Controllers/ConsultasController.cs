@@ -15,17 +15,10 @@ namespace WebAPI.Controllers
     {
 
         private IConsultaRepository consultaRepository;
+
         public ConsultasController()
         {
             consultaRepository = new ConsultaRepository();
-        }
-
-
-        [HttpGet("BuscarPorId")]
-        public IActionResult BuscarPorId(Guid idConsulta)
-        {
-            Consulta consultaBuscada = consultaRepository.BuscarPorId(idConsulta);
-            return Ok(consultaBuscada);
         }
 
         [Authorize]
@@ -35,12 +28,14 @@ namespace WebAPI.Controllers
             try
             {
                 Guid idUsuario = Guid.Parse(HttpContext.User.Claims.First(c => c.Type == JwtRegisteredClaimNames.Jti).Value);
+
                 List<Consulta> consultas = consultaRepository.ListarPorPaciente(idUsuario);
                 return Ok(consultas);
+
             }
-            catch (Exception exc)
+            catch (Exception ex)
             {
-                return BadRequest(exc.Message);
+                return BadRequest(ex.Message);
             }
         }
 
@@ -55,36 +50,38 @@ namespace WebAPI.Controllers
                 List<Consulta> consultas = consultaRepository.ListarPorMedico(idUsuario);
                 return Ok(consultas);
             }
-            catch (Exception exc)
+            catch (Exception ex)
             {
-                return BadRequest(exc.Message);
+                return BadRequest(ex.Message);
             }
         }
+
 
         [HttpPost("Cadastrar")]
         public IActionResult Post(ConsultaViewModel consultaViewModel)
         {
             try
             {
-                Consulta consulta = new()
-                {
-                    SituacaoId = consultaViewModel.SituacaoId,
-                    PacienteId = consultaViewModel.PacienteId,
-                    MedicoClinicaId = consultaViewModel.MedicoClinicaId,
+                Consulta consulta = new Consulta();
 
-                    Receita = new(),
+                consulta.SituacaoId = consultaViewModel.SituacaoId;
+                consulta.PacienteId = consultaViewModel.PacienteId;
+                consulta.MedicoClinicaId = consultaViewModel.MedicoClinicaId;
 
-                    PrioridadeId = consultaViewModel.PrioridadeId,
-                    DataConsulta = consultaViewModel.DataConsulta,
-                    Descricao = consultaViewModel.Descricao,
-                    Diagnostico = consultaViewModel.Diagnostico
-                };
+                consulta.Receita = new Receita();
+
+                consulta.PrioridadeId = consultaViewModel.PrioridadeId;
+                consulta.DataConsulta = consultaViewModel.DataConsulta;
+                consulta.Descricao = consultaViewModel.Descricao;
+                consulta.Diagnostico = consultaViewModel.Diagnostico;
 
                 consultaRepository.Cadastrar(consulta);
+
+                return StatusCode(201, consulta);
             }
-            catch (Exception exc)
+            catch (Exception ex)
             {
-                BadRequest(exc.Message);
+                return BadRequest(ex.Message);
             }
         }
 
@@ -133,6 +130,21 @@ namespace WebAPI.Controllers
                 consultaRepository.EditarProntuario(consulta);
 
                 return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("BuscarPorId")]
+        public IActionResult GetById(Guid id)
+        {
+            try
+            {
+                Consulta consultaBuscada = consultaRepository.BuscarPorId(id);
+
+                return Ok(consultaBuscada);
             }
             catch (Exception ex)
             {

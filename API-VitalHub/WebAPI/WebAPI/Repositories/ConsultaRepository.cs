@@ -126,7 +126,7 @@ namespace WebAPI.Repositories
             {
                 throw;
             }
-        }
+        } 
 
         public List<Consulta> ListarTodos()
         {

@@ -1,7 +1,7 @@
 ﻿using WebAPI.Contexts;
 using WebAPI.Domains;
 using WebAPI.Interfaces;
-using WebAPI.Utils;
+using WebAPI.Utils.Criptografia;
 
 namespace WebAPI.Repositories
 {
@@ -17,7 +17,7 @@ namespace WebAPI.Repositories
 
                 if (user == null) return false;
 
-                user.Senha = AzureBlobStorageHelper.GerarHash(senhaNova);
+                user.Senha = Criptografia.GerarHash(senhaNova);
 
                 ctx.Update(user);
 
@@ -71,7 +71,7 @@ namespace WebAPI.Repositories
 
                 if (user == null) return null!;
 
-                if (!AzureBlobStorageHelper.CompararHash(senha, user.Senha!)) return null!;
+                if (!Criptografia.CompararHash(senha, user.Senha!)) return null!;
 
                 return user;
             }
@@ -97,7 +97,7 @@ namespace WebAPI.Repositories
         {
             try
             {
-                usuario.Senha = AzureBlobStorageHelper.GerarHash(usuario.Senha!);
+                usuario.Senha = Criptografia.GerarHash(usuario.Senha!);
                 ctx.Add(usuario);
                 ctx.SaveChanges();
             }

@@ -28,14 +28,11 @@ namespace WebAPI.ViewModels
 
         public Guid IdTipoUsuario { get; set; }
 
-        //ignora qualquer json pois sera preciso apenas dcaptar a imagem
+
         [NotMapped]
         [JsonIgnore]
-        //É preciso de uma prop do tipo iformfile
-        public IFormFile? File { get; set; }
+        public IFormFile? Arquivo { get; set; }
         public string? Foto { get; set; }
-
-
 
     }
 }

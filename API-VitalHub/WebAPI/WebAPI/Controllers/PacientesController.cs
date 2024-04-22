@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.IdentityModel.Tokens.Jwt;
 using WebAPI.Domains;
 using WebAPI.Interfaces;
@@ -16,37 +14,12 @@ namespace WebAPI.Controllers
     public class PacientesController : ControllerBase
     {
         private IPacienteRepository pacienteRepository { get; set; }
+
         private readonly EmailSendingService _emailSendingService;
 
-        /*
-        public PacientesController()
-        {
-            pacienteRepository = new PacienteRepository();
-        }
-
-        [Authorize]
-        [HttpGet("ConsultasAgendadas")]
-        public IActionResult BuscarAgendadas()
-        {
-            Guid idUsuario = Guid.Parse(HttpContext.User.Claims.First(c => c.Type == JwtRegisteredClaimNames.Jti).Value);
-
-            return Ok(pacienteRepository.BuscarAgendadas(idUsuario));
-        }
-
-        [Authorize]
-        [HttpGet("ConsultasRealizadas")]
-        public IActionResult BuscarRealizadas()
-        {
-            Guid idUsuario = Guid.Parse(HttpContext.User.Claims.First(c => c.Type == JwtRegisteredClaimNames.Jti).Value);
-
-            return Ok(pacienteRepository.BuscarRealizadas(idUsuario));
-        }*/
-
-        //Quando for necessário utilizar métodos de outras classes é preciso injetar no seu controller
         public PacientesController(EmailSendingService emailSendingService)
         {
             pacienteRepository = new PacienteRepository();
-
             _emailSendingService = emailSendingService;
         }
 
@@ -73,69 +46,36 @@ namespace WebAPI.Controllers
             return Ok(pacienteRepository.BuscarPorId(id));
         }
 
-        /*
-        [HttpPost]
-        public IActionResult Post(PacienteViewModel pacienteModel)
-        {
-            Usuario user = new Usuario();
-
-            user.Nome = pacienteModel.Nome;
-            user.Email = pacienteModel.Email;
-            user.TipoUsuarioId = pacienteModel.IdTipoUsuario;
-            user.Foto = pacienteModel.Foto;
-            user.Senha = pacienteModel.Senha;
-
-            user.Paciente = new Paciente();
-
-            user.Paciente.DataNascimento = pacienteModel.DataNascimento;
-            user.Paciente.Rg = pacienteModel.Rg;
-            user.Paciente.Cpf = pacienteModel.Cpf;
-
-            user.Paciente.Endereco = new Endereco();
-
-            user.Paciente.Endereco.Logradouro = pacienteModel.Logradouro;
-            user.Paciente.Endereco.Numero = pacienteModel.Numero;
-            user.Paciente.Endereco.Cep = pacienteModel.Cep;
-            user.Paciente.Endereco.Cidade = pacienteModel.Cidade;
-
-            pacienteRepository.Cadastrar(user);
-
-            return Ok();
-        }*/
 
         [HttpPost]
         public async Task<IActionResult> Post([FromForm] PacienteViewModel pacienteModel)
         {
             try
             {
-                //Objeto a ser cadastrado
+                //objeto a ser cadastrado
                 Usuario user = new Usuario();
 
-                //Recebimento dos valores e preenchimento das proprieddades
+                //recebe os valores e preenche as propriedades do objeto
                 user.Nome = pacienteModel.Nome;
                 user.Email = pacienteModel.Email;
                 user.TipoUsuarioId = pacienteModel.IdTipoUsuario;
 
-                //Aqui iremos configurar e utilizar o método de upload image
+                //define o nome do container do blob
+                var containerName = "containervitalhubtarde";
 
-                //Define o nome a partir do seu container no blob
-                var containerName = "containervitalhubmatheusd";
+                //define a string de conexão
+                var connectionString = "DefaultEndpointsProtocol=https;AccountName=blobvitalhubtarde;AccountKey=irESJMeYuN8FtPy2nNqV5HF9TpAnkkOf1bcnG7oY0OuP2wch0sXUDGH44jCkkPW+JgmDjHji/bvG+AStAkVsng==;EndpointSuffix=core.windows.net";
 
-                //Definindo a string de conexão
-                var connectionString = "";
-
-                //A chamada da função de upload de imagem
-                user.Foto = await AzureBlobStorageHelper.UploadImageBlobAsync(pacienteModel.File!, connectionString, containerName);
+                //aqui vamos chamar o método para upload da imagem
+                user.Foto = await AzureBlobStorageHelper.UploadImageBlobAsync(pacienteModel.Arquivo!, connectionString, containerName);
 
                 user.Senha = pacienteModel.Senha;
 
-                //Paciente
                 user.Paciente = new Paciente();
                 user.Paciente.DataNascimento = pacienteModel.DataNascimento;
                 user.Paciente.Rg = pacienteModel.Rg;
                 user.Paciente.Cpf = pacienteModel.Cpf;
 
-                //Endereço
                 user.Paciente.Endereco = new Endereco();
                 user.Paciente.Endereco.Logradouro = pacienteModel.Logradouro;
                 user.Paciente.Endereco.Numero = pacienteModel.Numero;
@@ -150,10 +90,8 @@ namespace WebAPI.Controllers
             }
             catch (Exception ex)
             {
-
                 return BadRequest(ex.Message);
             }
-
         }
 
         [HttpGet("BuscarPorData")]

@@ -3,7 +3,7 @@ using System.Linq;
 using WebAPI.Contexts;
 using WebAPI.Domains;
 using WebAPI.Interfaces;
-using WebAPI.Utils;
+using WebAPI.Utils.Criptografia;
 using WebAPI.ViewModels;
 
 namespace WebAPI.Repositories
@@ -11,7 +11,7 @@ namespace WebAPI.Repositories
 
     public class MedicoRepository : IMedicoRepository
     {
-        VitalContext ctx = new();
+        VitalContext ctx = new VitalContext();
 
         public Medico AtualizarPerfil(Guid Id, MedicoViewModel medico)
         {
@@ -56,24 +56,6 @@ namespace WebAPI.Repositories
             }
         }
 
-        public Medico BuscarPorId(Guid Id)
-        {
-            try
-            {
-                Medico medicoBuscado = ctx.Medicos
-                    .Include(m => m.IdNavigation)
-                    .Include(m => m.Endereco)
-                    .FirstOrDefault(m => m.Id == Id)!;
-
-                return medicoBuscado;
-
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
-
         public List<Consulta> BuscarPorData(DateTime dataConsulta, Guid idMedico)
         {
             try
@@ -95,6 +77,24 @@ namespace WebAPI.Repositories
             }
         }
 
+        public Medico BuscarPorId(Guid Id)
+        {
+            try
+            {
+                Medico medicoBuscado = ctx.Medicos
+                    .Include(m => m.IdNavigation)
+                    .Include(m => m.Endereco)
+                    .FirstOrDefault(m => m.Id == Id)!;
+
+                return medicoBuscado;
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
         public List<Medico> ListarTodos()
         {
             try
@@ -106,6 +106,8 @@ namespace WebAPI.Repositories
                         Id = m.Id,
                         Crm = m.Crm,
                         Especialidade = m.Especialidade,
+
+
                         IdNavigation = new Usuario
                         {
                             Nome = m.IdNavigation.Nome,
@@ -125,7 +127,7 @@ namespace WebAPI.Repositories
         {
             try
             {
-                user.Senha = AzureBlobStorageHelper.GerarHash(user.Senha!);
+                user.Senha = Criptografia.GerarHash(user.Senha!);
                 ctx.Usuarios.Add(user);
                 ctx.SaveChanges();
 
@@ -150,6 +152,7 @@ namespace WebAPI.Repositories
                         Id = mc.Id,
                         Crm = mc.Medico!.Crm,
                         Especialidade = mc.Medico.Especialidade,
+
                         IdNavigation = new Usuario
                         {
                             Id = mc.Medico.IdNavigation.Id,

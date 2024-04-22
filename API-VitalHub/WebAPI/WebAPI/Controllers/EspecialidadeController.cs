@@ -18,7 +18,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get()
+        public ActionResult Get()
         {
             try
             {
@@ -31,18 +31,19 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post(Especialidade especialidade)
+        public ActionResult Post(Especialidade especialidade)
         {
             try
             {
                 _repository.Cadastrar(especialidade);
+
                 return StatusCode(201, especialidade);
+
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
         }
-
     }
 }

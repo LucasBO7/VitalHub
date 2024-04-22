@@ -23,17 +23,10 @@ namespace WebAPI.Controllers
             {
                 return Ok(clinicaRepository.Listar());
             }
-            catch (Exception exc)
+            catch (Exception ex)
             {
-                return BadRequest(exc.Message);
+                return BadRequest(ex.Message);
             }
-        }
-
-        [HttpPost("Cadastrar")]
-        public IActionResult Post(Clinica clinica)
-        {
-            clinicaRepository.Cadastrar(clinica);
-            return StatusCode(201);
         }
 
         [HttpGet("BuscarPorId")]
@@ -42,10 +35,11 @@ namespace WebAPI.Controllers
             try
             {
                 return Ok(clinicaRepository.BuscarPorId(id));
+
             }
-            catch (Exception exc)
+            catch (Exception ex)
             {
-                return BadRequest(exc.Message);
+                return BadRequest(ex.Message);
             }
         }
 
@@ -57,9 +51,9 @@ namespace WebAPI.Controllers
                 return Ok(clinicaRepository.ListarPorCidade(cidade));
 
             }
-            catch (Exception exc)
+            catch (Exception ex)
             {
-                return BadRequest(exc.Message);
+                return BadRequest(ex.Message);
             }
         }
     }
