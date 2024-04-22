@@ -6,7 +6,7 @@ const externalApiUrl = '4466';
 
 //declarar o ip da maquina 
 
-const ip = '172.16.39.100';
+const ip = '172.16.39.92';
 
 //definir a url padrao
 const apiUrlLocal = `http://172.16.39.92:4466/api`;

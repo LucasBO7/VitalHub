@@ -68,10 +68,7 @@ namespace WebAPI.Repositories
                  .ToList();
         }
 
-<<<<<<< HEAD
 
-=======
->>>>>>> origin/develop
         public List<Medico> ListarTodos()
         {
             return ctx.Medicos.

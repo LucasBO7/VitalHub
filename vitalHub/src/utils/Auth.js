@@ -34,26 +34,6 @@ export const userDecodeToken = async () => {
 export const userTokenLogout = async () => {
   const token = await AsyncStorage.removeItem("token");
 };
-<<<<<<< HEAD
-
-const [savedItems, setSavedItems] = useState([]);
-
-const handleSaveItem = async (newItem) => {
-  const updatedItems = [...savedItems];
-  updatedItems.push(newItem);
-  setSavedItems(updatedItems);
-
-  // Optionally, handle the API call here if needed
-};
-
-
-
-
-export const consultStatus = async ({}) => {
-  const prioridade = await AsyncStorage.getItem("status");
-  console.log(prioridade);
-};
-=======
 // export const registerConsult = async ({ idConsultInserted, bananaInserted }) => {
 //   await AsyncStorage.setItem("consult", {
 //     idConsult: idConsultInserted != null ? idConsultInserted,
@@ -89,4 +69,3 @@ export const getAge = (birthdateText) => {
   console.log(`Data de nascimento: $${birthdate} e data atual ${actualDate}, Idade = ${age}`);
   return age;
 }
->>>>>>> origin/develop

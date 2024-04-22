@@ -48,9 +48,6 @@ export const PatientConsultation = ({ navigation }) => {
     }
   }
 
-<<<<<<< HEAD
-  
-=======
   // Busca as Consultas do banco e guarda na const consults
   async function getAllConsults() {
     // console.log(`/Pacientes/BuscarPorData?dataConsulta=${selectedDate}&idPaciente=${user.id}`);
@@ -63,7 +60,6 @@ export const PatientConsultation = ({ navigation }) => {
       .catch(error => console.log(error));
   }
 
->>>>>>> origin/develop
   useEffect(() => {
     profileLoad();
     getAllConsults();

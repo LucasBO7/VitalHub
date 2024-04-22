@@ -19,11 +19,11 @@ export const DescriptionDoc = ({ description }) => {
     )
 }
 
-export const EmailDescription = () => {
+export const EmailDescription = ({route}) => {
 
     return(
 
-        <DescripritionEmail>Digite o código de 4 dígitos enviado para <EmailText>username@email.com</EmailText></DescripritionEmail>
+        <DescripritionEmail>Digite o código de 4 dígitos enviado para <EmailText>username@email.com</EmailText>{route.params.emailRecuperacao}</DescripritionEmail>
 
     )
 

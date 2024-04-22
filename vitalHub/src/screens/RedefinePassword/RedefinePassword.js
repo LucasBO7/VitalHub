@@ -10,6 +10,8 @@ import { Title } from '../../components/Title/StyleTitle'
 
 export const RedefinePassword = () => {
 
+
+
     return (
 
         <Container>

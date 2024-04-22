@@ -68,74 +68,9 @@ export const DoctorConsultation = ({ navigation }) => {
     getAllConsults();
   }, []);
 
-<<<<<<< HEAD
-  const [selectConsult, setSelectConsult] = useState(null)
-  
-  function MostrarModal(modal, consulta) {
-    setConsultaSelecionada(consulta)
-
-    if (modal == 'cancelar') {
-        setShowModalCancel(true)
-    } else if (modal == 'prontuario') {
-        setShowModalAppointment(true)
-    } else {
-        setShowModalSchedule(true)
-    }
-}
-
-  // CARD MOCADOS
-
-  const dataItens = [
-    {
-      id: 1,
-      hour: "14:00",
-      image: image,
-      name: "Niccole Sarga",
-      age: "22 anos",
-      routine: "Rotina",
-      status: "r",
-    },
-    {
-      id: 2,
-      hour: "15:00",
-      image: image,
-      name: "Richard Kosta",
-      age: "28 anos",
-      routine: "Urgência",
-      status: "a",
-    },
-    {
-      id: 3,
-      hour: "17:00",
-      image: image,
-      name: "Neymar Jr",
-      age: "28 anos",
-      routine: "Rotina",
-      status: "c",
-    },
-  ];
-
-  //FILTRO PARA CARD
-
-  const Check = (data) => {
-    if (data.status === "a" && selected.agendadas) {
-      return true;
-    }
-    if (data.status === "r" && selected.realizadas) {
-      return true;
-    }
-    if (data.status === "c" && selected.canceladas) {
-      return true;
-    }
-    return false;
-  };
-
-  const data = dataItens.filter(Check);
-=======
   useEffect(() => {
     getAllConsults();
   }, [selectedDate, consults])
->>>>>>> origin/develop
 
   // STATES PARA OS MODAIS
 
