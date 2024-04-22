@@ -1,6 +1,6 @@
 ﻿namespace WebAPI.Utils
 {
-    public static class Criptografia
+    public static class AzureBlobStorageHelper
     {
         public static string GerarHash(string senha)
         {
