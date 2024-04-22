@@ -50,15 +50,6 @@ namespace WebAPI.Controllers
             _emailSendingService = emailSendingService;
         }
 
-        [Authorize]
-        [HttpGet("ConsultasCanceladas")]
-        public IActionResult BuscarCanceladas()
-        {
-            Guid idUsuario = Guid.Parse(HttpContext.User.Claims.First(c => c.Type == JwtRegisteredClaimNames.Jti).Value);
-
-            return Ok(pacienteRepository.BuscarRealizadas(idUsuario));
-        }
-
         [HttpGet("PerfilLogado")]
         public IActionResult GetLogged()
         {

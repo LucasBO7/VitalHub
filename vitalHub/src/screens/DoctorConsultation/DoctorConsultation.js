@@ -21,7 +21,7 @@ import { CancellationModal } from "../../components/CancellationModal/Cancellati
 import { AppointmentModal } from "../../components/AppointmentModal/AppointmentModal";
 
 import api from "../../services/Services";
-import { userDecodeToken } from "../../utils/Auth";
+import { getAge, userDecodeToken } from "../../utils/Auth";
 
 export const DoctorConsultation = ({ navigation }) => {
   const [consults, setConsults] = useState(); // Guarda todas as Consultas que estierem salvas no banco de dados
@@ -136,7 +136,7 @@ export const DoctorConsultation = ({ navigation }) => {
               navigation={navigation}
               hour={'02:33'}
               name={item.paciente.idNavigation.nome}
-              age={'22 anos'}
+              age={getAge(item.paciente.dataNascimento)}
               routine={item.situacao.situacao}
               url={image}
               status={consultStatus}

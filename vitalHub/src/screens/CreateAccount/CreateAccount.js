@@ -8,6 +8,7 @@ import { Input } from '../../components/Input/Input'
 import { Cancel } from '../../components/Link/Link'
 import { Title } from '../../components/Title/StyleTitle'
 import { LogoCreateAccount } from '../../components/Images/StyleImages'
+import { useState } from 'react'
 
 
 export const CreateAccount = ({ navigation }) => {
@@ -50,9 +51,18 @@ export const CreateAccount = ({ navigation }) => {
             <DescriptionPassword description={"Insira seu endereço de e-mail e senha para realizar seu cadastro."} />
 
             <Input
-                placeholder={"Usuário ou E-mail"}
+                placeholder={"Usuário"}
                 placeholderTextColor={'#49B3BA'}
                 onChangeText={(text) => {
+                    
+                }}
+            />
+
+            <Input
+                placeholder={"E-mail"}
+                placeholderTextColor={'#49B3BA'}
+                onChangeText={(text) => {
+                    
                 }}
             />
             <Input

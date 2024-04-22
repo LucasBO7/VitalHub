@@ -46,7 +46,7 @@ namespace WebAPI.Utils.Mail
                 email.Body = builder.ToMessageBody();
 
                 //Após parar de utilizar o recurso o using fecha o mesmo sem precisar que fechemos a mão
-                using (var smtp = new SmtpClient())
+                using (var smtp = new MailKit.Net.Smtp.SmtpClient())
                 {
                     //Conecta ao servidor SMTP usando os  dados do emailSettings
                     smtp.Connect(emailSettings.Host, emailSettings.Port, SecureSocketOptions.StartTls);
