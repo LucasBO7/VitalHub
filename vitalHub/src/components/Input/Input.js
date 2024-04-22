@@ -163,7 +163,8 @@ export function HighInput({
     maxLength,
     placeholderTextColor,
     editable = true,
-    secureTextEntry = false
+    secureTextEntry = false,
+    isInsertedInputValid = true
 }) {
     return (
         <InputHigh
@@ -175,6 +176,7 @@ export function HighInput({
             value={fieldValue}
             onChangeText={onChangeText}
             secureTextEntry={secureTextEntry}
+            isInsertedInputValid={isInsertedInputValid}
         />
     )
 }

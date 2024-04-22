@@ -20,33 +20,55 @@ import { Card } from "../../components/Cards/Cards";
 import { CancellationModal } from "../../components/CancellationModal/CancellationModal";
 import { AppointmentModal } from "../../components/AppointmentModal/AppointmentModal";
 
+import api from "../../services/Services";
+import { userDecodeToken } from "../../utils/Auth";
+
 export const DoctorConsultation = ({ navigation }) => {
-  //STATE PARA O ESTADO DOS CARDS FLATLIST, BOTOES FILTRO
-  const [selected, setSelected] = useState({
-    agendadas: true,
-    realizadas: false,
-    canceladas: false,
+  const [consults, setConsults] = useState(); // Guarda todas as Consultas que estierem salvas no banco de dados
+  const [consultStatus, setConsultStatus] = useState('agendada');
+  const [selectedDate, setSelectedDate] = useState();
+  const [selectedPatient, setSelectedPatient] = useState(null);
+
+  // Guarda o Id da consulta para cancelá-la
+  const [cancelConsultId, setCancelConsultId] = useState();
+
+  const [user, setUser] = useState({
+    name: '',
+    id: ''
   });
 
   const image = require("../../assets/ImageCard.png");
 
-  //   1 - Logout === ok
-  //   2 - dados na tela de perfil
-  //   3 - dados no Header quando logar
 
   async function profileLoad() {
     const token = await userDecodeToken();
 
-    console.log("BANANAAA!");
     if (token) {
-      console.log(token.name);
+      setUser(token);
+
+      setSelectedDate(moment().format('YYYY-MM-DD'));
+    }
+  }
+
+  // Busca as Consultas do banco e guarda na const consults
+  async function getAllConsults() {
+    if (user.id && selectedDate) {
+      await api.get(`/Medicos/BuscarPorData?data=${selectedDate}&id=${user.id}`)
+        .then(
+          response => {
+            setConsults(response.data);
+          }
+        )
+        .catch(error => console.log(error));
     }
   }
 
   useEffect(() => {
     profileLoad();
+    getAllConsults();
   }, []);
 
+<<<<<<< HEAD
   const [selectConsult, setSelectConsult] = useState(null)
   
   function MostrarModal(modal, consulta) {
@@ -109,11 +131,17 @@ export const DoctorConsultation = ({ navigation }) => {
   };
 
   const data = dataItens.filter(Check);
+=======
+  useEffect(() => {
+    getAllConsults();
+  }, [selectedDate, consults])
+>>>>>>> origin/develop
 
   // STATES PARA OS MODAIS
 
   const [showModalCancel, setShowModalCancel] = useState(false);
   const [showModalAppointment, setShowModalAppointment] = useState(false);
+  // const [showModal, setShowModal] = useState(false);
 
   // RETURN
 
@@ -127,7 +155,7 @@ export const DoctorConsultation = ({ navigation }) => {
           <BoxDataHome>
             <WelcomeTitle textTitle={"Bem vindo"} />
 
-            <NameTitle textTitle={"Dr. Claudio"} />
+            <NameTitle textTitle={user.name} />
           </BoxDataHome>
         </BoxHome>
 
@@ -136,59 +164,77 @@ export const DoctorConsultation = ({ navigation }) => {
         </MoveIconBell>
       </Header>
 
-      <Calendar />
+      <Calendar setSelectedDate={setSelectedDate} />
 
       <ButtonHomeContainer>
         <FilterButton
           onPress={() => {
-            setSelected({ agendadas: true });
+            setConsultStatus('agendada');
           }}
-          selected={selected.agendadas}
+          selected={consultStatus == 'agendada' ? true : false}
           text={"Agendadas"}
         />
 
         <FilterButton
           onPress={() => {
-            setSelected({ realizadas: true });
+            setConsultStatus('realizada');
           }}
-          selected={selected.realizadas}
+          selected={consultStatus == 'realizada' ? true : false}
           text={"Realizadas"}
         />
 
         <FilterButton
           onPress={() => {
-            setSelected({ canceladas: true });
+            setConsultStatus('cancelada');
           }}
-          selected={selected.canceladas}
+          selected={consultStatus == 'cancelada' ? true : false}
           text={"Canceladas"}
         />
       </ButtonHomeContainer>
 
       <FlatContainer
-        data={data}
-        renderItem={({ item }) => (
-          <Card
-            navigation={navigation}
-            hour={item.hour}
-            name={item.name}
-            age={item.age}
-            routine={item.routine}
-            url={image}
-            status={item.status}
-            onPressCancel={() => setShowModalCancel(true)}
-            onPressAppointment={() => setShowModalAppointment(true)}
-          />
-        )}
+        data={consults}
+        renderItem={({ item }) =>
+          item.situacao.situacao == consultStatus &&
+          (
+            <Card
+              navigation={navigation}
+              hour={'02:33'}
+              name={item.paciente.idNavigation.nome}
+              age={'22 anos'}
+              routine={item.situacao.situacao}
+              url={image}
+              status={consultStatus}
+              // Botão cancelar
+              onPressCancel={() => {
+                setShowModalCancel(true);
+                setCancelConsultId(item.id);
+              }}
+              // Botão ver prescricão
+              onPressAppointment={() => {
+                navigation.navigate("ViewPrescription");
+              }}
+
+              // Clique no card
+              onPressAppointmentCard={() => {
+                setSelectedPatient(item);
+                setShowModalAppointment(item.situacao.situacao === "agendada" ? true : false); // Mostrar Modal
+              }}
+            />
+          )}
         keyExtractor={(item) => item.id}
         showsVerticalScrollIndicator={false}
       />
 
       <CancellationModal
+        consultId={cancelConsultId}
         visible={showModalCancel}
         setShowModalCancel={setShowModalCancel}
       />
 
       <AppointmentModal
+        consult={selectedPatient}
+        roleUsuario={user.role}
         navigation={navigation}
         visible={showModalAppointment}
         setShowModalAppointment={setShowModalAppointment}

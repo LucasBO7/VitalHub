@@ -5,14 +5,24 @@ import { ButtonLargeSelect } from "../Button/Button"
 import { CardCancelLess } from "../Descriptions/Descriptions"
 import { ModalContent, PatientModal } from "./StyleCancelationModal"
 import { handleCallNotifications } from "../Notifications/Notifications"
+import api from "../../services/Services"
 
 
 export const CancellationModal = ({
+    consultId,
     navigation,
     visible,
     setShowModalCancel = null,
     ...rest
 }) => {
+
+    // Setta o status da consulta para "cancelado"
+    async function cancelConsult() {
+        await api.put(`/Consultas/Status`, {
+            id: consultId,
+            situacaoId: '6316E329-B881-41A5-B7CE-EDF8FA04BEFC',
+        }).catch(error => console.log(error));
+    }
 
     return (
 
@@ -33,7 +43,11 @@ export const CancellationModal = ({
                     <DescriptionCancel>Ao cancelar essa consulta, abrirá uma possível disponibilidade no seu horário, deseja mesmo cancelar essa consulta?</DescriptionCancel>
 
                     <ButtonLargeSelect
-                        onPress={() => { setShowModalCancel(false), handleCallNotifications({ title: "Consulta cancelada !!!", body: "Consulta cancelada com sucesso." }) }}
+                        onPress={() => {
+                            cancelConsult();
+                            setShowModalCancel(false);
+                            handleCallNotifications({ title: "Consulta cancelada !!!", body: "Consulta cancelada com sucesso." });
+                        }}
                         text={"Continuar"}
                     />
 

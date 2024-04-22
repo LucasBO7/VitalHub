@@ -85,7 +85,6 @@ export const ModalStethoscope = ({
               onPress={() => {
                 navigation.navigate("SelectClinic");
                 setShowModalStethoscope(false);
-
               }}
               text={"Continuar"}
             />

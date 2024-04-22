@@ -17,8 +17,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 export const Card = ({ url, name, age, routine, hour, status, onPressCancel, onPressAppointment, onPressAppointmentCard, navigation }) => {
 
     const Check = () => {
-
-        if (status === "a") {
+        if (status === "agendada") {
             return (
                 <BoxDateCancel>
 
@@ -36,7 +35,7 @@ export const Card = ({ url, name, age, routine, hour, status, onPressCancel, onP
             )
 
 
-        } else if (status === "r") {
+        } else if (status === "realizada") {
             return (
                 <BoxDateCancel>
 
@@ -53,7 +52,7 @@ export const Card = ({ url, name, age, routine, hour, status, onPressCancel, onP
                 </BoxDateCancel>
             )
         }
-        else if (status === "c") {
+        else if (status === "cancelada") {
             return (
                 <BoxDateCancel>
 
@@ -69,22 +68,6 @@ export const Card = ({ url, name, age, routine, hour, status, onPressCancel, onP
             )
 
         }
-        // return (
-        //     <BoxDateCancel>
-
-        //     <ConsultDateGrey>
-
-        //         <FontAwesome6 name="clock" size={15} color="#4E4B59" />
-
-        //         <HourTextGrey>{hour}</HourTextGrey>
-
-        //     </ConsultDateGrey>
-
-        //     <CancelCard>Ver Prontuario</CancelCard>
-
-        // </BoxDateCancel>
-        // )
-
     }
 
     return (

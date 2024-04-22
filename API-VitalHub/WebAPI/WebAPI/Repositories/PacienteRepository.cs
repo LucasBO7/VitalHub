@@ -56,6 +56,7 @@ namespace WebAPI.Repositories
 
         public List<Consulta> BuscarPorData(DateTime dataConsulta, Guid idMedico)
         {
+<<<<<<< HEAD
             return ctx.Consultas
                  .Include(x => x.Situacao)
                  .Include(x => x.Prioridade)
@@ -63,17 +64,35 @@ namespace WebAPI.Repositories
                  // diferença em dias entre a Data da Consulta e a dataConsulta é igual a 0.
                  .Where(x => x.MedicoClinica!.MedicoId == idMedico && EF.Functions.DateDiffDay(x.DataConsulta, dataConsulta) == 0)
                  .ToList();
+=======
+           return ctx.Consultas
+                .Include(x => x.Situacao)
+                .Include(x => x.Prioridade)
+                .Include (x => x.Paciente!.IdNavigation)
+                .Include(x => x.MedicoClinica)
+                .Include(x => x.MedicoClinica.Medico)
+                .Include(x => x.MedicoClinica.Medico.IdNavigation)
+                // diferença em dias entre a Data da Consulta e a dataConsulta é igual a 0.
+                .Where(x  => x.PacienteId == idPaciente && EF.Functions.DateDiffDay(x.DataConsulta, dataConsulta) == 0)
+                .ToList();
+>>>>>>> origin/develop
         }
 
         public Paciente BuscarPorId(Guid Id)
         {
             return ctx.Pacientes
+<<<<<<< HEAD
                 .Include(x => x.Endereco)
                 .Include(x => x.IdNavigation)
                 .FirstOrDefault(x => x.Id == Id)!;
 
 
 
+=======
+                .Include(x => x.IdNavigation)
+                .Include(x => x.Endereco)
+                .FirstOrDefault(x => x.Id == Id);
+>>>>>>> origin/develop
         }
 
         public List<Consulta> BuscarRealizadas(Guid Id)

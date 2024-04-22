@@ -16,8 +16,13 @@ import { userDecodeToken } from "../../utils/Auth";
 import { faL } from "@fortawesome/free-solid-svg-icons";
 
 export const Login = ({ navigation }) => {
+<<<<<<< HEAD
   const [email, setEmail] = useState("lucas@gmail.com");
   const [senha, setSenha] = useState("lucas123");
+=======
+  const [email, setEmail] = useState("caroline@gmail.com");
+  const [senha, setSenha] = useState("Caroline123");
+>>>>>>> origin/develop
   const [isLoading, setIsLoading] = useState(false);
   const [isInputDataValid, setIsInputDataValid] = useState(true); // Guardo o estado do input (se estiver errado, mostrar mensagem de erro)
 
@@ -28,8 +33,7 @@ export const Login = ({ navigation }) => {
       senha: senha
     }).then(async response => {
       setIsInputDataValid(true);
-      console.log(response.data.token)
-
+      
       await AsyncStorage.setItem("token", JSON.stringify(response.data))
 
       const token = await userDecodeToken()

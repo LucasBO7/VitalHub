@@ -10,6 +10,7 @@ import { TitleProfile } from "../../components/Title/StyleTitle"
 import { ImportImages, Line, TitleImage } from "./Style"
 
 import * as MediaLibrary from "expo-media-library"
+import api from "../../services/Services"
 
 // import { useRoute } from '@react-navigation/native';
 
@@ -17,11 +18,23 @@ export const ViewPrescription = ({ navigation, route }) => {
 
     // const { photoUri } = route.params;
 
+    // useEffect(() => {
+    //     // console.log(photoUri)
+    //     console.log("sada") 
+    //     console.log(route.params)
+    // }, [route])
+
+    // Busca os dados do médico da API (s)
+    async function getDoctorInfos() {
+        await api.get(`/Medicos/BuscarPorId?id=${route.params.doctorId}`)
+            .catch(error => {
+                console.log(error);
+            });
+    }
+
     useEffect(() => {
-        // console.log(photoUri)
-        console.log("sada") 
-        console.log(route.params)
-    }, [route])
+        getDoctorInfos();
+    })
 
     return (
         <>
@@ -31,11 +44,11 @@ export const ViewPrescription = ({ navigation, route }) => {
 
                     <ViewImage source={require("../../assets/ney.webp")} />
 
-                    <TitleProfile>Dr. Ney</TitleProfile>
+                    <TitleProfile>{route.params.doctorName}</TitleProfile>
 
                     <BoxDescription>
                         <DescriptionDoc description={"Cliníco geral"} />
-                        <DescriptionDoc description={"CRM-15286"} />
+                        <DescriptionDoc description={route.params.doctorCrm} />
                     </BoxDescription>
 
                     <HighInputBoxGrey
@@ -43,16 +56,18 @@ export const ViewPrescription = ({ navigation, route }) => {
                         placeholderTextColor={"#A1A1A1"}
                         textLabel={"Descrição da consulta"}
                         placeholder={"Descrição"}
-                        editable={true}
+                        editable={false}
                         fieldWidth={90}
+                        fieldValue={route.params.consultDescricao}
                     />
 
                     <InputBox
                         placeholderTextColor={"#A1A1A1"}
                         textLabel={"Diagnóstico do paciente"}
                         placeholder={"Diagnóstico"}
-                        editable={true}
+                        editable={false}
                         fieldWidth={90}
+                        fieldValue={route.params.consultDiagnostico}
                     />
 
                     <HighInputBoxGrey
@@ -60,8 +75,10 @@ export const ViewPrescription = ({ navigation, route }) => {
                         placeholderTextColor={"#A1A1A1"}
                         textLabel={"Prescrição médica"}
                         placeholder={"Prescrição"}
-                        editable={true}
+                        editable={false}
                         fieldWidth={90}
+                        // RESTA INSERIR NA API
+                        fieldValue={'Prescrição...'}
                     />
 
                     <BoxViewImageImport>
@@ -69,14 +86,14 @@ export const ViewPrescription = ({ navigation, route }) => {
                         <Label textLabel={"Exames médicos"} />
 
                         <ImportImages>
-                            {route.params ? <ImagePrescription source={{ uri : route.params.photoUri }} /> : <TitleImage>{"[ ! ] Nenhuma foto informada"}</TitleImage>}
+                            {route.params ? <ImagePrescription source={{ uri: route.params.photoUri }} /> : <TitleImage>{"[ ! ] Nenhuma foto informada"}</TitleImage>}
                         </ImportImages>
 
                     </BoxViewImageImport>
 
                     <BoxBtn>
                         <SendButton onPress={() => { navigation.navigate("Camera") }} text={"Enviar"} />
-                        <CardCancel onPressCancel={() => {navigation.replace("Main") }} text={"Cancelar"} />
+                        <CardCancel onPressCancel={() => { navigation.replace("Main") }} text={"Cancelar"} />
                     </BoxBtn>
 
                     <Line />
@@ -85,7 +102,7 @@ export const ViewPrescription = ({ navigation, route }) => {
                         // fieldHeight={350}
                         placeholderTextColor={"#A1A1A1"}
                         placeholder={"Resultado do exame"}
-                        editable={true}
+                        editable={false}
                         fieldWidth={90}
                     />
 

@@ -47,7 +47,6 @@ export const SelectDoctor = ({ navigation }) => {
             // Quando houver uma resposta...
             .then(response => {
                 setDoctorList(response.data)
-                console.log(doctorList)
             })
             .catch((error) => {
                 console.log(error)

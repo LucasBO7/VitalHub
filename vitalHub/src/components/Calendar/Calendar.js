@@ -6,31 +6,31 @@ import { StyleSheet } from 'react-native';
 
 
 // Componente de calendário
-const Calendar = () => {
+const Calendar = ({ setSelectedDate }) => {
 
     // Define o padrão para o calendário em Português do Brasil
     moment.updateLocale("pt-br", {
         //meses
-    months:
-    "Janeiro_Fevereiro_Março_Abril_Maio_Junho_Julho_Agosto_Setembro_Outubro_Novembro_Dezembro".split(
-      "_"
-    ),
+        months:
+            "Janeiro_Fevereiro_Março_Abril_Maio_Junho_Julho_Agosto_Setembro_Outubro_Novembro_Dezembro".split(
+                "_"
+            ),
 
-  //abreviação de meses
-  monthsShort: "jan_fev_mar_abr_mai_jun_jul_ago_set_out_nov_dez".split("_"),
+        //abreviação de meses
+        monthsShort: "jan_fev_mar_abr_mai_jun_jul_ago_set_out_nov_dez".split("_"),
 
-  //dias da semana
-  weekdays:
-    "domingo_segunda-feira_terça-feira_quarta-feira_quinta-feira_sexta-feira_sábado".split(
-      "_"
-    ),
+        //dias da semana
+        weekdays:
+            "domingo_segunda-feira_terça-feira_quarta-feira_quinta-feira_sexta-feira_sábado".split(
+                "_"
+            ),
 
-  //abreviação dias da semana
-  weekdaysShort: "Dom_Seg_Ter_Qua_Qui_Sex_Sáb".split("_"),
+        //abreviação dias da semana
+        weekdaysShort: "Dom_Seg_Ter_Qua_Qui_Sex_Sáb".split("_"),
 
-  //abreviação dias da semana
-  weekdaysMin: "dom_2ª_3ª_4ª_5ª_6ª_sáb".split("_"),
-});
+        //abreviação dias da semana
+        weekdaysMin: "dom_2ª_3ª_4ª_5ª_6ª_sáb".split("_"),
+    });
 
 
     // Cria uma instância da data atual
@@ -44,10 +44,12 @@ const Calendar = () => {
 
     return (
         <StyledCalendarStrip
+            onDateSelected={date => setSelectedDate(moment(date).format('YYYY-MM-DD'))}
+
             // Configuração da animação do calendário
             calendarAnimation={{ type: "sequence", duration: 30 }}
             // Estilo da animação de seleção do dia
-            daySelectionAnimation={styles.selectedAnimationStyle}
+            daySelectionAnimation={styles.selectedAnimationStyle}  
             // Estilo do ícone de navegação para a esquerda
             iconLeftStyle={styles.iconsStyle}
             // Estilo do ícone de navegação para a direita
