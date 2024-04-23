@@ -1,5 +1,5 @@
 import { ViewBoxCode } from "../Container/StyleContainer";
-import {CancelBackMargin, CancelButtonRecords, CancelCard, CancelLessMargin, CancelLocal, DescripritionDoctor, DescripritionEmail, DescripritionForgot, EmailText, ResendCode, SeeMedicalRecord, SmallDescriptionModal, SmallDescriptionModal2 } from "./StyledDescriptions";
+import { CancelBackMargin, CancelButtonRecords, CancelCard, CancelLessMargin, CancelLocal, DescripritionDoctor, DescripritionEmail, DescripritionForgot, EmailText, ResendCode, SeeMedicalRecord, SmallDescriptionModal, SmallDescriptionModal2 } from "./StyledDescriptions";
 
 export const DescriptionPassword = ({ description }) => {
 
@@ -19,11 +19,19 @@ export const DescriptionDoc = ({ description }) => {
     )
 }
 
+<<<<<<< HEAD
 export const EmailDescription = ({route}) => {
+=======
+export const EmailDescription = ({ route }) => {
+>>>>>>> develop
 
-    return(
+    return (
 
+<<<<<<< HEAD
         <DescripritionEmail>Digite o código de 4 dígitos enviado para <EmailText>username@email.com</EmailText>{route.params.emailRecuperacao}</DescripritionEmail>
+=======
+        <DescripritionEmail>Digite o código de 4 dígitos enviado para <EmailText>{route.params.emailRecuperacao}</EmailText></DescripritionEmail>
+>>>>>>> develop
 
     )
 
@@ -35,7 +43,7 @@ export const CodeResend = ({
     onPress
 }) => {
 
-    return(
+    return (
 
         <ResendCode onPress={onPress}>{text}</ResendCode>
 
@@ -45,7 +53,7 @@ export const CodeResend = ({
 
 export const SeeRecord = ({ onPressAppointment, text }) => {
 
-    return(
+    return (
 
         <SeeMedicalRecord onPress={onPressAppointment}>{text}</SeeMedicalRecord>
 
@@ -55,7 +63,7 @@ export const SeeRecord = ({ onPressAppointment, text }) => {
 
 export const CardCancel = ({ onPressCancel, text }) => {
 
-    return(
+    return (
 
         <CancelCard onPress={onPressCancel}>{text}</CancelCard>
 
@@ -65,7 +73,7 @@ export const CardCancel = ({ onPressCancel, text }) => {
 
 export const CardCancelLess = ({ onPressCancel, text }) => {
 
-    return(
+    return (
 
         <CancelLessMargin onPress={onPressCancel}>{text}</CancelLessMargin>
 
@@ -75,7 +83,7 @@ export const CardCancelLess = ({ onPressCancel, text }) => {
 
 export const CardCancelLessLocal = ({ onPressCancel, text }) => {
 
-    return(
+    return (
 
         <CancelLocal onPress={onPressCancel}>{text}</CancelLocal>
 
@@ -85,16 +93,16 @@ export const CardCancelLessLocal = ({ onPressCancel, text }) => {
 
 export const CardBackLess = ({ onPressCancel, text }) => {
 
-    return(
+    return (
         <CancelBackMargin onPress={onPressCancel}>{text} </CancelBackMargin>
 
     )
 
 }
 
-export const DescripritionModalSmall2 = ({text }) => {
+export const DescripritionModalSmall2 = ({ text }) => {
 
-    return(
+    return (
 
         <SmallDescriptionModal2>{text}</SmallDescriptionModal2>
 
@@ -102,9 +110,9 @@ export const DescripritionModalSmall2 = ({text }) => {
 
 }
 
-export const DescripritionModalSmall = ({text }) => {
+export const DescripritionModalSmall = ({ text }) => {
 
-    return(
+    return (
 
         <SmallDescriptionModal>{text}</SmallDescriptionModal>
 
@@ -114,7 +122,7 @@ export const DescripritionModalSmall = ({text }) => {
 
 export const TextBarNormal = ({ onPress, text }) => {
 
-    return(
+    return (
 
         <SmallDescriptionModal onPress={onPress}>{text}</SmallDescriptionModal>
 
@@ -124,7 +132,7 @@ export const TextBarNormal = ({ onPress, text }) => {
 
 export const RecordsCancelButton = ({ onPress, text }) => {
 
-    return(
+    return (
 
         <CancelButtonRecords onPress={onPress}>{text}</CancelButtonRecords>
 

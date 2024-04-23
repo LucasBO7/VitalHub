@@ -22,24 +22,34 @@ namespace WebAPI.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok(_medicoRepository.ListarTodos());
+            try
+            {
+                return Ok(_medicoRepository.ListarTodos());
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpGet("BuscarPorId")]
         public IActionResult GetById(Guid id)
         {
+<<<<<<< HEAD
 
             return Ok(_medicoRepository.BuscarPorId(id)); ;
+=======
+            try
+            {
+                return Ok(_medicoRepository.BuscarPorId(id));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+>>>>>>> develop
         }
 
-        [Authorize]
-        [HttpPut]
-        public IActionResult AtualizarPerfil(MedicoViewModel medico)
-        {
-            Guid idUsuario = Guid.Parse(HttpContext.User.Claims.First(c => c.Type == JwtRegisteredClaimNames.Jti).Value);
-
-            return Ok(_medicoRepository.AtualizarPerfil(idUsuario, medico));
-        }
 
         [HttpPost]
         public IActionResult Post(MedicoViewModel medicoModel)
@@ -69,17 +79,52 @@ namespace WebAPI.Controllers
         [HttpGet("BuscarPorIdClinica")]
         public IActionResult GetByIdClinica(Guid id)
         {
+            try
+            {
+                return Ok(_medicoRepository.ListarPorClinica(id)); ;
 
+<<<<<<< HEAD
             return Ok(_medicoRepository.ListarPorClinica(id)); ;
 
 
 
+=======
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+>>>>>>> develop
         }
 
         [HttpGet("BuscarPorData")]
-        public IActionResult BuscarPorData(DateTime data, Guid id)
+        public IActionResult GetByDate(DateTime data, Guid id)
         {
-            return Ok(_medicoRepository.BuscarPorData(data, id));
+            try
+            {
+                return Ok(_medicoRepository.BuscarPorData(data, id));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [Authorize]
+        [HttpPut]
+        public IActionResult UpdateProfile(MedicoViewModel medico)
+        {
+            try
+            {
+                Guid idUsuario = Guid.Parse(HttpContext.User.Claims.First(c => c.Type == JwtRegisteredClaimNames.Jti).Value);
+
+                return Ok(_medicoRepository.AtualizarPerfil(idUsuario, medico));
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
     }

@@ -8,6 +8,7 @@ import { Input } from '../../components/Input/Input'
 import { Cancel } from '../../components/Link/Link'
 import { Title } from '../../components/Title/StyleTitle'
 import { LogoCreateAccount } from '../../components/Images/StyleImages'
+import { useState } from 'react'
 
 
 export const CreateAccount = ({ navigation }) => {
@@ -16,20 +17,33 @@ export const CreateAccount = ({ navigation }) => {
     const [senha, setSenha] = useState("")
     const [nome, setNome] = useState("")
 
+    const [user, setUser] = useState({
+        idTipoUsuario: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        nome: null,
+        email: null,
+        senha: null,
+        dataNascimento: "2024-04-22T18:09:28.308Z",
+        rg: null,
+        cpf: null,
+        cep: null,
+        foto: null
+    });
+
     async function HandleCadastro() {
         try {
-            const response = await api.post("/Pacientes", {
-                email: email,
-                senha: senha,
-                nome: nome,
-                IdTipoUsuario: "570998FF-66A6-4752-A875-2001F6DD36B4"
-            })
-
-            if (!response.data.success) {
-                throw new ('Cadastrado, yeah');
-            }
-
-            //Cadastrou-se e foi para a Login
+            await api.post("/Pacientes", {
+                idTipoUsuario: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                nome: null,
+                email: null,
+                senha: null,
+                dataNascimento: "2024-04-22T18:09:28.308Z",
+                rg: null,
+                cpf: null,
+                cep: null,
+                foto: null
+            }).then(
+                console.log('Sucesso!')
+            ).catch(console.log('Erro!'));
 
             navigation.navigate('Login');
         } catch (error) {
@@ -50,15 +64,27 @@ export const CreateAccount = ({ navigation }) => {
             <DescriptionPassword description={"Insira seu endereço de e-mail e senha para realizar seu cadastro."} />
 
             <Input
-                placeholder={"Usuário ou E-mail"}
+                placeholder={"Usuário"}
                 placeholderTextColor={'#49B3BA'}
                 onChangeText={(text) => {
+                    setUser({ user, nome: text })
+                }}
+            />
+
+            <Input
+                placeholder={"E-mail"}
+                placeholderTextColor={'#49B3BA'}
+                onChangeText={(text) => {
+                    setUser({ user, email: text })
                 }}
             />
             <Input
                 placeholder={"Senha"}
                 placeholderTextColor={'#49B3BA'}
                 secureTextEntry={true}
+                onChangeText={(text) => {
+                    setUser({ user, senha: text })
+                }}
             />
             <Input
                 placeholder={"Confirmar senha"}
@@ -66,7 +92,42 @@ export const CreateAccount = ({ navigation }) => {
                 secureTextEntry={true}
             />
 
-            <ButtonNormal text={"Cadastrar"} />
+            <Input
+                placeholder={"Data de nascimento"}
+                placeholderTextColor={'#49B3BA'}
+                secureTextEntry={true}
+                onChangeText={(text) => {
+                    setUser({ user, dataNascimento: text })
+                }}
+            />
+
+            <Input
+                placeholder={"RG"}
+                placeholderTextColor={'#49B3BA'}
+                secureTextEntry={true}
+                onChangeText={(text) => {
+                    setUser({ user, rg: text })
+                }}
+            />
+            <Input
+                placeholder={"CPF"}
+                placeholderTextColor={'#49B3BA'}
+                secureTextEntry={true}
+                onChangeText={(text) => {
+                    setUser({ user, rg: text })
+                }}
+            />
+
+            <Input
+                placeholder={"CEP"}
+                placeholderTextColor={'#49B3BA'}
+                secureTextEntry={true}
+                onChangeText={(text) => {
+                    setUser({ user, rg: text })
+                }}
+            />
+
+            <ButtonNormal text={"Cadastrar"} onPress={() => HandleCadastro()} />
 
             <Cancel onPress={() => { navigation.navigate("Login") }} />
 

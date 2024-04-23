@@ -8,6 +8,7 @@ namespace WebAPI.Interfaces
         public void Cadastrar(Usuario paciente);
         public Paciente BuscarPorId(Guid Id);
         public Paciente AtualizarPerfil(Guid id, PacienteViewModel paciente);
+<<<<<<< HEAD
 
 
                 
@@ -17,5 +18,8 @@ namespace WebAPI.Interfaces
 
         public List<Consulta> BuscarPorData(DateTime dataConsulta, Guid idPaciente);
 
+=======
+        public List<Consulta> BuscarPorData(DateTime dataConsulta, Guid id);
+>>>>>>> develop
     }
 }

@@ -2,7 +2,7 @@
 using WebAPI.Contexts;
 using WebAPI.Domains;
 using WebAPI.Interfaces;
-using WebAPI.Utils;
+using WebAPI.Utils.Criptografia;
 using WebAPI.ViewModels;
 
 namespace WebAPI.Repositories
@@ -90,7 +90,11 @@ namespace WebAPI.Repositories
         {
             try
             {
+<<<<<<< HEAD
                 user.Senha = AzureBlobStorageHelper.GerarHash(user.Senha!);
+=======
+                user.Senha = Criptografia.GerarHash(user.Senha!);
+>>>>>>> develop
                 ctx.Usuarios.Add(user);
                 ctx.SaveChanges();
             }

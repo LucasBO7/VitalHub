@@ -5,10 +5,30 @@ import { DescriptionPassword } from "../../components/Descriptions/Descriptions"
 import { Input } from "../../components/Input/Input"
 import { Logo, Seta } from "../../components/Images/StyleImages"
 import { Title } from "../../components/Title/StyleTitle"
+<<<<<<< HEAD
+=======
+import api from "../../services/Services";
+>>>>>>> develop
 import { useState } from "react"
 
 
 export const ForgotPassword = ({ navigation }) => {
+    const [email, setEmail] = useState("");
+
+    async function SendEmail() {
+        navigation.navigate("CheckEmail", {
+            emailRecuperacao: "paladinogostoso@gmail.com"
+        });
+        // await api.post(`/RecuperarSenha?email=${email}`)
+        //     .then(() => {
+        //         navigation.navigate("CheckEmail", {
+        //             emailRecuperacao: email
+        //         });
+        //     })
+        //     .catch(error => {
+        //         console.log(error);
+        //     })
+    }
 
     const [email, setEmail] = useState()
 
@@ -39,10 +59,18 @@ export const ForgotPassword = ({ navigation }) => {
 
                 fieldValue={email}
                 onChangeText={(text) => setEmail(text)}
+<<<<<<< HEAD
 
             />
 
             <ButtonNormal text={"Continuar"} onPress={() => {sendEmail()}} />
+=======
+            />
+
+            <ButtonNormal text={"Continuar"} onPress={() => {
+                SendEmail();
+            }} />
+>>>>>>> develop
 
 
         </Container>

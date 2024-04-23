@@ -20,7 +20,8 @@ import {
   BlockedSmallButton,
   ButtonLarge,
 } from "../../components/Button/Button";
-import { userDecodeToken, userTokenLogout } from "../../utils/Auth";
+
+import { tokenClear , userDecodeToken, userTokenLogout } from "../../utils/Auth";
 import moment from "moment";
 import { ActivityIndicator } from "react-native";
 
