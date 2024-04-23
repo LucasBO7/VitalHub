@@ -29,12 +29,13 @@ export const CheckEmail = ({ navigation, route }) => {
     }
 
     async function ValidarCodigo() {
+        console.log(`Coiso: ${`/RecuperarSenha/ValidarCodigoRecuperacaoSenha?email=${route.params.emailRecuperacao}&codigo=${codigo}`}`);
         await api.post(`/RecuperarSenha/ValidarCodigoRecuperacaoSenha?email=${route.params.emailRecuperacao}&codigo=${codigo}`)
             .then(() => {
                 navigation.replace("RedefinePassword", { emailRecuperacao: route.params.emailRecuperacao });
             })
             .catch(error => {
-                console.log(error);
+                console.log('Erro aqui: ' + error);
             });
     }
 
