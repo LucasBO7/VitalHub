@@ -74,8 +74,10 @@ builder.Services.AddSwaggerGen(options =>
         {
             Name = "Senai Informática"
         }
+
     });
 
+    options.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
 
 
     //Usando a autenticaçao no Swagger
@@ -148,6 +150,8 @@ app.UseSwaggerUI(options =>
 });
 
 app.UseCors("CorsPolicy");
+
+app.UseDeveloperExceptionPage();
 
 app.UseHttpsRedirection();
 
