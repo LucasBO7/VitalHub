@@ -31,6 +31,8 @@ export default function Cam({ navigation }) {
 
     const [zoom, setZoom] = useState(0)
 
+    const [lastPhoto, setLastPhoto] = useState(null);
+
     useEffect(() => {
 
         (async () => {
@@ -61,6 +63,14 @@ export default function Cam({ navigation }) {
 
         setOpenModal(false)
 
+    }
+
+    async function GetLatestPhoto() {
+        const assets = await MediaLibrary.getAssetsAsync({ sortBy: [[MediaLibrary.SortBy.creationTime, false]], first: 1 });
+
+        if (assets.length > 0) {
+            setLastPhoto(assets[0].uri);
+        }
     }
 
     async function UploadPhoto() {

@@ -10,7 +10,7 @@ import {
   DescripritionForgot,
 } from "../../components/Descriptions/StyledDescriptions";
 import { InputBox } from "../../components/InputBox/InputBox";
-import { ImagemPerfilPaciente } from "../../components/Images/StyleImages";
+import { ImageView, ImagemPerfilPaciente } from "../../components/Images/StyleImages";
 import { TitleProfile } from "../../components/Title/StyleTitle";
 import { LargeButton, NormalButton } from "../../components/Button/StyleButton";
 import { ButtonText } from "../../components/ButtonText/StyleButtonText";
@@ -21,9 +21,13 @@ import {
   ButtonLarge,
 } from "../../components/Button/Button";
 
-import { tokenClear , userDecodeToken, userTokenLogout } from "../../utils/Auth";
+import { tokenClear, userDecodeToken, userTokenLogout } from "../../utils/Auth";
 import moment from "moment";
-import { ActivityIndicator } from "react-native";
+import { ActivityIndicator, View } from "react-native";
+
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { ButtonCamera } from "../../components/Button/StyleButton";
+import { Camera } from "expo-camera";
 
 export const PatientProfile = ({ navigation }) => {
   const [cep, setCep] = useState("");
@@ -127,7 +131,13 @@ export const PatientProfile = ({ navigation }) => {
       {
         patientUser != null ? (
           <Container>
-            <ImagemPerfilPaciente source={require("../../assets/ney.webp")} />
+            <ImageView>
+              <ImagemPerfilPaciente source={require("../../assets/ney.webp")} />
+
+              <ButtonCamera onPress={() => navigation.navigate("Camera")}>
+                <MaterialCommunityIcons name="camera-plus" size={20} color="#FBFBFB"/>
+              </ButtonCamera>
+            </ImageView>
 
             <TitleProfile>{patientUser.idNavigation.nome}</TitleProfile>
 
