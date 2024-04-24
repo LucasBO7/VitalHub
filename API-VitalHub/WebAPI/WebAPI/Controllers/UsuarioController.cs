@@ -50,7 +50,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpPut("AlterarFotoPerfil")]
-        public async Task<IActionResult> UploadProfileImage(Guid id, UsuarioViewModel user)
+        public async Task<IActionResult> UploadProfileImage(Guid id,[FromForm] UsuarioViewModel user)
         {
             try
             {
@@ -66,7 +66,7 @@ namespace WebAPI.Controllers
                 var connectionString = "DefaultEndpointsProtocol=https;AccountName=blobvitalhubgrupo9lucas;AccountKey=HkZ7y53ynW0tBGwN4THDHaNqsqK/re+Pf7JYsl+X3d43BpkazDCSCxDxvvZC1jkpIJJJkNkHf62B+AStDAOLMw==;EndpointSuffix=core.windows.net";
 
                 // Nome do Blob
-                var containerName = "containervitalhubtarde";
+                var containerName = "containervitalhubtardeg9";
 
                 // Realiza o upload de imagem e guarda a url da imagem na variável
                 string photoUrl = await AzureBlobStorageHelper.UploadImageBlobAsync(user.Arquivo!, connectionString, containerName);
@@ -75,7 +75,7 @@ namespace WebAPI.Controllers
                 // usuarioBuscado.Foto = photoUrl;
                 usuarioRepository.AtualizarFoto(id, photoUrl);
 
-                return Ok();
+                return Ok(photoUrl);
             }
             catch (Exception exc)
             {

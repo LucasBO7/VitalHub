@@ -16,8 +16,11 @@ import { Entypo } from '@expo/vector-icons';
 import { ButtonLargeConfirmModal } from '../Button/Button';
 import { CardCancelLess } from '../Descriptions/Descriptions';
 
+import { LastPhoto } from '../Images/StyleImages';
 
-export default function Cam({ navigation }) {
+import * as ImagePicker from 'expo-image-picker';
+
+export default function Cam({ navigation, route }) {
 
     const cameraRef = useRef(null)
 
@@ -42,7 +45,7 @@ export default function Cam({ navigation }) {
             const { status: mediaStatus } = await MediaLibrary.requestPermissionsAsync();
 
         })();
-
+        GetLatestPhoto();
     }, [])
 
 
@@ -66,10 +69,22 @@ export default function Cam({ navigation }) {
     }
 
     async function GetLatestPhoto() {
-        const assets = await MediaLibrary.getAssetsAsync({ sortBy: [[MediaLibrary.SortBy.creationTime, false]], first: 1 });
+        const { assets } = await MediaLibrary.getAssetsAsync({ sortBy: [[MediaLibrary.SortBy.creationTime, false]], first: 1 });
 
         if (assets.length > 0) {
             setLastPhoto(assets[0].uri);
+        }
+    }
+
+    async function SelectImageGallery() {
+        const result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            quality: 1
+        });
+
+        if (!result.canceled) {
+            setPhoto(result.assets[0].uri);
+            setOpenModal(true);
         }
     }
 
@@ -89,8 +104,10 @@ export default function Cam({ navigation }) {
 
         //     });
 
-        console.log(photo)
-        navigation.navigate("ViewPrescription", { photoUri: photo, clearPhoto: ClearPhoto });
+        // console.log(photo)
+        // navigation.navigate("ViewPrescription", { photoUri: photo, clearPhoto: ClearPhoto });
+        setOpenModal(false);
+        navigation.navigate("PatientProfile", { route: route, navigation: navigation });
 
     }
 
@@ -124,6 +141,21 @@ export default function Cam({ navigation }) {
                         </TouchableOpacity>
 
                         <View style={styles.viewFlip}>
+
+                            {
+                                lastPhoto != null
+                                    ? (
+                                        <TouchableOpacity onPress={() => {
+                                            SelectImageGallery();
+                                        }}>
+                                            <LastPhoto
+                                                source={{ uri: lastPhoto }}
+                                            />
+                                        </TouchableOpacity>
+                                    ) : (
+                                        null
+                                    )
+                            }
 
                             <TouchableOpacity
                                 style={styles.btnFlip}

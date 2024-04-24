@@ -33,7 +33,13 @@ export const ImagemPerfilPaciente = styled.Image`
  margin-bottom: 27px;
 `
 
-export const ImageView = styled.View `
+export const LastPhoto = styled.Image`
+    width: 40px;
+    height: 40px;
+    border-radius: 5px;
+`;
+
+export const ImageView = styled.View`
 width: 100%;
 height: fit-content;
 
