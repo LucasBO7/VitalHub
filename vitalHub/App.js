@@ -30,11 +30,31 @@ import { ViewPrescription } from "./src/screens/ViewPrescription/ViewPrescriptio
 import Splash from "./src/screens/Splash/Splash";
 import { DoctorMain, Main } from "./src/components/Main/Main";
 import Camera from "./src/components/Camera/Camera";
+import * as MediaLibrary from 'expo-media-library';
+import * as ImagePicker from 'expo-image-picker';
+import { useEffect } from "react";
+
 
 const Stack = createNativeStackNavigator();
 
 
+
+
 export default function App() {
+
+  
+
+  async function requestGaleria() {
+    await MediaLibrary.requestPermissionsAsync();
+ 
+    await ImagePicker.requestMediaLibraryPermissionsAsync();
+ }
+
+ useEffect(() => {
+  requestGaleria();
+  // requestCamera();
+  // resquetLocation();
+ }, []);
 
   let [fontsLoaded, fontError] = useFonts({
     MontserratAlternates_500Medium,
