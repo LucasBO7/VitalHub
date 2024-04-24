@@ -51,7 +51,7 @@ namespace WebAPI.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpPost("ValidarCodigoRecuperacaoSenha")]
         public async Task<IActionResult> ValidatePasswordRecoveryCode(string email, int codigo)
         {
             try

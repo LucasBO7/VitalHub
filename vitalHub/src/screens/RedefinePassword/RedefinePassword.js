@@ -8,8 +8,25 @@ import { Input } from '../../components/Input/Input'
 import { Close, Logo } from '../../components/Images/StyleImages'
 import { Title } from '../../components/Title/StyleTitle'
 import { useState } from 'react'
+import api from '../../services/Services'
 
-export const RedefinePassword = () => {
+export const RedefinePassword = ({ navigation, route }) => {
+    const [senha, setSenha] = useState();
+    const [confirmar, setConfirmar] = useState();
+
+    async function ChangePassword() {
+        if (senha === confirmar) {
+            await api.post(`/Usuario/AlterarSenha?email=${route.params.emailRecuperacao}`, {
+                senhaNova: senha
+            }).then(() => {
+                navigation.replace("Login")
+            }).catch(error => {
+                console.log(error);
+            })
+        } else {
+            alert("Senhas incompatíveis!");
+        }
+    }
 
 
 
@@ -30,16 +47,26 @@ export const RedefinePassword = () => {
                 placeholder={"Nova Senha"}
                 placeholderTextColor={'#49B3BA'}
                 secureTextEntry={true}
+
+                fieldValue={senha}
+                onChangeText={(text) => {
+                    setSenha(text)
+                }}
             />
 
             <Input
                 placeholder={"Confirmar nova senha"}
                 placeholderTextColor={'#49B3BA'}
                 secureTextEntry={true}
+
+                fieldValue={confirmar}
+                onChangeText={(text) => {
+                    setConfirmar(text)
+                }}
             />
 
-            <ButtonNormal text={"Confirmar nova senha"}/>
-            
+            <ButtonNormal onPress={() => ChangePassword()} text={"Confirmar nova senha"} />
+
         </Container>
 
     )

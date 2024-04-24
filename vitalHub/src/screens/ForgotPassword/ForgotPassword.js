@@ -16,18 +16,18 @@ export const ForgotPassword = ({ navigation }) => {
     const [email, setEmail] = useState("");
 
     async function SendEmail() {
-        navigation.navigate("CheckEmail", {
-            emailRecuperacao: "paladinogostoso@gmail.com"
-        });
-        // await api.post(`/RecuperarSenha?email=${email}`)
-        //     .then(() => {
-        //         navigation.navigate("CheckEmail", {
-        //             emailRecuperacao: email
-        //         });
-        //     })
-        //     .catch(error => {
-        //         console.log(error);
-        //     })
+        // navigation.navigate("CheckEmail", {
+        //     emailRecuperacao: email
+        // });
+        await api.post(`/RecuperarSenha?email=${email}`)
+            .then(() => {
+                navigation.navigate("CheckEmail", {
+                    emailRecuperacao: email
+                });
+            })
+            .catch(error => {
+                console.log(error);
+            })
     }
 
     const [email, setEmail] = useState()
