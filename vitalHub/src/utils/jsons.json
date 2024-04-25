@@ -77,8 +77,6 @@
     },
     "rg": "351885468"
 }
-
-
 // _________________________________BUSCARPORID - MEDICO_____________________________________________
 {
     "id": "5031ee4c-424c-43ce-b0ae-834ba80faab0",
@@ -94,4 +92,52 @@
         "foto": "string"
     },
     "medicosClinicas": []
+}{
+    "key": "Camera-kpRTzSPmE9X2yncoGBcGc",
+    "name": "Camera",
+    "params": {
+        "navigation": {
+            "addListener": [Function addListener
+            ],
+            "canGoBack": [Function canGoBack
+            ],
+            "dispatch": [Function dispatch
+            ],
+            "getId": [Function getId
+            ],
+            "getParent": [Function getParent
+            ],
+            "getState": [Function anonymous
+            ],
+            "goBack": [Function anonymous
+            ],
+            "isFocused": [Function isFocused
+            ],
+            "navigate": [Function anonymous
+            ],
+            "pop": [Function anonymous
+            ],
+            "popToTop": [Function anonymous
+            ],
+            "push": [Function anonymous
+            ],
+            "removeListener": [Function removeListener
+            ],
+            "replace": [Function anonymous
+            ],
+            "reset": [Function anonymous
+            ],
+            "setOptions": [Function setOptions
+            ],
+            "setParams": [Function anonymous
+            ]
+        },
+        "route": {
+            "navigation": [Object
+            ],
+            "route": [Object
+            ]
+        }
+    },
+    "path": undefined
 }

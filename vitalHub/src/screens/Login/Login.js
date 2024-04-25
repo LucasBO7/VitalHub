@@ -16,8 +16,13 @@ import { userDecodeToken } from "../../utils/Auth";
 import { faL } from "@fortawesome/free-solid-svg-icons";
 
 export const Login = ({ navigation }) => {
+<<<<<<< HEAD
   const [email, setEmail] = useState("lucas@gmail.com");
   const [senha, setSenha] = useState("lucas123");
+=======
+  const [email, setEmail] = useState("Lucas@gmail.com");
+  const [senha, setSenha] = useState("Lucas123");
+>>>>>>> lucas
   const [isLoading, setIsLoading] = useState(false);
   const [isInputDataValid, setIsInputDataValid] = useState(true); // Guardo o estado do input (se estiver errado, mostrar mensagem de erro)
 

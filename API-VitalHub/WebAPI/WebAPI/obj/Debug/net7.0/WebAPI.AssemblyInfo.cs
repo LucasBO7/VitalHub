@@ -15,10 +15,14 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
 <<<<<<< HEAD
+<<<<<<< HEAD
 [assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9e13cfbca1a78d1d96bfda46a7858fb8f6db807a")]
 =======
 [assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6426020100cb48fe54156e9676f6d6b547e45ec3")]
 >>>>>>> origin/lucas
+=======
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+250e312e7b40a7ded516b1c0271ecc20eee85a92")]
+>>>>>>> lucas
 [assembly: System.Reflection.AssemblyProductAttribute("WebAPI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("WebAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

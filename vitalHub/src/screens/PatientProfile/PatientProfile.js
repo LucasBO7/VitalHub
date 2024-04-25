@@ -29,7 +29,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { ButtonCamera } from "../../components/Button/StyleButton";
 import { Camera } from "expo-camera";
 
-export const PatientProfile = ({ navigation }) => {
+export const PatientProfile = ({ navigation, route }) => {
   const [cep, setCep] = useState("");
   const [logradouro, setLogradouro] = useState("");
   const [cidade, setCidade] = useState("");
@@ -75,18 +75,49 @@ export const PatientProfile = ({ navigation }) => {
     }
   }
 
+  // Função para buscar os dados do usuário
   async function profileLoad() {
     const token = await userDecodeToken();
 
     if (token) {
-      console.log('TÁ AQUI');
       await getUser(token);
     }
   }
 
+  // Função para alterar a imagem do usuário
+  async function ChangePerfilPhoto() {
+    const formData = new FormData();
+    formData.append("Arquivo", {
+      uri: route.params.photoUri,
+      name: `image.${route.params.photoUri.split(".").pop()}`,
+      type: `image/${route.params.photoUri.split(".").pop()}`
+    })
+
+
+    await api.put(`/Usuario/AlterarFotoPerfil?id=${patientUser.id}`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data"
+      }
+    }).then(async response => {
+      console.log(`Dados: ${response.data}`);
+
+      setPatientUser({ ...patientUser, foto: route.params.photoUri })
+
+    }).catch(error => {
+      console.log(`Erro na imagem: ${error}`);
+    })
+  }
+
+  // Carregar os dados contidos dentro do token
   useEffect(() => {
     profileLoad();
   }, []);
+
+  useEffect(() => {
+    if (route.params != null) {
+      ChangePerfilPhoto();
+    }
+  }, [route.params])
 
   useEffect(() => {
     const getCep = async () => {
@@ -132,10 +163,10 @@ export const PatientProfile = ({ navigation }) => {
         patientUser != null ? (
           <Container>
             <ImageView>
-              <ImagemPerfilPaciente source={require("../../assets/ney.webp")} />
+              <ImagemPerfilPaciente source={{ uri: patientUser.foto }} />
 
-              <ButtonCamera onPress={() => navigation.navigate("Camera")}>
-                <MaterialCommunityIcons name="camera-plus" size={20} color="#FBFBFB"/>
+              <ButtonCamera onPress={() => navigation.navigate("Camera", { navigation: navigation, route: route })}>
+                <MaterialCommunityIcons name="camera-plus" size={20} color="#FBFBFB" />
               </ButtonCamera>
             </ImageView>
 
