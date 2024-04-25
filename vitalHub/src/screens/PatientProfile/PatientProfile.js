@@ -87,12 +87,10 @@ export const PatientProfile = ({ navigation, route }) => {
   // Função para alterar a imagem do usuário
   async function ChangePerfilPhoto() {
     const formData = new FormData();
-    console.log('Rota valor:');
-    console.log(route.params.route);
     formData.append("Arquivo", {
-      uri: route.params,
-      name: `image.${route.params.split(".")[1]}`,
-      type: `image/${route.params.split(".")[1]}`
+      uri: route.params.photoUri,
+      name: `image.${route.params.photoUri.split(".").pop()}`,
+      type: `image/${route.params.photoUri.split(".").pop()}`
     })
 
 
@@ -102,6 +100,9 @@ export const PatientProfile = ({ navigation, route }) => {
       }
     }).then(async response => {
       console.log(`Dados: ${response.data}`);
+
+      setPatientUser({ ...patientUser, foto: route.params.photoUri })
+
     }).catch(error => {
       console.log(`Erro na imagem: ${error}`);
     })
@@ -162,7 +163,7 @@ export const PatientProfile = ({ navigation, route }) => {
         patientUser != null ? (
           <Container>
             <ImageView>
-              <ImagemPerfilPaciente source={require("../../assets/ney.webp")} />
+              <ImagemPerfilPaciente source={{ uri: patientUser.foto }} />
 
               <ButtonCamera onPress={() => navigation.navigate("Camera", { navigation: navigation, route: route })}>
                 <MaterialCommunityIcons name="camera-plus" size={20} color="#FBFBFB" />

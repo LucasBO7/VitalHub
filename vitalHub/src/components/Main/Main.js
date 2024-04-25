@@ -11,11 +11,17 @@ import { PatientProfile } from "../../screens/PatientProfile/PatientProfile";
 import { PatientConsultation } from "../../screens/PatientConsultation/PatientConsultation";
 
 import { DoctorConsultation } from "../../screens/DoctorConsultation/DoctorConsultation";
+import { useEffect } from "react";
 
 const bottomTab = createBottomTabNavigator();
 
 export const Main = ({ navigation, route }) => {
   const routeParams = route.params;
+  // console.log(route);
+
+  useEffect(() => {
+    console.log(route);
+  }, [route])
 
   return (
 

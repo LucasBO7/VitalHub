@@ -89,26 +89,24 @@ export default function Cam({ navigation, route }) {
     }
 
     async function UploadPhoto() {
-
-        //   if (photo) {
+        // if (photo) {
         //     await MediaLibrary.createAssetAsync(photo).then(() => {
-        //       console.log(photo);
+        //         console.log(photo);
 
-        //     //    Alert.alert('Sucesso', ('foto salva na galeria'));
+        //         //    Alert.alert('Sucesso', ('foto salva na galeria'));
 
-        //       navigation.navigate("ViewPrescription", { photoUri: photo.uri });
+        //         // navigation.navigate("ViewPrescription", { photoUri: photo.uri });
         //     }).catch(error => {
-        //       // alert("erro ao processar" + error);
-        //       console.log(error)
-
-
+        //         alert("erro ao processar" + error);
+        //         // console.log(error)
         //     });
-
+        // }
         // console.log(photo)
         // navigation.navigate("ViewPrescription", { photoUri: photo, clearPhoto: ClearPhoto });
-        setOpenModal(false);
-        navigation.navigate("PatientProfile", { route: route, navigation: navigation });
 
+        setOpenModal(false);
+        navigation.navigate("Main", { photoUri: photo });
+        // navigation.navigate("PatientProfile", { route: route, navigation: navigation });
     }
 
     const changeZoom = (event) => {
@@ -157,6 +155,7 @@ export default function Cam({ navigation, route }) {
                                     )
                             }
 
+                            {/* Reverse Camera - Button */}
                             <TouchableOpacity
                                 style={styles.btnFlip}
                                 onPress={() => setTipoCamera(tipoCamera == CameraType.front ? CameraType.back : CameraType.front)}
@@ -166,11 +165,13 @@ export default function Cam({ navigation, route }) {
 
                             </TouchableOpacity>
 
+                            {/* Shot Camera - Button */}
                             <TouchableOpacity style={styles.btnCapture} onPress={() => CapturePhoto()}>
                                 <Entypo name="circle" size={45} color="#404040" />
                                 {/* #E8E8E8 */}
                             </TouchableOpacity>
 
+                            {/* Flash Camera - Button */}
                             <TouchableOpacity
                                 style={styles.btnFlash}
                                 onPress={() => setFlashMode(flashMode === Camera.Constants.FlashMode.off

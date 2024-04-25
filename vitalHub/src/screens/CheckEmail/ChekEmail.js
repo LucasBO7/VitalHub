@@ -30,6 +30,7 @@ export const CheckEmail = ({ navigation, route }) => {
 
     async function ValidarCodigo() {
         console.log(`Coiso: ${`/RecuperarSenha/ValidarCodigoRecuperacaoSenha?email=${route.params.emailRecuperacao}&codigo=${codigo}`}`);
+        console.log(route);
         await api.post(`/RecuperarSenha/ValidarCodigoRecuperacaoSenha?email=${route.params.emailRecuperacao}&codigo=${codigo}`)
             .then(() => {
                 navigation.replace("Main", { uriPhoto: uri, screen: "PatientConsultation" });
@@ -92,7 +93,7 @@ export const CheckEmail = ({ navigation, route }) => {
             </BoxNumeric>
 
             <ButtonNormal text={"Confirmar"} onPress={() => {
-                ValidarCodigo()
+                ValidarCodigo();
             }}
             />
 
