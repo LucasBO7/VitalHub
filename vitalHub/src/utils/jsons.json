@@ -141,3 +141,21 @@
     },
     "path": undefined
 }
+// ____________________
+{
+    "route": {
+        "key": "ViewPrescription-Z4_uIVcPUp5QG8l9h3OVr",
+        "name": "ViewPrescription",
+        "params": {
+            "consultDescricao": "Consulta tranquila onde o paciente dizia estar com nariz entupido.",
+            "consultDiagnostico": "Em evolução",
+            "doctorCrm": "1321sp",
+            "doctorEspecialidade": "item.medicoClinica.medico.idNavigation.especialidade",
+            "doctorId": "fddc8a4c-3de9-4a21-b822-61ed600fe592",
+            "doctorName": "Tiago Hugo da Mata",
+            "prescriptionId": "43fa657c-04c8-4889-a2b9-1f129b2cf2b3",
+            "viewToOpen": "ViewPrescription"
+        },
+        "path": undefined
+    }
+}

@@ -103,9 +103,20 @@ export default function Cam({ navigation, route }) {
         // }
         // console.log(photo)
         // navigation.navigate("ViewPrescription", { photoUri: photo, clearPhoto: ClearPhoto });
-
         setOpenModal(false);
-        navigation.navigate("Main", { photoUri: photo });
+        {
+            route.params.viewToOpen == "ViewPrescription"
+                ? console.log('PRESCRIPTION')
+                : console.log("MAIN");
+            // route.params.viewToOpen == "ViewPrescription"
+            //     ? console.log('ViewPrescription')
+            //     : console.log('Main')
+            // console.log(route);
+            // viewToOpen == "ViewPrescription"
+            //     ? navigation.navigate("ViewPrescription", { navigation: navigation, route: route, uriCameraCapture: route.params.photoUri })
+            //     : console.log("MAIN");
+
+        }
         // navigation.navigate("PatientProfile", { route: route, navigation: navigation });
     }
 
