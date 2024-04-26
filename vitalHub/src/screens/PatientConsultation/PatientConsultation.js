@@ -1,4 +1,4 @@
-import { StatusBar } from "react-native";
+ import { StatusBar } from "react-native";
 import {
   BoxDataHome,
   BoxHome,
@@ -146,6 +146,7 @@ export const PatientConsultation = ({ navigation, route }) => {
                   doctorCrm: item.medicoClinica.medico.crm,
                   consultDescricao: item.descricao,
                   consultDiagnostico: item.diagnostico,
+                  consultPrescription: item.receita.medicamento
                 });
               }}
 

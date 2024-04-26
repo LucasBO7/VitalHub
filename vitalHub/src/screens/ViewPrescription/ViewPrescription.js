@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useTransition } from "react"
 import { SendButton } from "../../components/Button/Button"
 import { ButtonSend } from "../../components/Button/StyleButton"
 import { BoxAgeEmail, BoxBtn, BoxDescription, BoxViewImageImport, Container, ScrollContainer, ViewImageImport } from "../../components/Container/StyleContainer"
@@ -14,18 +14,9 @@ import api from "../../services/Services"
 
 // import { useRoute } from '@react-navigation/native';
 
-export const ViewPrescription = ({ navigation, route, uriCameraCapture = null }) => {
-
-    // const { photoUri } = route.params;
-
-    // useEffect(() => {
-    //     // console.log(photoUri)
-    //     console.log("sada") 
-    //     console.log(route.params)
-    // }, [route])
-
-    // const [uriCameraCapture, setUriCameraCapture] = useState();
+export const ViewPrescription = ({ navigation, route }) => {
     const [descricaoExame, setDescricaoExame] = useState();
+    const [uriCameraCapture, setUriCameraCapture] = useState();
 
     // Busca os dados do médico da API (s)
     async function getDoctorInfos() {
@@ -35,10 +26,12 @@ export const ViewPrescription = ({ navigation, route, uriCameraCapture = null })
             });
     }
 
-
     useEffect(() => {
+        console.log(`params`);
+        console.log(route.params.photoUri);
+        route.params.photoUri != undefined ? setDescricaoExame(route.params.photoUri) : undefined;
         getDoctorInfos();
-        AddValue();
+        GetScreen();
     })
 
 <<<<<<< HEAD
@@ -57,6 +50,8 @@ export const ViewPrescription = ({ navigation, route, uriCameraCapture = null })
                 "Content-Type": "multipart/form-data"
             }
         }).then(response => {
+            console.log('OBJETO');
+            console.log(response.data);
             setDescricaoExame(descricaoExame + "\n" + response.data.descricao)
 
         }).catch(error => {
@@ -66,13 +61,19 @@ export const ViewPrescription = ({ navigation, route, uriCameraCapture = null })
 
     useEffect(() => {
         if (uriCameraCapture) {
-            InserirExame()
+            InserirExame();
         }
     }, [uriCameraCapture])
 
-    async function AddValue() {
+    async function GetScreen() {
         route.params.viewToOpen = "ViewPrescription";
     }
+
+    useEffect(() => {
+        console.log('PRESCRIÇÃO');
+        console.log(route);
+    }, [route])
+
 
 
 =======
@@ -123,7 +124,7 @@ export const ViewPrescription = ({ navigation, route, uriCameraCapture = null })
                         editable={false}
                         fieldWidth={90}
                         // RESTA INSERIR NA API
-                        fieldValue={'Prescrição...'}
+                        fieldValue={route.params.consultPrescription}
                     />
 
                     <BoxViewImageImport>
@@ -139,8 +140,10 @@ export const ViewPrescription = ({ navigation, route, uriCameraCapture = null })
                     <BoxBtn>
                         <SendButton onPress={() => {
                             // route.params.viewToOpen = "ViewPrescription";
+                            console.log('__________ROTE BATATAAA___________');
+                            console.log(route.params);
 
-                            navigation.navigate("Camera", { route: route });
+                            navigation.navigate("Camera", { viewData: route.params });
                         }} text={"Enviar"}
                         />
                         <CardCancel onPressCancel={() => { navigation.replace("Main") }} text={"Cancelar"} />
@@ -154,6 +157,7 @@ export const ViewPrescription = ({ navigation, route, uriCameraCapture = null })
                         placeholder={"Resultado do exame"}
                         editable={false}
                         fieldWidth={90}
+                        fieldValue={descricaoExame}
                     />
 
                     <CardBackLess onPressCancel={() => { navigation.navigate("PatientConsultation") }} text={"Voltar"} />
