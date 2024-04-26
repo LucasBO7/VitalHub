@@ -41,6 +41,7 @@ export const ViewPrescription = ({ navigation, route, uriCameraCapture = null })
         AddValue();
     })
 
+<<<<<<< HEAD
     // route.params.photoUri
     async function InserirExame() {
         const formData = new FormData();
@@ -74,10 +75,16 @@ export const ViewPrescription = ({ navigation, route, uriCameraCapture = null })
     }
 
 
+=======
+    async function name(params) {
+        
+    }
+
+>>>>>>> 89c0d86c3801c50f483d18045c204088faf08128
     return (
         <>
             <ScrollContainer>
-
+  
                 <Container>
 
                     <ViewImage source={require("../../assets/ney.webp")} />
