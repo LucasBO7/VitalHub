@@ -68,11 +68,16 @@ export const Main = ({ navigation, route }) => {
 
     ? */}
 
+      {/* <bottomTab.Screen
+        name="PatientConsultation"
+      >
+        {(props) => <PatientConsultation route={route} navigation={navigation} />}
+      </bottomTab.Screen> */}
+
       <bottomTab.Screen
         name="PatientConsultation"
         component={PatientConsultation}
       />
-
       {/* : */}
 
       <bottomTab.Screen
@@ -81,7 +86,7 @@ export const Main = ({ navigation, route }) => {
         {(props) => <PatientProfile route={route} navigation={navigation} />}
       </bottomTab.Screen>
 
-    </bottomTab.Navigator>
+    </bottomTab.Navigator >
   );
 };
 

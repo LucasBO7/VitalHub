@@ -22,7 +22,12 @@ export const Login = ({ navigation }) => {
 =======
   const [email, setEmail] = useState("Lucas@gmail.com");
   const [senha, setSenha] = useState("Lucas123");
+<<<<<<< HEAD
 >>>>>>> lucas
+=======
+  // const [email, setEmail] = useState("Lucas@gmail.com");
+  // const [senha, setSenha] = useState("Lucas123");
+>>>>>>> origin/lucas
   const [isLoading, setIsLoading] = useState(false);
   const [isInputDataValid, setIsInputDataValid] = useState(true); // Guardo o estado do input (se estiver errado, mostrar mensagem de erro)
 
@@ -33,7 +38,7 @@ export const Login = ({ navigation }) => {
       senha: senha
     }).then(async response => {
       setIsInputDataValid(true);
-      
+
       await AsyncStorage.setItem("token", JSON.stringify(response.data))
 
       const token = await userDecodeToken()

@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { SendButton } from "../../components/Button/Button"
 import { ButtonSend } from "../../components/Button/StyleButton"
 import { BoxAgeEmail, BoxBtn, BoxDescription, BoxViewImageImport, Container, ScrollContainer, ViewImageImport } from "../../components/Container/StyleContainer"
@@ -14,7 +14,7 @@ import api from "../../services/Services"
 
 // import { useRoute } from '@react-navigation/native';
 
-export const ViewPrescription = ({ navigation, route }) => {
+export const ViewPrescription = ({ navigation, route, uriCameraCapture = null }) => {
 
     // const { photoUri } = route.params;
 
@@ -24,6 +24,9 @@ export const ViewPrescription = ({ navigation, route }) => {
     //     console.log(route.params)
     // }, [route])
 
+    // const [uriCameraCapture, setUriCameraCapture] = useState();
+    const [descricaoExame, setDescricaoExame] = useState();
+
     // Busca os dados do médico da API (s)
     async function getDoctorInfos() {
         await api.get(`/Medicos/BuscarPorId?id=${route.params.doctorId}`)
@@ -32,9 +35,44 @@ export const ViewPrescription = ({ navigation, route }) => {
             });
     }
 
+
     useEffect(() => {
         getDoctorInfos();
+        AddValue();
     })
+
+    // route.params.photoUri
+    async function InserirExame() {
+        const formData = new FormData();
+        formData.append("ConsultaId", route.params.id);
+        formData.append("Imagem", {
+            uri: uriCameraCapture,
+            name: `image.${uriCameraCapture.split('.').pop()}`,
+            type: `image/${uriCameraCapture.split('.').pop()}`,
+        });
+
+        await api.post(`/Exame/Cadastrar`, formData, {
+            headers: {
+                "Content-Type": "multipart/form-data"
+            }
+        }).then(response => {
+            setDescricaoExame(descricaoExame + "\n" + response.data.descricao)
+
+        }).catch(error => {
+            console.log(error);
+        })
+    }
+
+    useEffect(() => {
+        if (uriCameraCapture) {
+            InserirExame()
+        }
+    }, [uriCameraCapture])
+
+    async function AddValue() {
+        route.params.viewToOpen = "ViewPrescription";
+    }
+
 
     return (
         <>
@@ -92,7 +130,12 @@ export const ViewPrescription = ({ navigation, route }) => {
                     </BoxViewImageImport>
 
                     <BoxBtn>
-                        <SendButton onPress={() => { navigation.navigate("Camera") }} text={"Enviar"} />
+                        <SendButton onPress={() => {
+                            // route.params.viewToOpen = "ViewPrescription";
+
+                            navigation.navigate("Camera", { route: route });
+                        }} text={"Enviar"}
+                        />
                         <CardCancel onPressCancel={() => { navigation.replace("Main") }} text={"Cancelar"} />
                     </BoxBtn>
 

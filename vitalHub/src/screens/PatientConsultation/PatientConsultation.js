@@ -26,7 +26,7 @@ import { userDecodeToken } from "../../utils/Auth";
 
 import api from "../../services/Services"
 
-export const PatientConsultation = ({ navigation }) => {
+export const PatientConsultation = ({ navigation, route }) => {
   const [user, setUser] = useState({
     name: '',
     id: ''
@@ -51,7 +51,7 @@ export const PatientConsultation = ({ navigation }) => {
   // Busca as Consultas do banco e guarda na const consults
   async function getAllConsults() {
     // console.log(`/Pacientes/BuscarPorData?dataConsulta=${selectedDate}&idPaciente=${user.id}`);
-    await api.get(`/Pacientes/BuscarPorData?dataConsulta=${selectedDate}&idPaciente=${user.id}`)
+    await api.get(`/Pacientes/BuscarPorData?data=${selectedDate}&id=${user.id}`)
       .then(
         response => {
           setConsults(response.data);
@@ -71,7 +71,6 @@ export const PatientConsultation = ({ navigation }) => {
 
   // STATES PARA OS MODAIS
   const [showModalCancel, setShowModalCancel] = useState(false);
-  const [showModalAppointment, setShowModalAppointment] = useState(false);
   const [showModalStethoscope, setShowModalStethoscope] = useState(false);
 
   const [showModal, setShowModal] = useState(false);
@@ -140,6 +139,7 @@ export const PatientConsultation = ({ navigation }) => {
               onPressCancel={() => setShowModalCancel(true)}
               onPressAppointment={() => {
                 navigation.navigate("ViewPrescription", {
+                  prescriptionId: item.id,
                   doctorId: item.medicoClinica.medico.id,
                   doctorName: item.medicoClinica.medico.idNavigation.nome,
                   doctorEspecialidade: 'item.medicoClinica.medico.idNavigation.especialidade',

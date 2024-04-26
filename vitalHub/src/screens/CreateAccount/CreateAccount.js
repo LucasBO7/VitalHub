@@ -12,11 +12,7 @@ import { useState } from 'react'
 
 
 export const CreateAccount = ({ navigation }) => {
-
-    const [email, setEmail] = useState("")
-    const [senha, setSenha] = useState("")
-    const [nome, setNome] = useState("")
-
+    const [confirmPassword, setConfirmPassword] = useState(null);
     const [user, setUser] = useState({
         idTipoUsuario: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
         nome: null,
@@ -90,6 +86,9 @@ export const CreateAccount = ({ navigation }) => {
                 placeholder={"Confirmar senha"}
                 placeholderTextColor={'#49B3BA'}
                 secureTextEntry={true}
+                onChangeText={(text) => {
+                    setConfirmPassword(text)
+                }}
             />
 
             <Input
