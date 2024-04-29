@@ -35,7 +35,19 @@ export const ModalStethoscope = ({
 
   const [consultStatus, setConsultStatus] = useState(0)
 
+  const [agendamento, setAgendamento] = useState(null)
+
+  async function handleContinue() {
+    await setShowModalStethoscope(false)
+
+    navigation.replace("SelecClinic", {agendamento : agendamento})
+  }
+
   return (
+    // onPress={() => ' CF8E1C18-EAD1-4D08-ABCF-84F7A0564E55'}
+    // onPress={() => '77C5A039-2BE0-4519-A3AF-C9D381168DF1'}
+    // onPress={() => '6316E329-B881-41A5-B7CE-EDF8FA04BEFC'}
+    
     <Modal {...rest} visible={visible} transparent={true} animationType="fade">
       <StethoscopeModal>
         <ModalStetContent>
@@ -46,6 +58,12 @@ export const ModalStethoscope = ({
             <ButtonHomeContainerStet>
               <FilterButtonStet
                 onPress={() => {
+                  setAgendamento({
+                    ...agendamento, //Manter as informacoes que ja existem dentro do state (Agendamento)
+                    prioridade : ' CF8E1C18-EAD1-4D08-ABCF-84F7A0564E55',
+                    prioridadeLabel : "Rotina"
+
+                  })
                   setSelected({ rotina: true });
                   setConsultStatus(0);
                 }}
@@ -75,6 +93,11 @@ export const ModalStethoscope = ({
 
           <LargeInputTextBoxStet
             placeholderTextColor={"#34898F"}
+            value={agendamento ? agendamento.localizacao : null}
+            onChangeText={(txt) => setAgendamento({
+                ...agendamento,
+                localizacao : txt
+            })}
             textLabel={"Informe a localização desejada"}
             placeholder={"Informe a localização"}
             editable={true}
@@ -82,10 +105,7 @@ export const ModalStethoscope = ({
 
           <FlexButtons>
             <ButtonLargeSelect
-              onPress={() => {
-                navigation.navigate("SelectClinic");
-                setShowModalStethoscope(false);
-              }}
+              onPress={() => {handleContinue() }}
               text={"Continuar"}
             />
 

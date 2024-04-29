@@ -19,19 +19,11 @@ export const DescriptionDoc = ({ description }) => {
     )
 }
 
-<<<<<<< HEAD
-export const EmailDescription = ({route}) => {
-=======
 export const EmailDescription = ({ route }) => {
->>>>>>> develop
 
     return (
 
-<<<<<<< HEAD
-        <DescripritionEmail>Digite o código de 4 dígitos enviado para <EmailText>username@email.com</EmailText>{route.params.emailRecuperacao}</DescripritionEmail>
-=======
         <DescripritionEmail>Digite o código de 4 dígitos enviado para <EmailText>{route.params.emailRecuperacao}</EmailText></DescripritionEmail>
->>>>>>> develop
 
     )
 

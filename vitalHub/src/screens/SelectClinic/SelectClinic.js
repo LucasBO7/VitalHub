@@ -13,7 +13,7 @@ import { CardCancelLess } from "../../components/Descriptions/Descriptions";
 import { useEffect, useState } from "react";
 import api from "../../services/Services";
 
-export const SelectCLinic = ({ navigation, onCardClick }) => {
+export const SelectCLinic = ({ navigation, onCardClick, route }) => {
   const dataItens = [
     {
       id: "fsdfsfsdasdf",
@@ -82,6 +82,10 @@ export const SelectCLinic = ({ navigation, onCardClick }) => {
   const handleSelectedCard = (id) => {
     setSelectedCardId(id);
   };
+
+  useEffect(() => {
+    console.log(route);
+  }, [route])
 
 
   return (
