@@ -36,10 +36,14 @@ export const ViewPrescription = ({ navigation, route }) => {
         getDoctorInfos();
     })
 
+    async function name(params) {
+        
+    }
+
     return (
         <>
             <ScrollContainer>
-
+  
                 <Container>
 
                     <ViewImage source={require("../../assets/ney.webp")} />

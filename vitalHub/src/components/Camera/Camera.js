@@ -16,8 +16,11 @@ import { Entypo } from '@expo/vector-icons';
 import { ButtonLargeConfirmModal } from '../Button/Button';
 import { CardCancelLess } from '../Descriptions/Descriptions';
 
+import { LastPhoto } from '../Images/StyleImages';
 
-export default function Cam({ navigation }) {
+import * as ImagePicker from 'expo-image-picker';
+
+export default function Cam({ navigation, route }) {
 
     const cameraRef = useRef(null)
 
@@ -31,6 +34,8 @@ export default function Cam({ navigation }) {
 
     const [zoom, setZoom] = useState(0)
 
+    const [lastPhoto, setLastPhoto] = useState(null);
+
     useEffect(() => {
 
         (async () => {
@@ -40,7 +45,7 @@ export default function Cam({ navigation }) {
             const { status: mediaStatus } = await MediaLibrary.requestPermissionsAsync();
 
         })();
-
+        GetLatestPhoto();
     }, [])
 
 
@@ -63,25 +68,45 @@ export default function Cam({ navigation }) {
 
     }
 
+    async function GetLatestPhoto() {
+        const { assets } = await MediaLibrary.getAssetsAsync({ sortBy: [[MediaLibrary.SortBy.creationTime, false]], first: 1 });
+
+        if (assets.length > 0) {
+            setLastPhoto(assets[0].uri);
+        }
+    }
+
+    async function SelectImageGallery() {
+        const result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            quality: 1
+        });
+
+        if (!result.canceled) {
+            setPhoto(result.assets[0].uri);
+            setOpenModal(true);
+        }
+    }
+
     async function UploadPhoto() {
-
-        //   if (photo) {
+        // if (photo) {
         //     await MediaLibrary.createAssetAsync(photo).then(() => {
-        //       console.log(photo);
+        //         console.log(photo);
 
-        //     //    Alert.alert('Sucesso', ('foto salva na galeria'));
+        //         //    Alert.alert('Sucesso', ('foto salva na galeria'));
 
-        //       navigation.navigate("ViewPrescription", { photoUri: photo.uri });
+        //         // navigation.navigate("ViewPrescription", { photoUri: photo.uri });
         //     }).catch(error => {
-        //       // alert("erro ao processar" + error);
-        //       console.log(error)
-
-
+        //         alert("erro ao processar" + error);
+        //         // console.log(error)
         //     });
+        // }
+        // console.log(photo)
+        // navigation.navigate("ViewPrescription", { photoUri: photo, clearPhoto: ClearPhoto });
 
-        console.log(photo)
-        navigation.navigate("ViewPrescription", { photoUri: photo, clearPhoto: ClearPhoto });
-
+        setOpenModal(false);
+        navigation.navigate("Main", { photoUri: photo });
+        // navigation.navigate("PatientProfile", { route: route, navigation: navigation });
     }
 
     const changeZoom = (event) => {
@@ -115,6 +140,22 @@ export default function Cam({ navigation }) {
 
                         <View style={styles.viewFlip}>
 
+                            {
+                                lastPhoto != null
+                                    ? (
+                                        <TouchableOpacity onPress={() => {
+                                            SelectImageGallery();
+                                        }}>
+                                            <LastPhoto
+                                                source={{ uri: lastPhoto }}
+                                            />
+                                        </TouchableOpacity>
+                                    ) : (
+                                        null
+                                    )
+                            }
+
+                            {/* Reverse Camera - Button */}
                             <TouchableOpacity
                                 style={styles.btnFlip}
                                 onPress={() => setTipoCamera(tipoCamera == CameraType.front ? CameraType.back : CameraType.front)}
@@ -124,11 +165,13 @@ export default function Cam({ navigation }) {
 
                             </TouchableOpacity>
 
+                            {/* Shot Camera - Button */}
                             <TouchableOpacity style={styles.btnCapture} onPress={() => CapturePhoto()}>
                                 <Entypo name="circle" size={45} color="#404040" />
                                 {/* #E8E8E8 */}
                             </TouchableOpacity>
 
+                            {/* Flash Camera - Button */}
                             <TouchableOpacity
                                 style={styles.btnFlash}
                                 onPress={() => setFlashMode(flashMode === Camera.Constants.FlashMode.off

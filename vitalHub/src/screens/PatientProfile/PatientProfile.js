@@ -10,7 +10,7 @@ import {
   DescripritionForgot,
 } from "../../components/Descriptions/StyledDescriptions";
 import { InputBox } from "../../components/InputBox/InputBox";
-import { ImagemPerfilPaciente } from "../../components/Images/StyleImages";
+import { ImageView, ImagemPerfilPaciente } from "../../components/Images/StyleImages";
 import { TitleProfile } from "../../components/Title/StyleTitle";
 import { LargeButton, NormalButton } from "../../components/Button/StyleButton";
 import { ButtonText } from "../../components/ButtonText/StyleButtonText";
@@ -21,11 +21,15 @@ import {
   ButtonLarge,
 } from "../../components/Button/Button";
 
-import { tokenClear , userDecodeToken, userTokenLogout } from "../../utils/Auth";
+import { tokenClear, userDecodeToken, userTokenLogout } from "../../utils/Auth";
 import moment from "moment";
-import { ActivityIndicator } from "react-native";
+import { ActivityIndicator, View } from "react-native";
 
-export const PatientProfile = ({ navigation }) => {
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { ButtonCamera } from "../../components/Button/StyleButton";
+import { Camera } from "expo-camera";
+
+export const PatientProfile = ({ navigation, route }) => {
   const [cep, setCep] = useState("");
   const [logradouro, setLogradouro] = useState("");
   const [cidade, setCidade] = useState("");
@@ -71,18 +75,49 @@ export const PatientProfile = ({ navigation }) => {
     }
   }
 
+  // Função para buscar os dados do usuário
   async function profileLoad() {
     const token = await userDecodeToken();
 
     if (token) {
-      console.log('TÁ AQUI');
       await getUser(token);
     }
   }
 
+  // Função para alterar a imagem do usuário
+  async function ChangePerfilPhoto() {
+    const formData = new FormData();
+    formData.append("Arquivo", {
+      uri: route.params.photoUri,
+      name: `image.${route.params.photoUri.split(".").pop()}`,
+      type: `image/${route.params.photoUri.split(".").pop()}`
+    })
+
+
+    await api.put(`/Usuario/AlterarFotoPerfil?id=${patientUser.id}`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data"
+      }
+    }).then(async response => {
+      console.log(`Dados: ${response.data}`);
+
+      setPatientUser({ ...patientUser, foto: route.params.photoUri })
+
+    }).catch(error => {
+      console.log(`Erro na imagem: ${error}`);
+    })
+  }
+
+  // Carregar os dados contidos dentro do token
   useEffect(() => {
     profileLoad();
   }, []);
+
+  useEffect(() => {
+    if (route.params != null) {
+      ChangePerfilPhoto();
+    }
+  }, [route.params])
 
   useEffect(() => {
     const getCep = async () => {
@@ -127,7 +162,13 @@ export const PatientProfile = ({ navigation }) => {
       {
         patientUser != null ? (
           <Container>
-            <ImagemPerfilPaciente source={require("../../assets/ney.webp")} />
+            <ImageView>
+              <ImagemPerfilPaciente source={{ uri: patientUser.foto }} />
+
+              <ButtonCamera onPress={() => navigation.navigate("Camera", { navigation: navigation, route: route })}>
+                <MaterialCommunityIcons name="camera-plus" size={20} color="#FBFBFB" />
+              </ButtonCamera>
+            </ImageView>
 
             <TitleProfile>{patientUser.idNavigation.nome}</TitleProfile>
 

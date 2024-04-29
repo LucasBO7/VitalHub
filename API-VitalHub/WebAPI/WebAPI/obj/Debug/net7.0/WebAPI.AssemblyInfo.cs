@@ -16,12 +16,16 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 [assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+02dfe0ce3b068f5e942414a7ae97aad7cd699a06")]
 =======
 [assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6a038b6601b117eee79e795144487dabd3265db5")]
 >>>>>>> origin/lucas
 =======
 [assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9e13cfbca1a78d1d96bfda46a7858fb8f6db807a")]
+>>>>>>> develop
+=======
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7712b773e4e22d7a6f64ee8b8a233a6ffab8d5a9")]
 >>>>>>> develop
 [assembly: System.Reflection.AssemblyProductAttribute("WebAPI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("WebAPI")]
