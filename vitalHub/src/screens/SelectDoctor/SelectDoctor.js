@@ -7,6 +7,7 @@ import { CancelLessMargin } from "../../components/Descriptions/StyledDescriptio
 import { CardCancelLessLocal } from "../../components/Descriptions/Descriptions"
 import { useEffect, useState } from "react"
 import api from "../../services/Services"
+import { text } from "@fortawesome/fontawesome-svg-core"
 // Fora do componente
 
 // Criar o state para receber a lista de médicos (Array) === OK
@@ -16,34 +17,16 @@ import api from "../../services/Services"
 
 
 
-export const SelectDoctor = ({ navigation }) => {
-    const dataItens = [
-        {
-            id: 'fsdfsfsdf',
-            area: 'Dermatóloga, Esteticista',
-            url: 'aar',
-            name: 'Dr Alessandra'
-        },
-        {
-            id: 'fsdfsf',
-            area: 'Cirurgião, Cardiologista',
-            url: 'siu',
-            name: 'Dr Kumushiro'
-        },
-        {
-            id: 'fsdf',
-            area: 'Clínico, Pediatra',
-            url: 'aha',
-            name: 'Dr Rodrigo Santos'
-        },
-    ]
-
+export const SelectDoctor = ({ navigation, route }) => {
     const [doctorList, setDoctorList] = useState([]); // Lista de medicos
+    const [selectedDoctor, setSelectedDoctor] = useState({ // Medico selecionado
+        medicoClinicaId: null
+    });
 
     // Busca todos os médicos do banco
     async function getAllDoctors() {
         // Instanciação da nossa conexão da api
-        await api.get("/Medicos")
+        await api.get(`/Medicos/BuscarPorIdClinica?id=${route.params.agendamento.clinicaId}`)
             // Quando houver uma resposta...
             .then(response => {
                 setDoctorList(response.data)
@@ -55,14 +38,38 @@ export const SelectDoctor = ({ navigation }) => {
 
     useEffect(() => {
         getAllDoctors();
+        console.log();
+        console.log('Selecionar Médico - OBJETO TRAZIDO:');
+        console.log(route.params);
     }, [])
 
-    const [selectedCardId, setSelectedCardId] = useState();
+    // useEffect(() => {
+    //     console.log();
+    //     console.log('MÉDICO LISTA');
+    //     console.log(doctorList);
+    // }, [doctorList])
+
+    useEffect(() => {
+        console.log();
+        console.log('MÉDICO SELECIONADO');
+        console.log(selectedDoctor);
+    }, [selectedDoctor])
+
+
 
     // Guarda o id da clínica selecionada no state
-    const handleSelectedCard = (id) => {
-        setSelectedCardId(id);
-    };
+    // const handleSelectedCard = (id) => {
+    //     setSelectedDoctor(id);
+    // };
+
+    async function handleContinue() {
+        navigation.navigate("ConsultLocalization", {
+            agendamento: {
+                ...route.params.agendamento,
+                ...selectedDoctor
+            }
+        })
+    }
 
     return (
         <Container>
@@ -77,15 +84,15 @@ export const SelectDoctor = ({ navigation }) => {
                     // Componente renderizado
                     <CardSelectDoctor
                         doctor={item}
-                        selectedCardId={selectedCardId}
-                        onCardPress={handleSelectedCard}
+                        selectedDoctor={selectedDoctor.doctorClinicaId}
+                        setSelectedDoctor={setSelectedDoctor}
                     />
                 )}
 
                 showsVerticalScrollIndicator={false}
             />
 
-            <ButtonLargeSelect onPress={() => { navigation.navigate("SelectDate") }} text={"Continuar"} />
+            <ButtonLargeSelect onPress={() => { handleContinue() }} text={"Continuar"} />
 
             <CardCancelLessLocal
                 onPressCancel={() => navigation.replace("Main")}

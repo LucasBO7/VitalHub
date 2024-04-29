@@ -32,6 +32,14 @@ export const ModalStethoscope = ({
     urgencia: false,
   });
 
+  const [agendamento, setAgendamento] = useState(null)
+
+  async function handleContinue() {
+    await setShowModalStethoscope(false)
+
+    navigation.replace("SelectClinic", { agendamento: agendamento })
+  }
+
   return (
     <Modal {...rest} visible={visible} transparent={true} animationType="fade">
       <StethoscopeModal>
@@ -43,6 +51,12 @@ export const ModalStethoscope = ({
             <ButtonHomeContainerStet>
               <FilterButtonStet
                 onPress={() => {
+                  setAgendamento({
+                    ...agendamento, //Manter as informacoes que ja existem dentro do state (Agendamento)
+                    prioridade: 'CF8E1C18-EAD1-4D08-ABCF-84F7A0564E55',
+                    prioridadeLabel: "Rotina"
+
+                  })
                   setSelected({ rotina: true });
                 }}
                 selected={selected.rotina}
@@ -52,6 +66,12 @@ export const ModalStethoscope = ({
               <FilterButtonStet
                 onPress={() => {
                   setSelected({ exame: true });
+                  setAgendamento({
+                    ...agendamento, //Manter as informacoes que ja existem dentro do state (Agendamento)
+                    prioridade: '577F5DC6-BFD7-4432-9326-50FDB1E63B36',
+                    prioridadeLabel: "Exame"
+
+                  })
                 }}
                 selected={selected.exame}
                 text={"Exame"}
@@ -60,6 +80,12 @@ export const ModalStethoscope = ({
               <FilterButtonStet
                 onPress={() => {
                   setSelected({ urgencia: true });
+                  setAgendamento({
+                    ...agendamento, //Manter as informacoes que ja existem dentro do state (Agendamento)
+                    prioridade: '8121BDC2-E3FB-4D70-AC26-3138C215D048',
+                    prioridadeLabel: "Urgencia"
+
+                  })
                 }}
                 selected={selected.urgencia}
                 text={"Urgencia"}
@@ -69,6 +95,11 @@ export const ModalStethoscope = ({
 
           <LargeInputTextBoxStet
             placeholderTextColor={"#34898F"}
+            value={agendamento ? agendamento.localizacao : null}
+            onChangeText={(txt) => setAgendamento({
+              ...agendamento,
+              localizacao: txt
+            })}
             textLabel={"Informe a localização desejada"}
             placeholder={"Informe a localização"}
             editable={true}
@@ -76,10 +107,7 @@ export const ModalStethoscope = ({
 
           <FlexButtons>
             <ButtonLargeSelect
-              onPress={() => {
-                navigation.navigate("SelectClinic");
-                setShowModalStethoscope(false);
-              }}
+              onPress={() => handleContinue()}
               text={"Continuar"}
             />
 

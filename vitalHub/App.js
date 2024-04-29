@@ -22,7 +22,7 @@ import { PatientProfile } from "./src/screens/PatientProfile/PatientProfile";
 import { MedicalRecords } from "./src/screens/MedicalRecords/MedicalRecords";
 import { DoctorConsultation } from "./src/screens/DoctorConsultation/DoctorConsultation";
 import { SelectDoctor } from "./src/screens/SelectDoctor/SelectDoctor";
-import { SelectCLinic } from "./src/screens/SelectClinic/SelectClinic";
+import { SelectClinic } from "./src/screens/SelectClinic/SelectClinic";
 import { PatientConsultation } from "./src/screens/PatientConsultation/PatientConsultation";
 import { SelectDate } from "./src/screens/SelectDate/SelectDate";
 import { ConsultLocalization } from "./src/screens/ConsultLocalization/ConsultLocalization";
@@ -168,7 +168,7 @@ export default function App() {
 
         <Stack.Screen
           name="SelectClinic"
-          component={SelectCLinic}
+          component={SelectClinic}
           options={{ title: "SelectClinic" }}
         />
 

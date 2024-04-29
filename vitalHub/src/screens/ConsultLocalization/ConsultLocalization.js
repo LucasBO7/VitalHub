@@ -16,6 +16,10 @@ export const ConsultLocalization = ({ navigation, route }) => {
   const [clinica, setClinica] = useState(null);
 
   useEffect(() => {
+    console.log(route);
+  }, [route])
+
+  useEffect(() => {
     if (clinica == null) {
       BuscarClinica();
     }

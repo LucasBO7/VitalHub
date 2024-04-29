@@ -13,6 +13,14 @@ import { ConfirmAppointmentModal } from "../../components/ConfirmAppointmentModa
 
 export const SelectDate = ({ navigation }) => {
     const [showModal, setShowModal] = useState(false);
+    const [dataSelecionada, setDataSelecionada] = useState('')
+    const [horaSelecionada, setHoraSelecionada] = useState('')
+    const [agendamento, setAgendamento] = useState(null)
+
+    useEffect(() => {
+        console.log(dataSelecionada);
+    }, [dataSelecionada])
+
     return (
 
         <Container>
@@ -21,12 +29,19 @@ export const SelectDate = ({ navigation }) => {
 
             <TitleSelect>Selecionar Data</TitleSelect>
 
-            <CalendarComponent />
+            <CalendarComponent 
+            setDataSelecionada={setDataSelecionada}
+            dataSelecionada={dataSelecionada}
+            />
 
             <BoxInputSelectLabel>
                 <LabelSelect textLabel={'Selecione um horário disponível'} />
                 <InputSelect />
             </BoxInputSelectLabel>
+
+            <InputSelect
+                setHoraSelecionada={setHoraSelecionada}
+            />
 
 
             <BoxButtons>

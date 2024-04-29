@@ -324,3 +324,109 @@
     },
     "path": undefined
 }
+// ____________BUSCAR POR ID CLINICA - MEDICO________________
+{
+    "clinicaId": "73f6a64d-6d3c-45fe-beea-a1fa418b9742",
+    "clinicaLabel": "VitalHub",
+    "localizacao": "Sp",
+    "prioridade": "CF8E1C18-EAD1-4D08-ABCF-84F7A0564E55",
+    "prioridadeLabel": "Rotina"
+}
+// ______________BUSCAR POR ID CLINICA - MEDICOS__________
+[
+    {
+        "crm": "1234567890",
+        "especialidade": {
+            "especialidade1": "Pneumologista",
+            "id": "f7e419b7-d2d4-451a-8287-ef7c8b37800b",
+            "medicos": [Array
+            ]
+        },
+        "id": "0af5cadf-6063-4dbf-9ed2-2a3d44acaba7",
+        "idNavigation": {
+            "email": "Caroline@gmail.com",
+            "foto": "string",
+            "id": "5031ee4c-424c-43ce-b0ae-834ba80faab0",
+            "nome": "Caroline Novaes"
+        },
+        "medicosClinicas": []
+    },
+    {
+        "crm": "1321sp",
+        "especialidade": {
+            "especialidade1": "Cardiologista",
+            "id": "67e34d5e-c5df-413d-b872-cfd6b5c595f2",
+            "medicos": [Array
+            ]
+        },
+        "id": "5b8143ab-b27b-4e36-b6bd-76d7ed2aad24",
+        "idNavigation": {
+            "email": "Tiago@gmail.com",
+            "foto": "string",
+            "id": "fddc8a4c-3de9-4a21-b822-61ed600fe592",
+            "nome": "Tiago Hugo da Mata"
+        },
+        "medicosClinicas": []
+    }
+]
+// 
+{
+    "key": "ConsultLocalization-we0brefeuKJ9Vj7tEewCz",
+    "name": "ConsultLocalization",
+    "params": {
+        "agendamento": {
+            "doctorClinicaId": "0af5cadf-6063-4dbf-9ed2-2a3d44acaba7",
+            "doctorLabel": "Caroline Novaes"
+        }
+    },
+    "path": undefined
+}
+// 
+{
+    "agendamento": {
+        "clinicaId": "73f6a64d-6d3c-45fe-beea-a1fa418b9742",
+        "clinicaLabel": "VitalHub",
+        "localizacao": "Sp",
+        "prioridade": "CF8E1C18-EAD1-4D08-ABCF-84F7A0564E55",
+        "prioridadeLabel": "Rotina"
+    }
+}
+// 
+{
+    "agendamento": {
+        "clinicaId": "73f6a64d-6d3c-45fe-beea-a1fa418b9742",
+        "clinicaLabel": "VitalHub",
+        "localizacao": "Sp",
+        "prioridade": "CF8E1C18-EAD1-4D08-ABCF-84F7A0564E55",
+        "prioridadeLabel": "Rotina"
+    }
+}
+// 
+{
+    "key": "ConsultLocalization-keMZS9ULOTp0rrBN6A30I",
+    "name": "ConsultLocalization",
+    "params": {
+        "agendamento": {
+            "clinicaId": "73f6a64d-6d3c-45fe-beea-a1fa418b9742",
+            "clinicaLabel": "VitalHub",
+            "doctorClinicaId": "0af5cadf-6063-4dbf-9ed2-2a3d44acaba7",
+            "doctorLabel": "Caroline Novaes",
+            "localizacao": "Sp",
+            "prioridade": "CF8E1C18-EAD1-4D08-ABCF-84F7A0564E55",
+            "prioridadeLabel": "Rotina"
+        }
+    },
+    "path": undefined
+}
+// 
+{
+    "agendamento": {
+        "clinicaId": "73f6a64d-6d3c-45fe-beea-a1fa418b9742",
+        "clinicaLabel": "VitalHub",
+        "doctorClinicaId": "0af5cadf-6063-4dbf-9ed2-2a3d44acaba7",
+        "doctorLabel": "Caroline Novaes",
+        "localizacao": "Sp",
+        "prioridade": "CF8E1C18-EAD1-4D08-ABCF-84F7A0564E55",
+        "prioridadeLabel": "Rotina"
+    }
+}

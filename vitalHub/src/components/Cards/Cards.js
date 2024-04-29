@@ -103,14 +103,17 @@ export const Card = ({ url, name, age, routine, hour, status, onPressCancel, onP
     )
 }
 
-export const CardSelectDoctor = ({ doctor, selectedCardId, onCardPress }) => {
+export const CardSelectDoctor = ({ doctor, selectedDoctor, setSelectedDoctor }) => {
 
     return (
 
         <CardContainerClinic
-            isSelected={selectedCardId == doctor.id ? true : false}
+            isSelected={selectedDoctor == doctor.id ? true : false}
             onPress={() => {
-                onCardPress(doctor.id);
+                setSelectedDoctor({
+                    doctorClinicaId: doctor.id,
+                    doctorLabel: doctor.idNavigation.nome
+                })
             }}
         >
             <BoxCardDoctor>
@@ -134,17 +137,19 @@ export const CardSelectDoctor = ({ doctor, selectedCardId, onCardPress }) => {
 
 }
 
-export const CardSelectClinic = ({ clinic, selectedCardId, onCardPress }) => {
+export const CardSelectClinic = ({ clinic, selectedCardId, setSelectedCardId }) => {
 
     return (
 
         <CardContainerClinic
             isSelected={selectedCardId == clinic.id ? true : false}
             onPress={() => {
-                onCardPress(clinic.id);
+                setSelectedCardId({
+                    clinicaId: clinic.id,
+                    clinicaLabel: clinic.nomeFantasia
+                })
             }}
         >
-
             <BoxCard>
 
                 <BoxTextClinicCard>

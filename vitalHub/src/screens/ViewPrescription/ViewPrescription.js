@@ -28,7 +28,7 @@ export const ViewPrescription = ({ navigation, route }) => {
 
     useEffect(() => {
         console.log(`params`);
-        console.log(route.params.photoUri);
+        // console.log(route.params.photoUri);
         route.params.photoUri != undefined ? setDescricaoExame(route.params.photoUri) : undefined;
         getDoctorInfos();
         GetScreen();
@@ -62,18 +62,12 @@ export const ViewPrescription = ({ navigation, route }) => {
         if (uriCameraCapture) {
             InserirExame();
         }
+        console.log('BUCETA');
     }, [uriCameraCapture])
 
     async function GetScreen() {
         route.params.viewToOpen = "ViewPrescription";
     }
-
-    useEffect(() => {
-        console.log('PRESCRIÇÃO');
-        console.log(route);
-    }, [route])
-
-
 
     return (
         <>
