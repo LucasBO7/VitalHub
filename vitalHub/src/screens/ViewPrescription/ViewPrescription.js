@@ -34,7 +34,6 @@ export const ViewPrescription = ({ navigation, route }) => {
         GetScreen();
     })
 
-<<<<<<< HEAD
     // route.params.photoUri
     async function InserirExame() {
         const formData = new FormData();
@@ -76,12 +75,6 @@ export const ViewPrescription = ({ navigation, route }) => {
 
 
 
-=======
-    async function name(params) {
-        
-    }
-
->>>>>>> 89c0d86c3801c50f483d18045c204088faf08128
     return (
         <>
             <ScrollContainer>
