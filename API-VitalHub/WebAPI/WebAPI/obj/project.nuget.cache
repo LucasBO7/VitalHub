@@ -2,6 +2,7 @@
   "version": 2,
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   "dgSpecHash": "suw6D/OZC9YNwe4iS0cIgW4DhVC9plN9GRPRPMUHgnQXPa8kkr9yRDh5YkR6i5ehRToh3Dy843dtZpdaogECLA==",
 =======
   "dgSpecHash": "6frqnJFH0TLQ1ToOY4f8fxRAl33J0YhdnrJ3PWotMVIpMkuNYYCc2E1ZCDFtmHoYs9I4PWmOh3wfQRI3OWvViw==",
@@ -12,9 +13,13 @@
 <<<<<<< HEAD
 =======
   "dgSpecHash": "9uaLXDO0Wy20qK08XFPVkwcCS3fb2ZnPh7RCK+cRkFtqm4NkGMUeKNoOgbCMEnO+XQCt1kgLpU1MnDsUS5/4ew==",
+=======
+  "dgSpecHash": "6frqnJFH0TLQ1ToOY4f8fxRAl33J0YhdnrJ3PWotMVIpMkuNYYCc2E1ZCDFtmHoYs9I4PWmOh3wfQRI3OWvViw==",
+>>>>>>> origin/lucas
   "success": true,
-  "projectFilePath": "C:\\Users\\53282675836\\Desktop\\VitalHub\\API-VitalHub\\WebAPI\\WebAPI\\WebAPI.csproj",
+  "projectFilePath": "C:\\Users\\41365718875\\Desktop\\VitalHub\\API-VitalHub\\WebAPI\\WebAPI\\WebAPI.csproj",
   "expectedPackageFiles": [
+<<<<<<< HEAD
 >>>>>>> develop
     "C:\\Users\\53282675836\\.nuget\\packages\\azure.core\\1.36.0\\azure.core.1.36.0.nupkg.sha512",
     "C:\\Users\\53282675836\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",
@@ -158,6 +163,8 @@
     "C:\\Users\\53282675836\\.nuget\\packages\\system.threading.tasks.extensions\\4.5.4\\system.threading.tasks.extensions.4.5.4.nupkg.sha512",
     "C:\\Users\\53282675836\\.nuget\\packages\\system.windows.extensions\\6.0.0\\system.windows.extensions.6.0.0.nupkg.sha512"
 =======
+=======
+>>>>>>> origin/lucas
     "C:\\Users\\41365718875\\.nuget\\packages\\azure.core\\1.36.0\\azure.core.1.36.0.nupkg.sha512",
     "C:\\Users\\41365718875\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",
     "C:\\Users\\41365718875\\.nuget\\packages\\azure.storage.blobs\\12.19.1\\azure.storage.blobs.12.19.1.nupkg.sha512",
@@ -307,6 +314,7 @@
     "C:\\Users\\41365718875\\.nuget\\packages\\system.windows.extensions\\6.0.0\\system.windows.extensions.6.0.0.nupkg.sha512",
     "C:\\Users\\41365718875\\.nuget\\packages\\system.xml.readerwriter\\4.3.0\\system.xml.readerwriter.4.3.0.nupkg.sha512",
     "C:\\Users\\41365718875\\.nuget\\packages\\system.xml.xdocument\\4.3.0\\system.xml.xdocument.4.3.0.nupkg.sha512"
+<<<<<<< HEAD
 >>>>>>> develop
 =======
     "C:\\Users\\53282675836\\.nuget\\packages\\system.appcontext\\4.3.0\\system.appcontext.4.3.0.nupkg.sha512",
@@ -383,6 +391,8 @@
     "C:\\Users\\53282675836\\.nuget\\packages\\system.xml.readerwriter\\4.3.0\\system.xml.readerwriter.4.3.0.nupkg.sha512",
     "C:\\Users\\53282675836\\.nuget\\packages\\system.xml.xdocument\\4.3.0\\system.xml.xdocument.4.3.0.nupkg.sha512"
 >>>>>>> develop
+=======
+>>>>>>> origin/lucas
   ],
   "logs": [
     {

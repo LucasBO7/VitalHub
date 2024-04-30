@@ -17,6 +17,7 @@ using System.Reflection;
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 [assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+02dfe0ce3b068f5e942414a7ae97aad7cd699a06")]
 =======
 [assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6a038b6601b117eee79e795144487dabd3265db5")]
@@ -27,6 +28,9 @@ using System.Reflection;
 =======
 [assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7712b773e4e22d7a6f64ee8b8a233a6ffab8d5a9")]
 >>>>>>> develop
+=======
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+afb5d472da8ae021ef7c3e95d203d64aa4e7e8f6")]
+>>>>>>> origin/lucas
 [assembly: System.Reflection.AssemblyProductAttribute("WebAPI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("WebAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

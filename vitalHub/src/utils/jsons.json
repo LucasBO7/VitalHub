@@ -141,3 +141,186 @@
     },
     "path": undefined
 }
+// ____________________
+{
+    "route": {
+        "key": "ViewPrescription-Z4_uIVcPUp5QG8l9h3OVr",
+        "name": "ViewPrescription",
+        "params": {
+            "consultDescricao": "Consulta tranquila onde o paciente dizia estar com nariz entupido.",
+            "consultDiagnostico": "Em evolução",
+            "doctorCrm": "1321sp",
+            "doctorEspecialidade": "item.medicoClinica.medico.idNavigation.especialidade",
+            "doctorId": "fddc8a4c-3de9-4a21-b822-61ed600fe592",
+            "doctorName": "Tiago Hugo da Mata",
+            "prescriptionId": "43fa657c-04c8-4889-a2b9-1f129b2cf2b3",
+            "viewToOpen": "ViewPrescription"
+        },
+        "path": undefined
+    }
+}
+// _________________________________________
+{
+    "key": "Camera-3bgXLQIaEzR2teTT1hzPu",
+    "name": "Camera",
+    "params": {
+        "route": {
+            "key": "ViewPrescription-5-1SvXt7qbMiWoImPUuOw",
+            "name": "ViewPrescription",
+            "params": [Object
+            ],
+            "path": undefined
+        }
+    },
+    "path": undefined
+}
+// _______________________________________________
+{
+    "viewData": {
+        "key": "ViewPrescription-sAzY9tsHuWOIknfueuP6a",
+        "name": "ViewPrescription",
+        "params": {
+            "consultDescricao": "Consulta tranquila onde o paciente dizia estar com nariz entupido.",
+            "consultDiagnostico": "Em evolução",
+            "consultPrescription": "Avamys",
+            "doctorCrm": "1321sp",
+            "doctorEspecialidade": "item.medicoClinica.medico.idNavigation.especialidade",
+            "doctorId": "fddc8a4c-3de9-4a21-b822-61ed600fe592",
+            "doctorName": "Tiago Hugo da Mata",
+            "prescriptionId": "43fa657c-04c8-4889-a2b9-1f129b2cf2b3",
+            "viewToOpen": "ViewPrescription"
+        },
+        "path": undefined
+    }
+}
+// ______________________________________
+{
+    "key": "Camera-Omq6Q_LR4aTckqi8yUb2s",
+    "name": "Camera",
+    "params": {
+        "viewData": {
+            "key": "ViewPrescription-vxCXjwmx0EreWIC9Ml3Je",
+            "name": "ViewPrescription",
+            "params": [Object
+            ],
+            "path": undefined
+        }
+    },
+    "path": undefined
+}
+
+{
+    "key": "ViewPrescription-vxCXjwmx0EreWIC9Ml3Je",
+    "name": "ViewPrescription",
+    "params": {
+        "consultDescricao": "Consulta tranquila onde o paciente dizia estar com nariz entupido.",
+        "consultDiagnostico": "Em evolução",
+        "consultPrescription": "Avamys",
+        "doctorCrm": "1321sp",
+        "doctorEspecialidade": "item.medicoClinica.medico.idNavigation.especialidade",
+        "doctorId": "fddc8a4c-3de9-4a21-b822-61ed600fe592",
+        "doctorName": "Tiago Hugo da Mata",
+        "prescriptionId": "43fa657c-04c8-4889-a2b9-1f129b2cf2b3",
+        "viewToOpen": "ViewPrescription"
+    },
+    "path": undefined
+}
+// ____________________________________
+{
+    "key": "ViewPrescription-Iwb6uvqGMIsKOUnakWdlY",
+    "name": "ViewPrescription",
+    "params": {
+        "photoUri": "file:///data/user/0/host.exp.exponent/cache/ExperienceData/%2540anonymous%252FvitalHub-6fa483f8-aa5e-4e1f-9bc2-63ea4c26aab0/Camera/96268c4d-e2bf-449d-8c41-ad8adaa634c6.jpg",
+        "route": {
+            "consultDescricao": "Consulta tranquila onde o paciente dizia estar com nariz entupido.",
+            "consultDiagnostico": "Em evolução",
+            "consultPrescription": "Avamys",
+            "doctorCrm": "1321sp",
+            "doctorEspecialidade": "item.medicoClinica.medico.idNavigation.especialidade",
+            "doctorId": "fddc8a4c-3de9-4a21-b822-61ed600fe592",
+            "doctorName": "Tiago Hugo da Mata",
+            "prescriptionId": "43fa657c-04c8-4889-a2b9-1f129b2cf2b3",
+            "viewToOpen": "ViewPrescription"
+        },
+        "viewToOpen": "ViewPrescription"
+    },
+    "path": undefined
+}
+
+{
+    "key": "ViewPrescription-FRlxmlnurYck-KVHWQfbw",
+    "name": "ViewPrescription",
+    "params": {
+        "consultDescricao": "Consulta tranquila onde o paciente dizia estar com nariz entupido.",
+        "consultDiagnostico": "Em evolução",
+        "consultPrescription": "Avamys",
+        "doctorCrm": "1321sp",
+        "doctorEspecialidade": "item.medicoClinica.medico.idNavigation.especialidade",
+        "doctorId": "fddc8a4c-3de9-4a21-b822-61ed600fe592",
+        "doctorName": "Tiago Hugo da Mata",
+        "prescriptionId": "43fa657c-04c8-4889-a2b9-1f129b2cf2b3",
+        "viewToOpen": "ViewPrescription"
+    },
+    "path": undefined
+}
+// 
+{
+    "key": "Camera-qusFxJuwD-zHDXvi8HXHV",
+    "name": "Camera",
+    "params": {
+        "viewData": {
+            "consultDescricao": "Consulta tranquila onde o paciente dizia estar com nariz entupido.",
+            "consultDiagnostico": "Em evolução",
+            "consultPrescription": "Avamys",
+            "doctorCrm": "1321sp",
+            "doctorEspecialidade": "item.medicoClinica.medico.idNavigation.especialidade",
+            "doctorId": "fddc8a4c-3de9-4a21-b822-61ed600fe592",
+            "doctorName": "Tiago Hugo da Mata",
+            "prescriptionId": "43fa657c-04c8-4889-a2b9-1f129b2cf2b3",
+            "viewToOpen": "ViewPrescription"
+        }
+    },
+    "path": undefined
+}
+// 
+{
+    "key": "ViewPrescription-Q8Sw3uOG-hkt-UTMFiDXg",
+    "name": "ViewPrescription",
+    "params": {
+        "photoUri": "file:///data/user/0/host.exp.exponent/cache/ExperienceData/%2540anonymous%252FvitalHub-6fa483f8-aa5e-4e1f-9bc2-63ea4c26aab0/Camera/c6beeb05-65c4-4425-8ea0-36182d3bde82.jpg",
+        "route": {
+            "consultDescricao": "Consulta tranquila onde o paciente dizia estar com nariz entupido.",
+            "consultDiagnostico": "Em evolução",
+            "consultPrescription": "Avamys",
+            "doctorCrm": "1321sp",
+            "doctorEspecialidade": "item.medicoClinica.medico.idNavigation.especialidade",
+            "doctorId": "fddc8a4c-3de9-4a21-b822-61ed600fe592",
+            "doctorName": "Tiago Hugo da Mata",
+            "prescriptionId": "43fa657c-04c8-4889-a2b9-1f129b2cf2b3",
+            "viewToOpen": "ViewPrescription"
+        },
+        "viewToOpen": "ViewPrescription"
+    },
+    "path": undefined
+}
+// 
+{
+    "key": "ViewPrescription-jIIBmapzHNVD6SZqCzGSb",
+    "name": "ViewPrescription",
+    "params": {
+        "params": {
+            "consultDescricao": "Consulta tranquila onde o paciente dizia estar com nariz entupido.",
+            "consultDiagnostico": "Em evolução",
+            "consultPrescription": "Avamys",
+            "doctorCrm": "1321sp",
+            "doctorEspecialidade": "item.medicoClinica.medico.idNavigation.especialidade",
+            "doctorId": "fddc8a4c-3de9-4a21-b822-61ed600fe592",
+            "doctorName": "Tiago Hugo da Mata",
+            "prescriptionId": "43fa657c-04c8-4889-a2b9-1f129b2cf2b3",
+            "viewToOpen": "ViewPrescription"
+        },
+        "photoUri": "file:///data/user/0/host.exp.exponent/cache/ExperienceData/%2540anonymous%252FvitalHub-6fa483f8-aa5e-4e1f-9bc2-63ea4c26aab0/Camera/df5b0a06-c636-4bcf-a1ae-9202b6faaa33.jpg",
+        "viewToOpen": "ViewPrescription"
+    },
+    "path": undefined
+}

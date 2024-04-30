@@ -36,6 +36,18 @@ export default function Cam({ navigation, route }) {
 
     const [lastPhoto, setLastPhoto] = useState(null);
 
+    // useEffect(() => {
+    //     console.log('CAMERA');
+    //     console.log(route);
+    //     console.log(route.params.viewData.viewToOpen);
+    // }, [route])
+
+    // useEffect(() => {
+    //     console.log('DADOS');
+    //     console.log(route.params.viewData);
+    //     // console.log(route.params.route.name);
+    // }, [route])
+
     useEffect(() => {
 
         (async () => {
@@ -89,24 +101,12 @@ export default function Cam({ navigation, route }) {
     }
 
     async function UploadPhoto() {
-        // if (photo) {
-        //     await MediaLibrary.createAssetAsync(photo).then(() => {
-        //         console.log(photo);
-
-        //         //    Alert.alert('Sucesso', ('foto salva na galeria'));
-
-        //         // navigation.navigate("ViewPrescription", { photoUri: photo.uri });
-        //     }).catch(error => {
-        //         alert("erro ao processar" + error);
-        //         // console.log(error)
-        //     });
-        // }
-        // console.log(photo)
-        // navigation.navigate("ViewPrescription", { photoUri: photo, clearPhoto: ClearPhoto });
-
         setOpenModal(false);
-        navigation.navigate("Main", { photoUri: photo });
-        // navigation.navigate("PatientProfile", { route: route, navigation: navigation });
+        {
+            route.params.viewData.viewToOpen == "ViewPrescription"
+                ? navigation.navigate("ViewPrescription", { photoUri: photo, ...route.params.viewData })
+                : navigation.navigate("Main", { photoUri: photo });
+        }
     }
 
     const changeZoom = (event) => {
