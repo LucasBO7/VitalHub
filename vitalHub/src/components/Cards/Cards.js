@@ -112,7 +112,8 @@ export const CardSelectDoctor = ({ doctor, selectedDoctor, setSelectedDoctor }) 
             onPress={() => {
                 setSelectedDoctor({
                     doctorClinicaId: doctor.id,
-                    doctorLabel: doctor.idNavigation.nome
+                    doctorLabel: doctor.idNavigation.nome,
+                    doctorEspecialidade: doctor.especialidade.especialidade1
                 })
             }}
         >

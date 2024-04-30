@@ -21,7 +21,7 @@ export const SelectClinic = ({ navigation, onCardClick, route }) => {
   });
 
   async function getAllClinics() {
-    await api.get("/Clinica/ListarTodas")
+    await api.get(`/Clinica/BuscarPorCidade?cidade=${route.params.agendamento.localizacao}`)
       .then(response => {
         setClinics(response.data);
       })

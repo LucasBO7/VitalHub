@@ -3,6 +3,8 @@ import { InputHigh, InputHighGrey, InputNumeric, InputProfile, InputText, InputT
 import RNPickerSelect from 'react-native-picker-select';
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
+import moment from "moment";
+import { useEffect, useState } from "react";
 
 
 // import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
@@ -53,7 +55,7 @@ export const InputSelect = ({ setHoraSelecionada }) => {
             let valor = new Date().getHours() + (index + 1)
 
             return {
-                label: `${valor}:00`, value : valor
+                label: `${valor}:00`, value: `${valor}:00`
             }
         })
 
@@ -63,8 +65,8 @@ export const InputSelect = ({ setHoraSelecionada }) => {
     }
 
     useEffect(() => {
-        loadOptions
-    })
+        loadOptions();
+    }, []);
 
 
     const pickerStyles = {
@@ -73,7 +75,6 @@ export const InputSelect = ({ setHoraSelecionada }) => {
         placeholder: { color: '#34898F', },
     };
     const placeholder = {
-        
         label: 'Selecionar horário',
         value: null,
         color: '#34898F',
@@ -89,7 +90,7 @@ export const InputSelect = ({ setHoraSelecionada }) => {
                         Icon={() => {
                             return <FontAwesomeIcon icon={faCaretDown} color='#34898F' size={22} />
                         }}
-                        onValueChange={() => setHoraSelecionada(value)}
+                        onValueChange={(value) => setHoraSelecionada(value)}
                         placeholder={{
                             label: 'Selecione um valor',
                             value: null,

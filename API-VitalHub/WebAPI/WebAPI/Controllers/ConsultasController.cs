@@ -86,11 +86,11 @@ namespace WebAPI.Controllers
         }
 
         [HttpPut("Status")]
-        public IActionResult UpdateStatus(Guid idConsulta, string status)
+        public IActionResult UpdateStatus(Consulta consulta)
         {
             try
             {
-                consultaRepository.EditarStatus(idConsulta, status);
+                consultaRepository.EditarStatus(consulta);
 
                 return Ok();
 

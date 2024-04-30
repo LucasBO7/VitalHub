@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "blIR/i9Fxx13BuJ2Yqn0K3j83w7bkJzuGKfuZbUJbUw+UoMQojAonDtJtQ0BCzlDx9xyz7mM5FLwo9PsGab/oQ==",
+  "dgSpecHash": "TWo4wI07DPmy1zZzRBhwMz57AK6GJ2dDMncCdJnG3FJN1JHd+pn9e94pxwSB59SCLVB1VQLr8tOYOmpWS8h8Vg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\41365718875\\Desktop\\VitalHub\\API-VitalHub\\WebAPI\\WebAPI\\WebAPI.csproj",
+  "projectFilePath": "C:\\Users\\41365718875\\Desktop\\VitalHub\\API-VitalHub-antiga-backup\\WebAPI\\WebAPI\\WebAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\41365718875\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
     "C:\\Users\\41365718875\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",
@@ -80,16 +80,6 @@
       "level": "Warning",
       "warningLevel": 1,
       "message": "O pacote 'System.IdentityModel.Tokens.Jwt' 7.0.3 tem uma moderado vulnerabilidade de gravidade conhecida, https://github.com/advisories/GHSA-59j7-ghrg-fj52",
-      "libraryId": "System.IdentityModel.Tokens.Jwt",
-      "targetGraphs": [
-        "net7.0"
-      ]
-    },
-    {
-      "code": "NU1902",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "O pacote 'System.IdentityModel.Tokens.Jwt' 7.0.3 tem uma moderado vulnerabilidade de gravidade conhecida, https://github.com/advisories/GHSA-8g9c-28fc-mcx2",
       "libraryId": "System.IdentityModel.Tokens.Jwt",
       "targetGraphs": [
         "net7.0"

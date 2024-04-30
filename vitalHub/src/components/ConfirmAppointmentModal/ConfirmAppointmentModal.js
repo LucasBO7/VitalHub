@@ -1,4 +1,4 @@
-import { Modal } from "react-native"
+import { ActivityIndicator, Modal } from "react-native"
 import { ModalContent, PatientModal } from "../CancellationModal/StyleCancelationModal"
 import { Title, TitleModalSchedule } from "../Title/StyleTitle"
 import { DescriptionConfirmModal, SmallDescriptionModal } from "../Descriptions/StyledDescriptions"
@@ -7,14 +7,65 @@ import { Label } from "../Label/Label"
 import { LabelDescription } from "../Label/StyleLabel"
 import { CardCancelLess, DescripritionModalSmall, DescripritionModalSmall2 } from "../Descriptions/Descriptions"
 import { ButtonLargeConfirmModal, ButtonLargeModal, ButtonLargeSelect } from "../Button/Button"
+import moment from "moment"
+import { useEffect, useState } from "react"
+import api from "../../services/Services"
+import { userDecodeToken } from "../../utils/Auth"
 
 
 export const ConfirmAppointmentModal = ({
     navigation,
     visible,
     setShowModal = null,
+    agendamento,
     ...rest
 }) => {
+
+    const [profile, setProfile] = useState();
+
+    // useEffect(() => {
+    //     console.log();
+    //     console.log(`CONFIRM`);
+    //     console.log(agendamento);
+    // }, [agendamento])
+
+    async function profileLoad() {
+        const token = await userDecodeToken();
+
+        if (token) {
+            setProfile(token);
+        }
+    }
+
+    useEffect(() => {
+        profileLoad();
+    }, [])
+
+    useEffect(() => {
+        console.log(profile);
+    }, [])
+
+    async function handleContinue() {
+        console.log({
+            ...agendamento,
+            pacienteId: profile,
+            situacaoId: 'A3139466-853B-434B-928D-8AA58CC8C2D0',
+        });
+        await api.post(`/Consultas/Cadastrar`, {
+            ...agendamento,
+            pacienteId: profile,
+            situacaoId: 'A3139466-853B-434B-928D-8AA58CC8C2D0',
+
+
+        }).then(async () => {
+            await setShowModal(false);
+
+            navigation.replace("Main")
+        }).catch(error => {
+            console.log(error);
+        })
+    }
+
     return (
 
         <Modal
@@ -23,47 +74,51 @@ export const ConfirmAppointmentModal = ({
             transparent={true}
             animationType="fade">
 
+            {
+                agendamento != null
+                    ? (
+                        <PatientModal>
 
-            <PatientModal>
+                            <ModalContent>
 
-                <ModalContent>
+                                <Title>Agendar Consulta</Title>
 
-                    <Title>Agendar Consulta</Title>
+                                <DescriptionConfirmModal>Consulte os dados selecionados para a sua consulta</DescriptionConfirmModal>
 
-                    <DescriptionConfirmModal>Consulte os dados selecionados para a sua consulta</DescriptionConfirmModal>
+                                <BoxDescriptions>
 
-                    <BoxDescriptions>
+                                    <LabelDescription>Data da consulta</LabelDescription>
+                                    <DescripritionModalSmall text={moment(agendamento.dataConsulta).format("DD/MM/YYYY  HH:mm")} />
 
-                        <LabelDescription>Data da consulta</LabelDescription>
+                                    <LabelDescription>Médico(a) da consulta</LabelDescription>
+                                    <DescripritionModalSmall2 text={agendamento.doctorLabel} />
+                                    <DescripritionModalSmall2 text={agendamento.doctorEspecialidade} />
 
-                        <DescripritionModalSmall text={"1 de Novembro de 2023"} />
+                                    {/* <DescripritionModalSmall text={"Demartologa, Esteticista"} /> */}
+``
+                                    <LabelDescription>Local da consulta</LabelDescription>
+                                    <DescripritionModalSmall text={agendamento.localizacao} />
 
-                        <LabelDescription>Médico(a) da consulta</LabelDescription>
+                                    <LabelDescription>Tipo da consulta</LabelDescription>
+                                    <DescripritionModalSmall text={agendamento.prioridadeLabel} />
 
-                        <DescripritionModalSmall2 text={"Dra Alessandra"} />
+                                </BoxDescriptions>
 
-                        <DescripritionModalSmall text={"Demartologa, Esteticista"} />
+                                <ButtonLargeConfirmModal onPress={() => handleContinue()} text={"Confirmar"} />
 
-                        <LabelDescription>Local da consulta</LabelDescription>
+                                <CardCancelLess onPressCancel={() => setShowModal(false)} text={"Cancelar"} />
 
-                        <DescripritionModalSmall text={"São Paulo, SP"} />
+                            </ModalContent>
 
-                        <LabelDescription>Tipo da consulta</LabelDescription>
-
-                        <DescripritionModalSmall text={"Rotina"} />
-
-                    </BoxDescriptions>
-
-                    <ButtonLargeConfirmModal onPress={() => { navigation.navigate("Main") }} text={"Confirmar"} />
-
-                    <CardCancelLess onPressCancel={() => setShowModal(false)} text={"Cancelar"} />
-
-                </ModalContent>
-
-            </PatientModal>
-
+                        </PatientModal>
+                    )
+                    : (
+                        <ActivityIndicator />
+                    )
+            }
         </Modal>
 
 
     )
 }
+

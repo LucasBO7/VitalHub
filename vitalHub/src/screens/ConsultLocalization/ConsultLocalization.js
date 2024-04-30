@@ -16,6 +16,8 @@ export const ConsultLocalization = ({ navigation, route }) => {
   const [clinica, setClinica] = useState(null);
 
   useEffect(() => {
+    console.log();
+    console.log('Consult');
     console.log(route);
   }, [route])
 
@@ -26,7 +28,8 @@ export const ConsultLocalization = ({ navigation, route }) => {
   }, [clinica])
 
   async function BuscarClinica() {
-    await api.get(`/Clinica/BuscarPorId?id=${route.params.clinicaId}`)
+    console.log(`/Clinica/BuscarPorId?id=${route.params.agendamento.clinicaId}`);
+    await api.get(`/Clinica/BuscarPorId?id=${route.params.agendamento.clinicaId}`)
       .then(response => {
         setClinica(response.data);
       }).catch(error => {

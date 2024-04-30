@@ -27,7 +27,7 @@ export const ViewPrescription = ({ navigation, route }) => {
     }
 
     useEffect(() => {
-        console.log(`params`);
+        // console.log(`params`);
         // console.log(route.params.photoUri);
         route.params.photoUri != undefined ? setDescricaoExame(route.params.photoUri) : undefined;
         getDoctorInfos();
@@ -62,12 +62,15 @@ export const ViewPrescription = ({ navigation, route }) => {
         if (uriCameraCapture) {
             InserirExame();
         }
-        console.log('BUCETA');
     }, [uriCameraCapture])
 
     async function GetScreen() {
         route.params.viewToOpen = "ViewPrescription";
     }
+
+    useEffect(() => {
+        console.log(route.params);
+    }, [route.params])
 
     return (
         <>
@@ -80,7 +83,7 @@ export const ViewPrescription = ({ navigation, route }) => {
                     <TitleProfile>{route.params.doctorName}</TitleProfile>
 
                     <BoxDescription>
-                        <DescriptionDoc description={"Cliníco geral"} />
+                        <DescriptionDoc description={route.params.doctorEspecialidade} />
                         <DescriptionDoc description={route.params.doctorCrm} />
                     </BoxDescription>
 
@@ -147,8 +150,7 @@ export const ViewPrescription = ({ navigation, route }) => {
                         fieldValue={descricaoExame}
                     />
 
-                    <CardBackLess onPressCancel={() => { navigation.navigate("PatientConsultation") }} text={"Voltar"} />
-
+                    <CardBackLess onPressCancel={() => { navigation.goBack() }} text={"Voltar"} />
                 </Container>
 
             </ScrollContainer>

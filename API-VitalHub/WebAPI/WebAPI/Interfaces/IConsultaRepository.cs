@@ -7,7 +7,7 @@ namespace WebAPI.Interfaces
     {
         public void Cadastrar(Consulta consulta);
         public Consulta BuscarPorId(Guid id);
-        public void EditarStatus(Guid idConsulta, string status);
+        public void EditarStatus(Consulta consulta);
         public void EditarProntuario(Consulta consulta);
         public List<Consulta> ListarTodos();
         public List<Consulta> ListarPorMedico(Guid IdMedico);

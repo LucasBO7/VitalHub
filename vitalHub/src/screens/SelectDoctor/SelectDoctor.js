@@ -20,7 +20,8 @@ import { text } from "@fortawesome/fontawesome-svg-core"
 export const SelectDoctor = ({ navigation, route }) => {
     const [doctorList, setDoctorList] = useState([]); // Lista de medicos
     const [selectedDoctor, setSelectedDoctor] = useState({ // Medico selecionado
-        medicoClinicaId: null
+        medicoClinicaId: null,
+        doctorLabel: null
     });
 
     // Busca todos os médicos do banco
@@ -63,7 +64,7 @@ export const SelectDoctor = ({ navigation, route }) => {
     // };
 
     async function handleContinue() {
-        navigation.navigate("ConsultLocalization", {
+        navigation.navigate("SelectDate", {
             agendamento: {
                 ...route.params.agendamento,
                 ...selectedDoctor

@@ -68,15 +68,21 @@ namespace WebAPI.Repositories
             }
         }
 
-        public void EditarStatus(Guid idConsulta, string status)
+        public void EditarStatus(Consulta consulta)
         {
             try
             {
-                SituacaoConsulta situacao = ctx.Situacoes.FirstOrDefault(x => x.Situacao == status)!;
+                //SituacaoConsulta situacao = ctx.Situacoes.FirstOrDefault(x => x.Situacao == status)!;
 
-                Consulta buscada = ctx.Consultas.Find(idConsulta)!;
+                //Consulta buscada = ctx.Consultas.Find(idConsulta)!;
 
-                buscada.SituacaoId = situacao.Id;
+                //buscada.SituacaoId = situacao.Id;
+                //ctx.Update(buscada);
+                //ctx.SaveChanges();
+
+                Consulta buscada = ctx.Consultas.Find(consulta.Id);
+
+                buscada.SituacaoId = consulta.SituacaoId;
                 ctx.Update(buscada);
                 ctx.SaveChanges();
 
@@ -126,7 +132,7 @@ namespace WebAPI.Repositories
             {
                 throw;
             }
-        } 
+        }
 
         public List<Consulta> ListarTodos()
         {

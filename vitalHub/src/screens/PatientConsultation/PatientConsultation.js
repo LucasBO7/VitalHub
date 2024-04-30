@@ -1,4 +1,4 @@
- import { StatusBar } from "react-native";
+import { StatusBar } from "react-native";
 import {
   BoxDataHome,
   BoxHome,
@@ -25,6 +25,7 @@ import { PatientAppointmentModal } from "../../components/PatientAppointmentModa
 import { userDecodeToken } from "../../utils/Auth";
 
 import api from "../../services/Services"
+import moment from "moment";
 
 export const PatientConsultation = ({ navigation, route }) => {
   const [user, setUser] = useState({
@@ -142,7 +143,7 @@ export const PatientConsultation = ({ navigation, route }) => {
                   prescriptionId: item.id,
                   doctorId: item.medicoClinica.medico.id,
                   doctorName: item.medicoClinica.medico.idNavigation.nome,
-                  doctorEspecialidade: 'item.medicoClinica.medico.idNavigation.especialidade',
+                  doctorEspecialidade: item.medicoClinica.medico.especialidade.especialidade1,
                   doctorCrm: item.medicoClinica.medico.crm,
                   consultDescricao: item.descricao,
                   consultDiagnostico: item.diagnostico,

@@ -7,11 +7,11 @@ import { Label, LabelSelect } from "../../components/Label/Label"
 import { ButtonLarge, ButtonNormal } from "../../components/Button/Button"
 import { CardCancelLess } from "../../components/Descriptions/Descriptions"
 import { BoxButtons } from "../../components/Button/StyleButton"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { ConfirmAppointmentModal } from "../../components/ConfirmAppointmentModal/ConfirmAppointmentModal"
 
 
-export const SelectDate = ({ navigation }) => {
+export const SelectDate = ({ navigation, route }) => {
     const [showModal, setShowModal] = useState(false);
     const [dataSelecionada, setDataSelecionada] = useState('')
     const [horaSelecionada, setHoraSelecionada] = useState('')
@@ -21,6 +21,15 @@ export const SelectDate = ({ navigation }) => {
         console.log(dataSelecionada);
     }, [dataSelecionada])
 
+    function handleContinue() {
+        setAgendamento({
+            ...route.params.agendamento,
+            dataConsulta: `${dataSelecionada} ${horaSelecionada}`
+        });
+
+        setShowModal(true)
+    }
+
     return (
 
         <Container>
@@ -29,23 +38,32 @@ export const SelectDate = ({ navigation }) => {
 
             <TitleSelect>Selecionar Data</TitleSelect>
 
-            <CalendarComponent 
-            setDataSelecionada={setDataSelecionada}
-            dataSelecionada={dataSelecionada}
+            {/* Calendário */}
+            <CalendarComponent
+                setDataSelecionada={setDataSelecionada}
+                dataSelecionada={dataSelecionada}
             />
+
+            {/* Input */}
+            {/* <BoxInputSelectLabel>
+                <LabelSelect textLabel={'Selecione um horário disponível'} />
+                <InputSelect />
+            </BoxInputSelectLabel> */}
 
             <BoxInputSelectLabel>
                 <LabelSelect textLabel={'Selecione um horário disponível'} />
-                <InputSelect />
+                <InputSelect
+                    setHoraSelecionada={setHoraSelecionada}
+                />
             </BoxInputSelectLabel>
 
-            <InputSelect
-                setHoraSelecionada={setHoraSelecionada}
-            />
 
-
+            {/* Botões de navegação */}
             <BoxButtons>
-                <ButtonLarge onPress={() => setShowModal(true)} text={'Confirmar'} />
+                <ButtonLarge
+                    text={'Confirmar'}
+                    onPress={() => handleContinue()}
+                />
 
                 <CardCancelLess onPressCancel={() => {
                     navigation.navigate("SelectDoctor");
@@ -56,6 +74,7 @@ export const SelectDate = ({ navigation }) => {
                 navigation={navigation}
                 visible={showModal}
                 setShowModal={setShowModal}
+                agendamento={agendamento}
             />
 
         </Container>
