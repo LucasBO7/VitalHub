@@ -63,7 +63,7 @@ export const SelectCLinic = ({ navigation, onCardClick, route }) => {
 
 
   async function getAllClinics() {
-    await api.get("/Clinica/ListarTodas")
+    await api.get(`/Clinica/ListarTodas?=${route.params.agendamento.localizacao}`)
       .then(response => {
         setClinics(response.data);
       })
@@ -105,7 +105,7 @@ export const SelectCLinic = ({ navigation, onCardClick, route }) => {
           <CardSelectClinic
             clinic={item}
             selectedCardId={selectedCardId}
-            onCardPress={handleSelectedCard}
+            onCardPress={setSelectedCardId}
           />
         )}
         showsVerticalScrollIndicator={false}

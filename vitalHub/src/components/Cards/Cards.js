@@ -140,9 +140,10 @@ export const CardSelectClinic = ({ clinic, selectedCardId, onCardPress }) => {
 
         <CardContainerClinic
             isSelected={selectedCardId == clinic.id ? true : false}
-            onPress={() => {
-                onCardPress(clinic.id);
-            }}
+            onPress={() => { onCardPress({
+                clinicaId : clinic.id,
+                clinicaLabel: clinic.nomeFantasia 
+              })}}
         >
 
             <BoxCard>

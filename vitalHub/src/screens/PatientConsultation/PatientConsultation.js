@@ -25,6 +25,7 @@ import { PatientAppointmentModal } from "../../components/PatientAppointmentModa
 import { userDecodeToken } from "../../utils/Auth";
 
 import api from "../../services/Services"
+import moment from "moment";
 
 export const PatientConsultation = ({ navigation }) => {
   const [user, setUser] = useState({

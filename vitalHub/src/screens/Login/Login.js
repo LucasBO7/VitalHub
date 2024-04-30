@@ -1,3 +1,4 @@
+
 import { Title, TitleInvalidInputAlert } from "../../components/Title/StyleTitle";
 import { Container } from "../../components/Container/StyleContainer";
 import { Logo } from "../../components/Images/StyleImages";
@@ -13,14 +14,10 @@ import api from "../../services/Services";
 
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { userDecodeToken } from "../../utils/Auth";
-import { faL } from "@fortawesome/free-solid-svg-icons";
 
 export const Login = ({ navigation }) => {
-
-
   const [email, setEmail] = useState("Lucas@gmail.com");
   const [senha, setSenha] = useState("Lucas123");
-
   const [isLoading, setIsLoading] = useState(false);
   const [isInputDataValid, setIsInputDataValid] = useState(true); // Guardo o estado do input (se estiver errado, mostrar mensagem de erro)
 
@@ -31,12 +28,12 @@ export const Login = ({ navigation }) => {
       senha: senha
     }).then(async response => {
       setIsInputDataValid(true);
-      
+
       await AsyncStorage.setItem("token", JSON.stringify(response.data))
 
       const token = await userDecodeToken()
 
-      if (token.role === "Paciente") {
+      if (token.role === "paciente") {
         navigation.replace("Main")
       }
       else {
