@@ -15,8 +15,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage"
 import { userDecodeToken } from "../../utils/Auth";
 
 export const Login = ({ navigation }) => {
-  const [email, setEmail] = useState("Lucas@gmail.com");
-  const [senha, setSenha] = useState("Lucas123");
+  const [email, setEmail] = useState("Teixeirapaladino921@gmail.com");
+  const [senha, setSenha] = useState("Paladino123");
   const [isLoading, setIsLoading] = useState(false);
   const [isInputDataValid, setIsInputDataValid] = useState(true); // Guardo o estado do input (se estiver errado, mostrar mensagem de erro)
 

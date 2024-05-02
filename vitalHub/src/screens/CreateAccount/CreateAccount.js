@@ -25,18 +25,37 @@ export const CreateAccount = ({ navigation, route }) => {
     // const [confirmPassword, setConfirmPassword] = useState(null);
     const [confirmPassword, setConfirmPassword] = useState('Paladino123');
     const [user, setUser] = useState({
-        idTipoUsuario: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        idTipoUsuario: "FE373DEC-3E52-4DF5-B3B2-5A94865467E7",
         nome: 'Paladino',
         email: 'teixeirapaladino921@gmail.com',
         senha: 'Paladino123',
-        dataNascimento: "2024-04-22T18:09:28.308Z",
+        dataNascimento: "2005-04-22",
         rg: '5234606253',
         cpf: '52282675736',
-        cep: '0337500',
-        foto: 'string'
+        // cep: '0337500',
+        // foto: 'string',
+        // numero: '510',
+        // cidade: 'Sao Paulo',
+        // logradouro: 'Rua Hemisferio'
     });
 
     async function HandleCadastro() {
+        console.log(user);
+
+        var form = new FormData();
+        form.append("idTipoUsuario", user.idTipoUsuario);
+        form.append("nome", user.nome);
+        form.append("email", user.email);
+        form.append("senha", user.senha);
+        form.append("dataNascimento", user.dataNascimento);
+        form.append("rg", user.rg);
+        form.append("cpf", user.cpf);
+        // form.append("cep", user.cep);
+        // form.append("numero", user.numero);
+        // form.append("cidade", user.cidade);
+        // form.append("logradouro", user.logradouro);
+        // form.append("foto", user.foto);
+
         // Aqui
         await schema.validate({ senha: user.senha, confirmPassword }, { abortEarly: false });
         // await api.post("/Pacientes", {
@@ -47,22 +66,38 @@ export const CreateAccount = ({ navigation, route }) => {
         //     console.log(error);
         // })
 
-        await api.post("/Pacientes", {
-            IdTipoUsuario: user.idTipoUsuario,
-            Nome: user.nome,
-            Email: user.email,
-            Senha: user.senha,
-            DataNascimento: user.dataNascimento,
-            Rg: user.rg,
-            Cpf: user.cpf,
-            Cep: user.cep,
-            Foto: 'string'
+
+
+        await api.post("/Pacientes", form, {
+            headers: {
+                "Content-Type": "multipart/form-data"
+            }
         }).then(response => {
             console.log('Sucesso!')
             console.log(response);
             navigation.replace('Login');
         }
         ).catch(error => console.log(error));
+        // await api.post("/Pacientes", {
+        //     idTipoUsuario: user.idTipoUsuario,
+        //     nome: user.nome,
+        //     email: user.email,
+        //     senha: user.senha,
+        //     dataNascimento: user.dataNascimento,
+        //     rg: user.rg,
+        //     cpf: user.cpf,
+        //     cep: user.cep,
+        //     foto: 'string',
+        //     logradouro: user.logradouro,
+        //     numero: user.numero,
+        //     cidade: user.cidade
+
+        // }).then(response => {
+        //     console.log('Sucesso!')
+        //     console.log(response);
+        //     navigation.replace('Login');
+        // }
+        // ).catch(error => console.log(error));
     }
 
     return (
@@ -150,6 +185,33 @@ export const CreateAccount = ({ navigation, route }) => {
                     onChangeText={(text) => {
                         // setUser({ user, cep: text })
                         setUser({ ...user }, user.cep = text)
+                    }}
+                />
+                <Input
+                    placeholder={"logradouro"}
+                    placeholderTextColor={'#49B3BA'}
+                    // secureTextEntry={true}
+                    onChangeText={(text) => {
+                        // setUser({ user, cep: text })
+                        setUser({ ...user }, user.logradouro = text)
+                    }}
+                />
+                <Input
+                    placeholder={"Cidade"}
+                    placeholderTextColor={'#49B3BA'}
+                    // secureTextEntry={true}
+                    onChangeText={(text) => {
+                        // setUser({ user, cep: text })
+                        setUser({ ...user }, user.cidade = text)
+                    }}
+                />
+                <Input
+                    placeholder={"Numero"}
+                    placeholderTextColor={'#49B3BA'}
+                    // secureTextEntry={true}
+                    onChangeText={(text) => {
+                        // setUser({ user, cep: text })
+                        setUser({ ...user }, user.numero = text)
                     }}
                 />
 

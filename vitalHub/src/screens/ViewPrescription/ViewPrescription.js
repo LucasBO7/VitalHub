@@ -32,7 +32,7 @@ export const ViewPrescription = ({ navigation, route }) => {
         route.params.photoUri != undefined ? setDescricaoExame(route.params.photoUri) : undefined;
         getDoctorInfos();
         GetScreen();
-    })
+    }, [])
 
     // route.params.photoUri
     async function InserirExame() {

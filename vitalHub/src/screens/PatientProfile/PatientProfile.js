@@ -113,6 +113,10 @@ export const PatientProfile = ({ navigation, route }) => {
     profileLoad();
   }, []);
 
+  // useEffect(() => {
+  //   console.log(route.params);
+  // }, [route.params])
+
   useEffect(() => {
     if (route.params != null) {
       ChangePerfilPhoto();
@@ -155,8 +159,6 @@ export const PatientProfile = ({ navigation, route }) => {
       .catch(error => console.log(error));
   }
 
-
-
   return (
     <ScrollContainer>
       {
@@ -165,7 +167,7 @@ export const PatientProfile = ({ navigation, route }) => {
             <ImageView>
               <ImagemPerfilPaciente source={{ uri: patientUser.foto }} />
 
-              <ButtonCamera onPress={() => navigation.navigate("Camera", { navigation: navigation, route: route })}>
+              <ButtonCamera onPress={() => navigation.navigate("Camera", { navigation: navigation, viewData: route.params })}>
                 <MaterialCommunityIcons name="camera-plus" size={20} color="#FBFBFB" />
               </ButtonCamera>
             </ImageView>
