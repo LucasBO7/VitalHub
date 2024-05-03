@@ -19,6 +19,7 @@ import { CardCancelLess } from '../Descriptions/Descriptions';
 import { LastPhoto } from '../Images/StyleImages';
 
 import * as ImagePicker from 'expo-image-picker';
+import { userDecodeToken } from '../../utils/Auth';
 
 export default function Cam({ navigation, route }) {
 
@@ -35,6 +36,7 @@ export default function Cam({ navigation, route }) {
     const [zoom, setZoom] = useState(0)
 
     const [lastPhoto, setLastPhoto] = useState(null);
+    const [user, setUser] = useState();
 
     // useEffect(() => {
     //     console.log('CAMERA');
@@ -58,8 +60,16 @@ export default function Cam({ navigation, route }) {
 
         })();
         GetLatestPhoto();
+        profileLoad();
     }, [])
 
+    async function profileLoad() {
+        const token = await userDecodeToken();
+
+        if (token) {
+            await setUser(token);
+        }
+    }
 
 
     async function CapturePhoto() {
@@ -103,9 +113,25 @@ export default function Cam({ navigation, route }) {
     async function UploadPhoto() {
         setOpenModal(false);
         {
-            route.params.viewData.viewToOpen == "ViewPrescription"
-                ? navigation.navigate("ViewPrescription", { photoUri: photo, ...route.params.viewData })
-                : navigation.navigate("Main", { photoUri: photo });
+            if (route.params.viewToOpen == "ViewPrescription") {
+                navigation.navigate("ViewPrescription", { photoUri: photo, ...route.params.viewData })
+            } else {
+                if (user.role === "medico") {
+                    navigation.navigate("DoctorMain", { photoUri: photo });
+                } else {
+                    navigation.navigate("Main", { photoUri: photo });
+                }
+            }
+
+
+            // route.params.viewData.viewToOpen == "ViewPrescription"
+            //     ? navigation.navigate("ViewPrescription", { photoUri: photo, ...route.params.viewData })
+            //     : user.role === "medico"
+            //         ?
+            //         navigation.navigate("Main", { photoUri: photo });
+            //      :
+            // navigation.navigate("Main", { photoUri: photo });
+
         }
     }
 

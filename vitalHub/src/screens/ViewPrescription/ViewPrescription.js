@@ -64,9 +64,9 @@ export const ViewPrescription = ({ navigation, route }) => {
         }
     }, [uriCameraCapture])
 
-    async function GetScreen() {
-        route.params.viewToOpen = "ViewPrescription";
-    }
+    // async function GetScreen() {
+    //     route.params.viewToOpen = "ViewPrescription";
+    // }
 
     useEffect(() => {
         console.log(route.params);
@@ -133,7 +133,7 @@ export const ViewPrescription = ({ navigation, route }) => {
                             console.log('__________ROTE BATATAAA___________');
                             console.log(route.params);
 
-                            navigation.navigate("Camera", { viewData: route.params });
+                            navigation.navigate("Camera", { viewData: route.params, viewToOpen: "ViewPrescription" });
                         }} text={"Enviar"}
                         />
                         <CardCancel onPressCancel={() => { navigation.replace("Main") }} text={"Cancelar"} />

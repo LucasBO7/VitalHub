@@ -553,3 +553,142 @@
     },
     "situacaoId": "a3139466-853b-434b-928d-8aa58cc8c2d0"
 }
+// 
+{
+    "consulta": [],
+    "cpf": "52282675736",
+    "dataNascimento": "2005-04-22T00:00:00",
+    "endereco": {
+        "clinicas": [],
+        "id": "468293d9-a4a0-4387-8487-3be924e6b922",
+        "medicos": [],
+        "pacientes": []
+    },
+    "enderecoId": "468293d9-a4a0-4387-8487-3be924e6b922",
+    "id": "390af2da-03c6-4b64-8a08-af9f16971963",
+    "idNavigation": {
+        "email": "teixeirapaladino921@gmail.com",
+        "foto": "https://blobvitalhubgrupo9lucas.blob.core.windows.net/containervitalhubtardeg9/e07309919cf14da58da51a3f31800d1a.jpg",
+        "id": "390af2da-03c6-4b64-8a08-af9f16971963",
+        "nome": "Paladino",
+        "senha": "$2a$11$58Si8dKFXrXt0cYh38Wv0eHG2ZYTklQklEU6tTc/e8YWdVkzAwxBy",
+        "tipoUsuarioId": "fe373dec-3e52-4df5-b3b2-5a94865467e7"
+    },
+    "rg": "5234606253"
+}
+// 
+{
+    "crm": "1234567890",
+    "endereco": {
+        "cep": "05785150",
+        "clinicas": [],
+        "id": "130333dc-8a9f-4e89-ab64-0958737dd4ca",
+        "logradouro": "Rua João Lunardelli",
+        "medicos": [],
+        "numero": 660,
+        "pacientes": []
+    },
+    "enderecoId": "130333dc-8a9f-4e89-ab64-0958737dd4ca",
+    "especialidadeId": "f7e419b7-d2d4-451a-8287-ef7c8b37800b",
+    "foto": "file:///data/user/0/host.exp.exponent/cache/ExperienceData/%2540anonymous%252FvitalHub-6fa483f8-aa5e-4e1f-9bc2-63ea4c26aab0/Camera/d18193a4-32dd-43ce-9a13-cf639577d920.jpg",
+    "id": "5031ee4c-424c-43ce-b0ae-834ba80faab0",
+    "idNavigation": {
+        "codRecupSenha": 4076,
+        "email": "Caroline@gmail.com",
+        "foto": "string",
+        "id": "5031ee4c-424c-43ce-b0ae-834ba80faab0",
+        "nome": "Caroline Novaes",
+        "senha": "$2a$11$qHXmk.TLUf7ocXtKxD796uvC9IXciWqRXaXkuV173ue3TRnJjIVya",
+        "tipoUsuarioId": "7f1da5a2-4935-4156-9efc-ca707bd21d37"
+    },
+    "medicosClinicas": []
+}
+// 
+{
+    "crm": "1234567890",
+    "endereco": {
+        "cep": "05785150",
+        "clinicas": [],
+        "id": "130333dc-8a9f-4e89-ab64-0958737dd4ca",
+        "logradouro": "Rua João Lunardelli",
+        "medicos": [],
+        "numero": 660,
+        "pacientes": []
+    },
+    "enderecoId": "130333dc-8a9f-4e89-ab64-0958737dd4ca",
+    "especialidadeId": "f7e419b7-d2d4-451a-8287-ef7c8b37800b",
+    "foto": "file:///data/user/0/host.exp.exponent/cache/ExperienceData/%2540anonymous%252FvitalHub-6fa483f8-aa5e-4e1f-9bc2-63ea4c26aab0/Camera/7575fb46-f115-41cf-833f-df05b2206e49.jpg",
+    "id": "5031ee4c-424c-43ce-b0ae-834ba80faab0",
+    "idNavigation": {
+        "codRecupSenha": 4076,
+        "email": "Caroline@gmail.com",
+        "foto": "string",
+        "id": "5031ee4c-424c-43ce-b0ae-834ba80faab0",
+        "nome": "Caroline Novaes",
+        "senha": "$2a$11$qHXmk.TLUf7ocXtKxD796uvC9IXciWqRXaXkuV173ue3TRnJjIVya",
+        "tipoUsuarioId": "7f1da5a2-4935-4156-9efc-ca707bd21d37"
+    },
+    "medicosClinicas": []
+}
+// 
+{
+    "crm": "1234567890",
+    "endereco": {
+        "cep": "05785150",
+        "clinicas": [],
+        "id": "130333dc-8a9f-4e89-ab64-0958737dd4ca",
+        "logradouro": "Rua João Lunardelli",
+        "medicos": [],
+        "numero": 660,
+        "pacientes": []
+    },
+    "enderecoId": "130333dc-8a9f-4e89-ab64-0958737dd4ca",
+    "especialidadeId": "f7e419b7-d2d4-451a-8287-ef7c8b37800b",
+    "foto": "file:///data/user/0/host.exp.exponent/cache/ExperienceData/%2540anonymous%252FvitalHub-6fa483f8-aa5e-4e1f-9bc2-63ea4c26aab0/Camera/665bd42a-73d5-4c80-9a52-360be7f73e6e.jpg",
+    "id": "5031ee4c-424c-43ce-b0ae-834ba80faab0",
+    "idNavigation": {
+        "codRecupSenha": 4076,
+        "email": "Caroline@gmail.com",
+        "foto": "https://blobvitalhubgrupo9lucas.blob.core.windows.net/containervitalhubtardeg9/67fdade1747b44d89cbed4698e29219f.jpg",
+        "id": "5031ee4c-424c-43ce-b0ae-834ba80faab0",
+        "nome": "Caroline Novaes",
+        "senha": "$2a$11$qHXmk.TLUf7ocXtKxD796uvC9IXciWqRXaXkuV173ue3TRnJjIVya",
+        "tipoUsuarioId": "7f1da5a2-4935-4156-9efc-ca707bd21d37"
+    },
+    "medicosClinicas": []
+}
+// 
+{
+    "crm": "1234567890",
+    "endereco": {
+        "cep": "05785150",
+        "clinicas": [],
+        "id": "130333dc-8a9f-4e89-ab64-0958737dd4ca",
+        "logradouro": "Rua João Lunardelli",
+        "medicos": [],
+        "numero": 660,
+        "pacientes": []
+    },
+    "enderecoId": "130333dc-8a9f-4e89-ab64-0958737dd4ca",
+    "especialidadeId": "f7e419b7-d2d4-451a-8287-ef7c8b37800b",
+    "foto": "file:///data/user/0/host.exp.exponent/cache/ExperienceData/%2540anonymous%252FvitalHub-6fa483f8-aa5e-4e1f-9bc2-63ea4c26aab0/Camera/72d4a823-5461-49db-9421-44c157eb1a70.jpg",
+    "id": "5031ee4c-424c-43ce-b0ae-834ba80faab0",
+    "idNavigation": {
+        "codRecupSenha": 4076,
+        "email": "Caroline@gmail.com",
+        "foto": "https://blobvitalhubgrupo9lucas.blob.core.windows.net/containervitalhubtardeg9/e2bd32c657c1459e80967f437e9235a9.jpg",
+        "id": "5031ee4c-424c-43ce-b0ae-834ba80faab0",
+        "nome": "Caroline Novaes",
+        "senha": "$2a$11$qHXmk.TLUf7ocXtKxD796uvC9IXciWqRXaXkuV173ue3TRnJjIVya",
+        "tipoUsuarioId": "7f1da5a2-4935-4156-9efc-ca707bd21d37"
+    },
+    "medicosClinicas": []
+}
+// _____________________________BUSCARPORID - PATIENT____________________________
+{
+    "email": "teixeirapaladino921@gmail.com",
+    "id": "390af2da-03c6-4b64-8a08-af9f16971963",
+    "name": "Paladino",
+    "role": "paciente",
+    "token": "{\"token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlaXhlaXJhcGFsYWRpbm85MjFAZ21haWwuY29tIiwibmFtZSI6IlBhbGFkaW5vIiwianRpIjoiMzkwYWYyZGEtMDNjNi00YjY0LThhMDgtYWY5ZjE2OTcxOTYzIiwicm9sZSI6InBhY2llbnRlIiwiZXhwIjoxNzE0NzY2MzgyLCJpc3MiOiJWaXRhbC1XZWJBUEkiLCJhdWQiOiJWaXRhbC1XZWJBUEkifQ.oTJEdIY_yWiIq6kIr25AldOCxGZucU3E1fdJQfPpHF0\"}"
+}

@@ -15,6 +15,7 @@ import { useEffect } from "react";
 
 const bottomTab = createBottomTabNavigator();
 
+// Main do Patient
 export const Main = ({ navigation, route }) => {
   const routeParams = route.params;
   // console.log(route);
@@ -90,7 +91,8 @@ export const Main = ({ navigation, route }) => {
   );
 };
 
-export const DoctorMain = () => {
+// Main do Doctor
+export const DoctorMain = ({route, navigation}) => {
 
   return (
 
@@ -146,10 +148,11 @@ export const DoctorMain = () => {
 
       <bottomTab.Screen
         name="PatientProfile"
-        component={PatientProfile}
-      />
+      >
+        {(props) => <PatientProfile route={route} navigation={navigation} />}
+      </bottomTab.Screen>
 
-    </bottomTab.Navigator>
+    </bottomTab.Navigator >
   );
 };
 

@@ -38,7 +38,7 @@ export const PatientProfile = ({ navigation, route }) => {
   const [editable, setEditable] = useState(false);
   const [userRole, setUserRole] = useState();
 
-
+  // Busca os dados do usuário no banco
   async function getUser(userTaken) {
     setUserRole(userTaken.role);
 
@@ -75,7 +75,7 @@ export const PatientProfile = ({ navigation, route }) => {
     }
   }
 
-  // Função para buscar os dados do usuário
+  // Busca os dados do usuário logado (email, senha, token...)
   async function profileLoad() {
     const token = await userDecodeToken();
 
@@ -84,7 +84,7 @@ export const PatientProfile = ({ navigation, route }) => {
     }
   }
 
-  // Função para alterar a imagem do usuário
+  // Altera a imagem do usuário
   async function ChangePerfilPhoto() {
     const formData = new FormData();
     formData.append("Arquivo", {
@@ -99,16 +99,19 @@ export const PatientProfile = ({ navigation, route }) => {
         "Content-Type": "multipart/form-data"
       }
     }).then(async response => {
-      console.log(`Dados: ${response.data}`);
-
-      setPatientUser({ ...patientUser, foto: route.params.photoUri })
-
+      setPatientUser(prevState => ({
+        ...prevState,
+        idNavigation: {
+          ...prevState.idNavigation,
+          foto: route.params.photoUri
+        }
+      }));
     }).catch(error => {
       console.log(`Erro na imagem: ${error}`);
     })
   }
 
-  // Carregar os dados contidos dentro do token
+  // Carrega os dados contidos dentro do token
   useEffect(() => {
     profileLoad();
   }, []);
@@ -159,15 +162,19 @@ export const PatientProfile = ({ navigation, route }) => {
       .catch(error => console.log(error));
   }
 
+  // Use effect para ver se está pegando a foto
+  useEffect(() => {
+    console.log(patientUser);
+  }, [patientUser])
+
   return (
     <ScrollContainer>
       {
         patientUser != null ? (
           <Container>
             <ImageView>
-              <ImagemPerfilPaciente source={{ uri: patientUser.foto }} />
-
-              <ButtonCamera onPress={() => navigation.navigate("Camera", { navigation: navigation, viewData: route.params })}>
+              <ImagemPerfilPaciente source={{ uri: patientUser.idNavigation.foto }} />
+              <ButtonCamera onPress={() => navigation.navigate("Camera", { navigation: navigation, viewData: route.params, viewToOpen: "Profile" })}>
                 <MaterialCommunityIcons name="camera-plus" size={20} color="#FBFBFB" />
               </ButtonCamera>
             </ImageView>
@@ -236,6 +243,8 @@ export const PatientProfile = ({ navigation, route }) => {
             <ButtonLarge text={"Salvar"} onPress={() => {
               saveProfileChanges();
             }} />
+
+
 
             <ButtonLarge text={"Editar"} onPress={() => {
               handleIsInputsEditable(editable, setEditable);

@@ -30,20 +30,47 @@ import moment from "moment";
 export const PatientConsultation = ({ navigation, route }) => {
   const [user, setUser] = useState({
     name: '',
-    id: ''
+    id: '',
+    role: ''
   });
   const [consults, setConsults] = useState({}); // Guarda todas as Consultas que estierem salvas no banco de dados
   const [selectedDate, setSelectedDate] = useState();
 
   const [consultStatus, setConsultStatus] = useState('agendada');
-  const image = require("../../assets/CardDoctorImage.png");
+  const defaultImage = require("../../assets/CardDoctorImage.png");
   const [selectedConsultDoctor, setSelectedConsultDoctor] = useState(null);
+  const [patientUser, setPatientUser] = useState(null);
+
+  async function getUser(userTaken) {
+    if (userTaken.role == 'medico') {
+      // Busca médico
+      await api.get(`/Medicos/BuscarPorId?id=${userTaken.id}`)
+        .then(response => {
+          setPatientUser(response.data);
+        })
+        .catch(error => {
+          console.log(`HOUVE UM ERRO: ${error}`);
+        });
+
+    } else {
+      // Busca paciente
+      await api.get(`/Pacientes/BuscarPorId?id=${userTaken.id}`)
+        .then(response => {
+          // Dados usuário paciente
+          setPatientUser(response.data);
+        })
+        .catch(error => {
+          console.log(error);
+        })
+    }
+  }
 
   async function profileLoad() {
     const token = await userDecodeToken();
 
     if (token) {
       setUser(token);
+      getUser(token);
 
       setSelectedDate(moment().format('YYYY-MM-DD'));
     }
@@ -61,14 +88,48 @@ export const PatientConsultation = ({ navigation, route }) => {
       .catch(error => console.log(error));
   }
 
+  // Função para alterar a imagem do usuário
+  async function ChangePerfilPhoto() {
+    const formData = new FormData();
+    formData.append("Arquivo", {
+      uri: route.params.photoUri,
+      name: `image.${route.params.photoUri.split(".").pop()}`,
+      type: `image/${route.params.photoUri.split(".").pop()}`
+    })
+
+
+    await api.put(`/Usuario/AlterarFotoPerfil?id=${patientUser.id}`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data"
+      }
+    }).then(async response => {
+      console.log(`Dados: ${response.data}`);
+
+      setPatientUser({ ...patientUser, foto: route.params.photoUri })
+
+    }).catch(error => {
+      console.log(`Erro na imagem: ${error}`);
+    })
+  }
+
+  useEffect(() => {
+    if (route.params != null) {
+      ChangePerfilPhoto();
+    }
+  }, [route.params])
+
   useEffect(() => {
     profileLoad();
     getAllConsults();
-  }, []);
+  }, [...route.params.photoUri]);
 
   useEffect(() => {
     getAllConsults();
   }, [selectedDate])
+
+  // useEffect(() => {
+
+  // }, [])
 
   // STATES PARA OS MODAIS
   const [showModalCancel, setShowModalCancel] = useState(false);
@@ -78,23 +139,30 @@ export const PatientConsultation = ({ navigation, route }) => {
 
   return (
     <Container>
-      <Header>
-        <StatusBar translucent backgroundColor="transparent" />
+      {
+        patientUser != null && user != null
+          ? (
+            <Header>
+              <StatusBar translucent backgroundColor="transparent" />
 
-        <BoxHome>
-          <ImagemHome source={require("../../assets/PatientHomeImage.png")} />
+              <BoxHome>
+                <ImagemHome source={{ uri: patientUser.idNavigation.foto }} />
 
-          <BoxDataHome>
-            <WelcomeTitle textTitle={"Bem vindo"} />
+                <BoxDataHome>
+                  <WelcomeTitle textTitle={"Bem vindo"} />
 
-            <NameTitle textTitle={user.name} />
-          </BoxDataHome>
-        </BoxHome>
+                  <NameTitle textTitle={user.name} />
+                </BoxDataHome>
+              </BoxHome>
 
-        <MoveIconBell>
-          <Ionicons name="notifications" size={25} color="white" />
-        </MoveIconBell>
-      </Header>
+              <MoveIconBell>
+                <Ionicons name="notifications" size={25} color="white" />
+              </MoveIconBell>
+            </Header>
+          )
+          : null
+      }
+
 
       <Calendar setSelectedDate={setSelectedDate} />
 
@@ -135,7 +203,7 @@ export const PatientConsultation = ({ navigation, route }) => {
               name={item.medicoClinica.medico.idNavigation.nome}
               age={item.medicoClinica.medico.crm}
               routine={item.situacao.situacao}
-              url={image}
+              url={item.medicoClinica.medico.idNavigation.foto}
               status={consultStatus}
               onPressCancel={() => setShowModalCancel(true)}
               onPressAppointment={() => {
