@@ -38,27 +38,14 @@ export default function Cam({ navigation, route }) {
     const [lastPhoto, setLastPhoto] = useState(null);
     const [user, setUser] = useState();
 
-    // useEffect(() => {
-    //     console.log('CAMERA');
-    //     console.log(route);
-    //     console.log(route.params.viewData.viewToOpen);
-    // }, [route])
-
-    // useEffect(() => {
-    //     console.log('DADOS');
-    //     console.log(route.params.viewData);
-    //     // console.log(route.params.route.name);
-    // }, [route])
+    // Realiza a requisição de permissões de acesso ao usuário
+    async function requestPermissions() {
+        const cameraStatus = await MediaLibrary.requestPermissionsAsync();
+        const mediaStatus = await Camera.requestCameraPermissionsAsync();
+    }
 
     useEffect(() => {
-
-        (async () => {
-
-            const { status: cameraStatus } = await Camera.requestCameraPermissionsAsync();
-
-            const { status: mediaStatus } = await MediaLibrary.requestPermissionsAsync();
-
-        })();
+        requestPermissions();
         GetLatestPhoto();
         profileLoad();
     }, [])

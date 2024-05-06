@@ -28,6 +28,7 @@ export const DoctorConsultation = ({ navigation }) => {
   const [consultStatus, setConsultStatus] = useState('agendada');
   const [selectedDate, setSelectedDate] = useState();
   const [selectedPatient, setSelectedPatient] = useState(null);
+  const [doctor, setDoctor] = useState();
 
   // Guarda o Id da consulta para cancelá-la
   const [cancelConsultId, setCancelConsultId] = useState();
@@ -39,6 +40,15 @@ export const DoctorConsultation = ({ navigation }) => {
 
   const image = require("../../assets/ImageCard.png");
 
+  async function getUser(userTaken) {
+    await api.get(`/Medicos/BuscarPorId?id=${userTaken.id}`)
+      .then(response => {
+        setDoctor(response.data);
+      })
+      .catch(error => {
+        console.log(`HOUVE UM ERRO: ${error}`);
+      });
+  }
 
   async function profileLoad() {
     const token = await userDecodeToken();
@@ -69,8 +79,18 @@ export const DoctorConsultation = ({ navigation }) => {
   }, []);
 
   useEffect(() => {
+    getUser(user) // Pega os dados do paciente
+  }, [route.params])
+
+  useEffect(() => {
     getAllConsults();
   }, [selectedDate, consults])
+
+  useFocusEffect(
+    React.useCallback(() => {
+      profileLoad();
+    }, []), // Empty dependency array means this callback will only run once on mount and not on updates
+  );
 
   // STATES PARA OS MODAIS
 
@@ -85,7 +105,7 @@ export const DoctorConsultation = ({ navigation }) => {
       <StatusBar translucent backgroundColor="transparent" />
       <Header>
         <BoxHome>
-          <ImagemHome source={require("../../assets/DoctorImage.png")} />
+          <ImagemHome source={{ uri: doctor.idNavigation.foto }} />
 
           <BoxDataHome>
             <WelcomeTitle textTitle={"Bem vindo"} />

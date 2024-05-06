@@ -20,10 +20,6 @@ export const Main = ({ navigation, route }) => {
   const routeParams = route.params;
   // console.log(route);
 
-  useEffect(() => {
-    console.log(route);
-  }, [route])
-
   return (
 
     <bottomTab.Navigator

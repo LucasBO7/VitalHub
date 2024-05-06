@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEfct, useEffect, useState } from "react";
 import {
   Container,
   ContainerCepCidade,
@@ -28,6 +28,7 @@ import { ActivityIndicator, View } from "react-native";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { ButtonCamera } from "../../components/Button/StyleButton";
 import { Camera } from "expo-camera";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const PatientProfile = ({ navigation, route }) => {
   const [cep, setCep] = useState("");
@@ -116,10 +117,6 @@ export const PatientProfile = ({ navigation, route }) => {
     profileLoad();
   }, []);
 
-  // useEffect(() => {
-  //   console.log(route.params);
-  // }, [route.params])
-
   useEffect(() => {
     if (route.params != null) {
       ChangePerfilPhoto();
@@ -141,6 +138,14 @@ export const PatientProfile = ({ navigation, route }) => {
     getCep();
   }, [cep]);
 
+  // useEffect(() => {
+  //   async () => {
+
+  //     const token = await userDecodeToken();
+  //     await AsyncStorage.setItem("token", JSON.stringify(...token, token.photo = route.params.idNavigation.foto));
+  //   }
+  // }, [route.params])
+
   // Controle do valor do editable: controla se os inputs estarão editáveis ou não
   function handleIsInputsEditable(inputsEditableStats, setInputsEditableStats) {
     // Se estiverem editáveis, desativar
@@ -161,11 +166,6 @@ export const PatientProfile = ({ navigation, route }) => {
     }).then(response => { console.log('FOI') })
       .catch(error => console.log(error));
   }
-
-  // Use effect para ver se está pegando a foto
-  useEffect(() => {
-    console.log(patientUser);
-  }, [patientUser])
 
   return (
     <ScrollContainer>

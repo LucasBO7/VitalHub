@@ -692,3 +692,38 @@
     "role": "paciente",
     "token": "{\"token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlaXhlaXJhcGFsYWRpbm85MjFAZ21haWwuY29tIiwibmFtZSI6IlBhbGFkaW5vIiwianRpIjoiMzkwYWYyZGEtMDNjNi00YjY0LThhMDgtYWY5ZjE2OTcxOTYzIiwicm9sZSI6InBhY2llbnRlIiwiZXhwIjoxNzE0NzY2MzgyLCJpc3MiOiJWaXRhbC1XZWJBUEkiLCJhdWQiOiJWaXRhbC1XZWJBUEkifQ.oTJEdIY_yWiIq6kIr25AldOCxGZucU3E1fdJQfPpHF0\"}"
 }
+// _____________PATIENT USER_____________________-
+{
+    "consulta": [],
+    "cpf": "52282675736",
+    "dataNascimento": "2005-04-22T00:00:00",
+    "endereco": {
+        "clinicas": [],
+        "id": "468293d9-a4a0-4387-8487-3be924e6b922",
+        "medicos": [],
+        "pacientes": []
+    },
+    "enderecoId": "468293d9-a4a0-4387-8487-3be924e6b922",
+    "id": "390af2da-03c6-4b64-8a08-af9f16971963",
+    "idNavigation": {
+        "email": "teixeirapaladino921@gmail.com",
+        "foto": "https://blobvitalhubgrupo9lucas.blob.core.windows.net/containervitalhubtardeg9/952dd0dda61241b18a684aca38e61a5f.jpg",
+        "id": "390af2da-03c6-4b64-8a08-af9f16971963",
+        "nome": "Paladino",
+        "senha": "$2a$11$58Si8dKFXrXt0cYh38Wv0eHG2ZYTklQklEU6tTc/e8YWdVkzAwxBy",
+        "tipoUsuarioId": "fe373dec-3e52-4df5-b3b2-5a94865467e7"
+    },
+    "rg": "5234606253"
+}
+// __________________________
+{
+    "consultDescricao": undefined,
+    "consultDiagnostico": undefined,
+    "consultPrescription": undefined,
+    "doctorCrm": "1321sp",
+    "doctorEspecialidade": "Cardiologista",
+    "doctorId": "fddc8a4c-3de9-4a21-b822-61ed600fe592",
+    "doctorName": "Tiago Hugo da Mata",
+    "photoUri": "file:///data/user/0/host.exp.exponent/cache/ExperienceData/%2540anonymous%252FvitalHub-6fa483f8-aa5e-4e1f-9bc2-63ea4c26aab0/Camera/4f011d8f-2678-448b-b5bd-087262946aad.jpg",
+    "prescriptionId": "bfa8b90e-cb04-4828-938c-e1946a4a0e30"
+}

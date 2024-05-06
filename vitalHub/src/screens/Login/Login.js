@@ -17,8 +17,10 @@ import { userDecodeToken } from "../../utils/Auth";
 export const Login = ({ navigation }) => {
   // const [email, setEmail] = useState("caroline@gmail.com");
   // const [senha, setSenha] = useState("caroline123");
-  const [email, setEmail] = useState("teixeirapaladino921@gmail.com");
-  const [senha, setSenha] = useState("Paladino123");
+  // const [email, setEmail] = useState("teixeirapaladino921@gmail.com");
+  // const [senha, setSenha] = useState("Paladino123");
+  const [email, setEmail] = useState("Tiago@gmail.com");
+  const [senha, setSenha] = useState("Tiago123");
   const [isLoading, setIsLoading] = useState(false);
   const [isInputDataValid, setIsInputDataValid] = useState(true); // Guardo o estado do input (se estiver errado, mostrar mensagem de erro)
 

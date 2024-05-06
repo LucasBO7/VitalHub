@@ -14,7 +14,7 @@ import { Ionicons } from "@expo/vector-icons";
 import Calendar from "../../components/Calendar/Calendar";
 
 import { FilterButton } from "../../components/Button/Button";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Card } from "../../components/Cards/Cards";
 import { CancellationModal } from "../../components/CancellationModal/CancellationModal";
 
@@ -26,6 +26,7 @@ import { userDecodeToken } from "../../utils/Auth";
 
 import api from "../../services/Services"
 import moment from "moment";
+import { useFocusEffect } from "@react-navigation/native";
 
 export const PatientConsultation = ({ navigation, route }) => {
   const [user, setUser] = useState({
@@ -42,27 +43,15 @@ export const PatientConsultation = ({ navigation, route }) => {
   const [patientUser, setPatientUser] = useState(null);
 
   async function getUser(userTaken) {
-    if (userTaken.role == 'medico') {
-      // Busca médico
-      await api.get(`/Medicos/BuscarPorId?id=${userTaken.id}`)
-        .then(response => {
-          setPatientUser(response.data);
-        })
-        .catch(error => {
-          console.log(`HOUVE UM ERRO: ${error}`);
-        });
-
-    } else {
-      // Busca paciente
-      await api.get(`/Pacientes/BuscarPorId?id=${userTaken.id}`)
-        .then(response => {
-          // Dados usuário paciente
-          setPatientUser(response.data);
-        })
-        .catch(error => {
-          console.log(error);
-        })
-    }
+    // Busca paciente
+    await api.get(`/Pacientes/BuscarPorId?id=${userTaken.id}`)
+      .then(response => {
+        // Dados usuário paciente
+        setPatientUser(response.data);
+      })
+      .catch(error => {
+        console.log(error);
+      })
   }
 
   async function profileLoad() {
@@ -78,7 +67,6 @@ export const PatientConsultation = ({ navigation, route }) => {
 
   // Busca as Consultas do banco e guarda na const consults
   async function getAllConsults() {
-    // console.log(`/Pacientes/BuscarPorData?dataConsulta=${selectedDate}&idPaciente=${user.id}`);
     await api.get(`/Pacientes/BuscarPorData?data=${selectedDate}&id=${user.id}`)
       .then(
         response => {
@@ -88,7 +76,7 @@ export const PatientConsultation = ({ navigation, route }) => {
       .catch(error => console.log(error));
   }
 
-  // Função para alterar a imagem do usuário
+  // Função para alterar a imagem do usuário no banco de dados
   async function ChangePerfilPhoto() {
     const formData = new FormData();
     formData.append("Arquivo", {
@@ -103,8 +91,6 @@ export const PatientConsultation = ({ navigation, route }) => {
         "Content-Type": "multipart/form-data"
       }
     }).then(async response => {
-      console.log(`Dados: ${response.data}`);
-
       setPatientUser({ ...patientUser, foto: route.params.photoUri })
 
     }).catch(error => {
@@ -121,15 +107,22 @@ export const PatientConsultation = ({ navigation, route }) => {
   useEffect(() => {
     profileLoad();
     getAllConsults();
-  }, [...route.params.photoUri]);
+  }, []); // AQUI user
+
+
+  useEffect(() => {
+    getUser(user) // Pega os dados do paciente
+  }, [route.params])
 
   useEffect(() => {
     getAllConsults();
   }, [selectedDate])
 
-  // useEffect(() => {
-
-  // }, [])
+  useFocusEffect(
+    React.useCallback(() => {
+      profileLoad();
+    }, []), // Empty dependency array means this callback will only run once on mount and not on updates
+  );
 
   // STATES PARA OS MODAIS
   const [showModalCancel, setShowModalCancel] = useState(false);
@@ -213,6 +206,7 @@ export const PatientConsultation = ({ navigation, route }) => {
                   doctorName: item.medicoClinica.medico.idNavigation.nome,
                   doctorEspecialidade: item.medicoClinica.medico.especialidade.especialidade1,
                   doctorCrm: item.medicoClinica.medico.crm,
+                  consultId: item.id,
                   consultDescricao: item.descricao,
                   consultDiagnostico: item.diagnostico,
                   consultPrescription: item.receita.medicamento

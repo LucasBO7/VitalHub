@@ -27,22 +27,27 @@ export const ViewPrescription = ({ navigation, route }) => {
     }
 
     useEffect(() => {
-        // console.log(`params`);
-        // console.log(route.params.photoUri);
         route.params.photoUri != undefined ? setDescricaoExame(route.params.photoUri) : undefined;
         getDoctorInfos();
-        GetScreen();
+        // GetScreen();
     }, [])
 
     // route.params.photoUri
     async function InserirExame() {
         const formData = new FormData();
-        formData.append("ConsultaId", route.params.id);
+        formData.append("ConsultaId", route.params.consultId);
         formData.append("Imagem", {
             uri: uriCameraCapture,
             name: `image.${uriCameraCapture.split('.').pop()}`,
             type: `image/${uriCameraCapture.split('.').pop()}`,
         });
+
+        console.log({
+            uri: uriCameraCapture,
+            name: `image.${uriCameraCapture.split('.').pop()}`,
+            type: `image/${uriCameraCapture.split('.').pop()}`,
+        });
+        console.log(route.params.consultId);
 
         await api.post(`/Exame/Cadastrar`, formData, {
             headers: {
@@ -59,6 +64,10 @@ export const ViewPrescription = ({ navigation, route }) => {
     }
 
     useEffect(() => {
+        setUriCameraCapture(route.params.photoUri);
+    }, [route.params])
+
+    useEffect(() => {
         if (uriCameraCapture) {
             InserirExame();
         }
@@ -68,14 +77,14 @@ export const ViewPrescription = ({ navigation, route }) => {
     //     route.params.viewToOpen = "ViewPrescription";
     // }
 
-    useEffect(() => {
-        console.log(route.params);
-    }, [route.params])
+    // useEffect(() => {
+    //     console.log(route.params);
+    // }, [route.params])
 
     return (
         <>
             <ScrollContainer>
-  
+
                 <Container>
 
                     <ViewImage source={require("../../assets/ney.webp")} />
@@ -130,9 +139,6 @@ export const ViewPrescription = ({ navigation, route }) => {
                     <BoxBtn>
                         <SendButton onPress={() => {
                             // route.params.viewToOpen = "ViewPrescription";
-                            console.log('__________ROTE BATATAAA___________');
-                            console.log(route.params);
-
                             navigation.navigate("Camera", { viewData: route.params, viewToOpen: "ViewPrescription" });
                         }} text={"Enviar"}
                         />

@@ -1,9 +1,11 @@
 import LottieView from "lottie-react-native";
 import styled from "styled-components";
 import heartBeat from "../../assets/heartBeat.json";
+import heartRed from "../../assets/heartRed.json";
+import AnimationHeart from "../../assets/AnimationHeart.json";
 
 export const HeartAnimatedStyle = styled(LottieView).attrs({
-  source: heartBeat,
+  source: AnimationHeart,
   autoPlay: true,
   loop: true,
 })`
