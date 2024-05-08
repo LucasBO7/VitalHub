@@ -92,7 +92,188 @@
         "foto": "string"
     },
     "medicosClinicas": []
-}{
+}
+// __________________________________BUSCARPORID - CONSULTAS_________________________________________
+{
+    "consultData": {
+        "dataConsulta": "2024-05-07T18:00:00",
+        "exames": [],
+        "id": "9ead4bda-a3d5-420e-b138-58783028958d",
+        "medicoClinica": {
+            "clinicaId": "73f6a64d-6d3c-45fe-beea-a1fa418b9742",
+            "consulta": [Array
+            ],
+            "id": "0af5cadf-6063-4dbf-9ed2-2a3d44acaba7",
+            "medico": [Object
+            ],
+            "medicoId": "5031ee4c-424c-43ce-b0ae-834ba80faab0"
+        },
+        "medicoClinicaId": "0af5cadf-6063-4dbf-9ed2-2a3d44acaba7",
+        "paciente": {
+            "consulta": [Array
+            ],
+            "cpf": "52282675736",
+            "dataNascimento": "2005-04-22T00:00:00",
+            "enderecoId": "468293d9-a4a0-4387-8487-3be924e6b922",
+            "id": "390af2da-03c6-4b64-8a08-af9f16971963",
+            "idNavigation": [Object
+            ],
+            "rg": "5234606253"
+        },
+        "pacienteId": "390af2da-03c6-4b64-8a08-af9f16971963",
+        "prioridade": {
+            "consulta": [Array
+            ],
+            "id": "cf8e1c18-ead1-4d08-abcf-84f7a0564e55",
+            "prioridade": 0
+        },
+        "prioridadeId": "cf8e1c18-ead1-4d08-abcf-84f7a0564e55",
+        "receita": {
+            "consulta": [Array
+            ],
+            "id": "cef46c48-0544-4824-81bd-947f7deacc5b"
+        },
+        "receitaId": "cef46c48-0544-4824-81bd-947f7deacc5b",
+        "situacao": {
+            "consulta": [Array
+            ],
+            "id": "a3139466-853b-434b-928d-8aa58cc8c2d0",
+            "situacao": "agendada"
+        },
+        "situacaoId": "a3139466-853b-434b-928d-8aa58cc8c2d0"
+    },
+    "consultId": "9ead4bda-a3d5-420e-b138-58783028958d",
+    "patientAge": undefined,
+    "patientEmail": "teixeirapaladino921@gmail.com",
+    "patientName": "Paladino"
+}
+// __________________________________PATIENTAPPOINTMENTMODAL - CONSULTA______________________________
+{
+    "clinicaId": "73f6a64d-6d3c-45fe-beea-a1fa418b9742",
+    "consulta": [],
+    "id": "0af5cadf-6063-4dbf-9ed2-2a3d44acaba7",
+    "medico": {
+        "crm": "1234567890",
+        "enderecoId": "130333dc-8a9f-4e89-ab64-0958737dd4ca",
+        "especialidade": {
+            "especialidade1": "Pneumologista",
+            "id": "f7e419b7-d2d4-451a-8287-ef7c8b37800b",
+            "medicos": [Array
+            ]
+        },
+        "especialidadeId": "f7e419b7-d2d4-451a-8287-ef7c8b37800b",
+        "id": "5031ee4c-424c-43ce-b0ae-834ba80faab0",
+        "idNavigation": {
+            "codRecupSenha": 4076,
+            "email": "Caroline@gmail.com",
+            "foto": "https://blobvitalhubgrupo9lucas.blob.core.windows.net/containervitalhubtardeg9/94122e77c0434558b17fa02b15accb66.jpg",
+            "id": "5031ee4c-424c-43ce-b0ae-834ba80faab0",
+            "nome": "Caroline Novaes",
+            "senha": "$2a$11$qHXmk.TLUf7ocXtKxD796uvC9IXciWqRXaXkuV173ue3TRnJjIVya",
+            "tipoUsuarioId": "7f1da5a2-4935-4156-9efc-ca707bd21d37"
+        },
+        "medicosClinicas": []
+    },
+    "medicoId": "5031ee4c-424c-43ce-b0ae-834ba80faab0"
+}
+// __________________________________CADASTRAR - CONSULTAS___________________________________________
+{
+    "clinicaId": "73f6a64d-6d3c-45fe-beea-a1fa418b9742",
+    "clinicaLabel": "VitalHub",
+    "dataConsulta": "2024-05-08 22:00",
+    "doctorClinicaId": "0af5cadf-6063-4dbf-9ed2-2a3d44acaba7",
+    "doctorEspecialidade": "Pneumologista",
+    "doctorLabel": "Caroline Novaes",
+    "localizacao": "São Paulo",
+    "pacienteId": {
+        "email": "teixeirapaladino921@gmail.com",
+        "id": "390af2da-03c6-4b64-8a08-af9f16971963",
+        "name": "Paladino",
+        "photo": undefined,
+        "role": "paciente",
+        "token": "{\"token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlaXhlaXJhcGFsYWRpbm85MjFAZ21haWwuY29tIiwibmFtZSI6IlBhbGFkaW5vIiwianRpIjoiMzkwYWYyZGEtMDNjNi00YjY0LThhMDgtYWY5ZjE2OTcxOTYzIiwicm9sZSI6InBhY2llbnRlIiwiZXhwIjoxNzE1MjAwNDM2LCJpc3MiOiJWaXRhbC1XZWJBUEkiLCJhdWQiOiJWaXRhbC1XZWJBUEkifQ.U_yLAfCzQKUgENVjSLAsodc0aWCdbWsOhf5F0wWOjCM\"}"
+    },
+    "prioridade": "CF8E1C18-EAD1-4D08-ABCF-84F7A0564E55",
+    "prioridadeLabel": "Rotina",
+    "situacaoId": "A3139466-853B-434B-928D-8AA58CC8C2D0"
+}
+
+{
+    "clinicaId": "73f6a64d-6d3c-45fe-beea-a1fa418b9742",
+    "clinicaLabel": "VitalHub",
+    "dataConsulta": "2024-05-10 21:00",
+    "medicoClinicaId": "0af5cadf-6063-4dbf-9ed2-2a3d44acaba7",
+    "doctorEspecialidade": "Pneumologista",
+    "doctorLabel": "Caroline Novaes",
+    "localizacao": "São Paulo",
+    "pacienteId": "390af2da-03c6-4b64-8a08-af9f16971963",
+    "prioridade": "CF8E1C18-EAD1-4D08-ABCF-84F7A0564E55",
+    "prioridadeLabel": "Rotina",
+    "situacaoId": undefined
+}
+
+
+{
+    "dataConsulta": "2024-05-07T18:00:00",
+    "exames": [],
+    "id": "9ead4bda-a3d5-420e-b138-58783028958d",
+    "medicoClinica": {
+        "clinicaId": "73f6a64d-6d3c-45fe-beea-a1fa418b9742",
+        "consulta": [],
+        "id": "0af5cadf-6063-4dbf-9ed2-2a3d44acaba7",
+        "medico": {
+            "crm": "1234567890",
+            "enderecoId": "130333dc-8a9f-4e89-ab64-0958737dd4ca",
+            "especialidade": [Object
+            ],
+            "especialidadeId": "f7e419b7-d2d4-451a-8287-ef7c8b37800b",
+            "id": "5031ee4c-424c-43ce-b0ae-834ba80faab0",
+            "idNavigation": [Object
+            ],
+            "medicosClinicas": [Array
+            ]
+        },
+        "medicoId": "5031ee4c-424c-43ce-b0ae-834ba80faab0"
+    },
+    "medicoClinicaId": "0af5cadf-6063-4dbf-9ed2-2a3d44acaba7",
+    "paciente": {
+        "consulta": [],
+        "cpf": "52282675736",
+        "dataNascimento": "2005-04-22T00:00:00",
+        "enderecoId": "468293d9-a4a0-4387-8487-3be924e6b922",
+        "id": "390af2da-03c6-4b64-8a08-af9f16971963",
+        "idNavigation": {
+            "email": "teixeirapaladino921@gmail.com",
+            "foto": "https://blobvitalhubgrupo9lucas.blob.core.windows.net/containervitalhubtardeg9/8d46b7b7ffc24cb6a3d3ae684d7a3dfd.jpg",
+            "id": "390af2da-03c6-4b64-8a08-af9f16971963",
+            "nome": "Paladino",
+            "senha": "$2a$11$58Si8dKFXrXt0cYh38Wv0eHG2ZYTklQklEU6tTc/e8YWdVkzAwxBy",
+            "tipoUsuarioId": "fe373dec-3e52-4df5-b3b2-5a94865467e7"
+        },
+        "rg": "5234606253"
+    },
+    "pacienteId": "390af2da-03c6-4b64-8a08-af9f16971963",
+    "prioridade": {
+        "consulta": [],
+        "id": "cf8e1c18-ead1-4d08-abcf-84f7a0564e55",
+        "prioridade": 0
+    },
+    "prioridadeId": "cf8e1c18-ead1-4d08-abcf-84f7a0564e55",
+    "receita": {
+        "consulta": [],
+        "id": "cef46c48-0544-4824-81bd-947f7deacc5b",
+        "medicamento": "Dipirona 20g"
+    },
+    "receitaId": "cef46c48-0544-4824-81bd-947f7deacc5b",
+    "situacao": {
+        "consulta": [],
+        "id": "a3139466-853b-434b-928d-8aa58cc8c2d0",
+        "situacao": "agendada"
+    },
+    "situacaoId": "a3139466-853b-434b-928d-8aa58cc8c2d0"
+}
+// ______________________________________________________
+{
     "key": "Camera-kpRTzSPmE9X2yncoGBcGc",
     "name": "Camera",
     "params": {
@@ -727,3 +908,46 @@
     "photoUri": "file:///data/user/0/host.exp.exponent/cache/ExperienceData/%2540anonymous%252FvitalHub-6fa483f8-aa5e-4e1f-9bc2-63ea4c26aab0/Camera/4f011d8f-2678-448b-b5bd-087262946aad.jpg",
     "prescriptionId": "bfa8b90e-cb04-4828-938c-e1946a4a0e30"
 }
+// 
+[
+    {
+        "dataConsulta": "2024-05-01T21:00:00",
+        "exames": [],
+        "id": "bfa8b90e-cb04-4828-938c-e1946a4a0e30",
+        "medicoClinica": {
+            "clinicaId": "73f6a64d-6d3c-45fe-beea-a1fa418b9742",
+            "consulta": [Array
+            ],
+            "id": "5b8143ab-b27b-4e36-b6bd-76d7ed2aad24",
+            "medicoId": "fddc8a4c-3de9-4a21-b822-61ed600fe592"
+        },
+        "medicoClinicaId": "5b8143ab-b27b-4e36-b6bd-76d7ed2aad24",
+        "paciente": {
+            "consulta": [Array
+            ],
+            "cpf": "52282675736",
+            "dataNascimento": "2005-04-22T00:00:00",
+            "enderecoId": "468293d9-a4a0-4387-8487-3be924e6b922",
+            "id": "390af2da-03c6-4b64-8a08-af9f16971963",
+            "idNavigation": [Object
+            ],
+            "rg": "5234606253"
+        },
+        "pacienteId": "390af2da-03c6-4b64-8a08-af9f16971963",
+        "prioridade": {
+            "consulta": [Array
+            ],
+            "id": "577f5dc6-bfd7-4432-9326-50fdb1e63b36",
+            "prioridade": 1
+        },
+        "prioridadeId": "577f5dc6-bfd7-4432-9326-50fdb1e63b36",
+        "receitaId": "48c59887-18c0-4596-8384-30170315d42a",
+        "situacao": {
+            "consulta": [Array
+            ],
+            "id": "77c5a039-2be0-4519-a3af-c9d381168df1",
+            "situacao": "realizada"
+        },
+        "situacaoId": "77c5a039-2be0-4519-a3af-c9d381168df1"
+    }
+]

@@ -23,12 +23,13 @@ import {
 
 import { tokenClear, userDecodeToken, userTokenLogout } from "../../utils/Auth";
 import moment from "moment";
-import { ActivityIndicator, View } from "react-native";
+import { ActivityIndicator, Text, View } from "react-native";
 
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { ButtonCamera } from "../../components/Button/StyleButton";
 import { Camera } from "expo-camera";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
 
 export const PatientProfile = ({ navigation, route }) => {
   const [cep, setCep] = useState("");
@@ -123,19 +124,22 @@ export const PatientProfile = ({ navigation, route }) => {
     }
   }, [route.params])
 
+  // Busca os dados da localização por meio do cep
   useEffect(() => {
     const getCep = async () => {
       if (cep !== "" && cep.length === 8) {
-        await api.get(`${cep}/json/`)
+        await axios.get(`https://viacep.com.br/ws/${cep}/json/`)
           .then(response => {
+            console.log('CEP BUSCADO');
+            console.log(response.data);
             setLogradouro(response.data.logradouro);
             setCidade(response.data.localidade);
           })
-          .catch(error => console.log(error));
+          .catch(error => console.log(`Erro ao buscar cep: ${error}`));
       }
     };
 
-    getCep();
+    cep != undefined ? getCep() : console.log('VAZIOOOOOOOOOOO');
   }, [cep]);
 
   // useEffect(() => {
@@ -155,16 +159,19 @@ export const PatientProfile = ({ navigation, route }) => {
 
   // PArou aqui
   async function saveProfileChanges() {
-    await api.put(`/Pacientes/AtualizarPerfil?id=${patientUser.id}`, {
-      id: patientUser.id,
+    await api.put(`/Pacientes?idUsuario=${patientUser.id}`, {
       dataNascimento: patientUser.dataNascimento,
       cpf: patientUser.cpf,
       logradouro,
+      cidade,
       numero: 0,
       cep,
-      foto: null
-    }).then(response => { console.log('FOI') })
-      .catch(error => console.log(error));
+      foto: patientUser.idNavigation.foto
+    }).then(response => {
+      alert("Alterações salvas com sucesso!");
+      handleIsInputsEditable(editable, setEditable);
+    })
+      .catch(error => console.log(`Erro no salvamento das alteraões: ${error}`));
   }
 
   return (
@@ -190,8 +197,8 @@ export const PatientProfile = ({ navigation, route }) => {
               keyboardType="numeric"
               editable={editable}
               fieldWidth={90}
-              // fieldValue={patientUser.dataNascimento && moment(patientUser.dataNascimento).format('DD-MM-YYYY')}
-              fieldValue={patientUser.dataNascimento}
+              fieldValue={patientUser.dataNascimento && moment(patientUser.dataNascimento).format('DD-MM-YYYY')}
+              // fieldValue={patientUser.dataNascimento}
               onChangeText={(text) => {
                 setPatientUser({ ...patientUser, dataNascimento: text });
               }}
@@ -228,7 +235,9 @@ export const PatientProfile = ({ navigation, route }) => {
                 editable={editable}
                 fieldWidth={40}
                 fieldValue={cep}
-                onChangeText={(text) => setCep(text)}
+                onChangeText={(text) => {
+                  setCep(text)
+                }}
               />
               <InputBox
                 placeholderTextColor={"#A1A1A1"}

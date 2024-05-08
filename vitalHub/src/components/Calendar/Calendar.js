@@ -87,7 +87,8 @@ const styles = StyleSheet.create({
     },
     calendarHeaderStyle: {
         fontSize: 24,
-        textAlign: "center",
+        // textAlignVertical: "center",
+        // textAlign: "center",
         alignSelf: 'flex-start',
         color: '#4E4B59',
         fontFamily: "MontserratAlternates_600SemiBold",

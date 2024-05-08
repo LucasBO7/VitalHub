@@ -58,13 +58,13 @@ export const AppointmentModal = ({
                     consult != null ? (
                         <ModalContent>
 
-                            <ImageModalRecord source={require('../../assets/ImageModalRecord.png')} />
+                            <ImageModalRecord source={{ uri: consult.paciente.idNavigation.foto }} />
 
                             <TitleModalRecord>{consult.paciente.idNavigation.nome}</TitleModalRecord>
 
                             <BoxAgeEmailModal>
 
-                                <DescriptionModalRecord>{consult.paciente.age}</DescriptionModalRecord>
+                                <DescriptionModalRecord>{getAge(consult.paciente.dataNascimento)} anos</DescriptionModalRecord>
                                 <DescriptionModalRecord>{consult.paciente.idNavigation.email}</DescriptionModalRecord>
 
                             </BoxAgeEmailModal>

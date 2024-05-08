@@ -37,7 +37,8 @@ export const MedicalRecords = ({ navigation, route }) => {
 
     // Busca os dados da consulta com a receita (prescrição)
     async function getConsultDataById() {
-        await api.get(`/Consultas/BuscarPorId?idConsulta=${consult.consultId}`)
+        // console.log(`/Consultas/BuscarPorId?id=${consult.consultId}`);
+        await api.get(`/Consultas/BuscarPorId?id=${consult.consultId}`)
             .then(response => {
                 setConsults({ ...consult, consultData: response.data });
             })
@@ -66,7 +67,7 @@ export const MedicalRecords = ({ navigation, route }) => {
 
                     <BoxAgeEmail>
 
-                        <DescriptionPassword description={consult.patientAge} />
+                        <DescriptionPassword description={`${consult.patientAge} anos`} />
                         <DescriptionPassword description={consult.patientEmail} />
 
                     </BoxAgeEmail>
@@ -103,11 +104,11 @@ export const MedicalRecords = ({ navigation, route }) => {
                         placeholderTextColor={"#34898F"}
                         textLabel={"Prescrição médica"}
                         placeholder={"Prescriçao médica"}
-                        editable={editable}
+                        editable={false}
                         fieldWidth={90}
-                        fieldValue={consult.consultData.receita.observacoes}
+                        fieldValue={consult.consultData.receita.medicamento}
                         onChangeText={(text) => {
-                            setConsults({ ...consult }, consult.consultData.receita.observacoes = text)
+                            setConsults({ ...consult }, consult.consultData.receita.medicamento = text)
                         }}
                     />
 

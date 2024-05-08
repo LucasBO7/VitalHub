@@ -11,11 +11,15 @@ import { AgeCard, BoxRate, CardContainer, CardContainerClinic, CardContentDoctor
 import { FontAwesome6 } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { useEffect } from "react"
 
 
 
 export const Card = ({ url, name, age, routine, hour, status, onPressCancel, onPressAppointment, onPressAppointmentCard, navigation }) => {
 
+    useEffect(() => {
+        console.log(status)
+    }, [])
     const Check = () => {
         if (status === "agendada") {
             return (
@@ -76,7 +80,7 @@ export const Card = ({ url, name, age, routine, hour, status, onPressCancel, onP
 
             <BoxCard>
 
-                <ImageCard source={url} />
+                <ImageCard source={{ uri: url }} />
 
                 <BoxTextCard>
 
@@ -84,14 +88,13 @@ export const Card = ({ url, name, age, routine, hour, status, onPressCancel, onP
 
                     <AgeCard>
 
-                        <AgeTextCard>{age}</AgeTextCard>
+                        <AgeTextCard>{age} anos</AgeTextCard>
 
                         <PointCard source={require('../../assets/PointCard.png')} />
 
                         <RoutineTextCard>{routine}</RoutineTextCard>
 
                     </AgeCard>
-
                     {Check()}
 
                 </BoxTextCard>
@@ -111,7 +114,7 @@ export const CardSelectDoctor = ({ doctor, selectedDoctor, setSelectedDoctor }) 
             isSelected={selectedDoctor == doctor.id ? true : false}
             onPress={() => {
                 setSelectedDoctor({
-                    doctorClinicaId: doctor.id,
+                    medicoClinicaId: doctor.id,
                     doctorLabel: doctor.idNavigation.nome,
                     doctorEspecialidade: doctor.especialidade.especialidade1
                 })

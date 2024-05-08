@@ -48,12 +48,12 @@ export const ConfirmAppointmentModal = ({
     async function handleContinue() {
         console.log({
             ...agendamento,
-            pacienteId: profile,
+            pacienteId: profile.id,
             situacaoId: 'A3139466-853B-434B-928D-8AA58CC8C2D0',
         });
         await api.post(`/Consultas/Cadastrar`, {
             ...agendamento,
-            pacienteId: profile,
+            pacienteId: profile.id,
             situacaoId: 'A3139466-853B-434B-928D-8AA58CC8C2D0',
 
 
@@ -94,8 +94,6 @@ export const ConfirmAppointmentModal = ({
                                     <DescripritionModalSmall2 text={agendamento.doctorLabel} />
                                     <DescripritionModalSmall2 text={agendamento.doctorEspecialidade} />
 
-                                    {/* <DescripritionModalSmall text={"Demartologa, Esteticista"} /> */}
-``
                                     <LabelDescription>Local da consulta</LabelDescription>
                                     <DescripritionModalSmall text={agendamento.localizacao} />
 

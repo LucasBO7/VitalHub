@@ -124,6 +124,11 @@ export const PatientConsultation = ({ navigation, route }) => {
     }, []), // Empty dependency array means this callback will only run once on mount and not on updates
   );
 
+  useEffect(() => {
+    console.log('CONSULTAAAAAAAAAAAAAAAAAAAAAS');
+    console.log(consults);
+  }, [consults])
+
   // STATES PARA OS MODAIS
   const [showModalCancel, setShowModalCancel] = useState(false);
   const [showModalStethoscope, setShowModalStethoscope] = useState(false);

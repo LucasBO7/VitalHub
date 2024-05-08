@@ -67,6 +67,6 @@ export const getAge = (birthdateText) => {
     // se fez aniversário
     : actualDate.getFullYear() - birthdate.getFullYear();
 
-  console.log(`Data de nascimento: $${birthdate} e data atual ${actualDate}, Idade = ${age}`);
+  // console.log(`Data de nascimento: $${birthdate} e data atual ${actualDate}, Idade = ${age}`);
   return age;
 }

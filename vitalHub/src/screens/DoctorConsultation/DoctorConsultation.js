@@ -1,4 +1,4 @@
-import { StatusBar } from "react-native";
+import { FlatList, StatusBar, Text } from "react-native";
 import {
   BoxDataHome,
   BoxHome,
@@ -15,16 +15,18 @@ import { Ionicons } from "@expo/vector-icons";
 import Calendar from "../../components/Calendar/Calendar";
 
 import { FilterButton } from "../../components/Button/Button";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Card } from "../../components/Cards/Cards";
 import { CancellationModal } from "../../components/CancellationModal/CancellationModal";
 import { AppointmentModal } from "../../components/AppointmentModal/AppointmentModal";
 
 import api from "../../services/Services";
 import { getAge, userDecodeToken } from "../../utils/Auth";
+import { useFocusEffect } from "@react-navigation/native";
+import moment from "moment";
 
-export const DoctorConsultation = ({ navigation }) => {
-  const [consults, setConsults] = useState(); // Guarda todas as Consultas que estierem salvas no banco de dados
+export const DoctorConsultation = ({ navigation, route }) => {
+  const [consults, setConsults] = useState([]); // Guarda todas as Consultas que estierem salvas no banco de dados
   const [consultStatus, setConsultStatus] = useState('agendada');
   const [selectedDate, setSelectedDate] = useState();
   const [selectedPatient, setSelectedPatient] = useState(null);
@@ -40,7 +42,7 @@ export const DoctorConsultation = ({ navigation }) => {
 
   const image = require("../../assets/ImageCard.png");
 
-  async function getUser(userTaken) {
+  async function getDoctor(userTaken) {
     await api.get(`/Medicos/BuscarPorId?id=${userTaken.id}`)
       .then(response => {
         setDoctor(response.data);
@@ -55,6 +57,7 @@ export const DoctorConsultation = ({ navigation }) => {
 
     if (token) {
       setUser(token);
+      getDoctor(token);
 
       setSelectedDate(moment().format('YYYY-MM-DD'));
     }
@@ -74,23 +77,31 @@ export const DoctorConsultation = ({ navigation }) => {
   }
 
   useEffect(() => {
-    profileLoad();
-    getAllConsults();
-  }, []);
-
-  useEffect(() => {
-    getUser(user) // Pega os dados do paciente
+    if (route.params != null) {
+      ChangePerfilPhoto();
+    }
   }, [route.params])
 
   useEffect(() => {
-    getAllConsults();
-  }, [selectedDate, consults])
+    profileLoad();
+  }, []);
 
-  useFocusEffect(
-    React.useCallback(() => {
-      profileLoad();
-    }, []), // Empty dependency array means this callback will only run once on mount and not on updates
-  );
+  useEffect(() => {
+    getDoctor(user) // Pega os dados do paciente
+  }, [route.params])
+
+
+  useEffect(() => {
+    if (selectedDate) {
+      getAllConsults();
+    }
+  }, [selectedDate]);
+
+  // useFocusEffect(
+  //   React.useCallback(() => {
+  //     profileLoad();
+  //   }, []), // Empty dependency array means this callback will only run once on mount and not on updates
+  // );
 
   // STATES PARA OS MODAIS
 
@@ -99,25 +110,29 @@ export const DoctorConsultation = ({ navigation }) => {
   // const [showModal, setShowModal] = useState(false);
 
   // RETURN
-
   return (
-    <Container>
+    < Container >
       <StatusBar translucent backgroundColor="transparent" />
-      <Header>
-        <BoxHome>
-          <ImagemHome source={{ uri: doctor.idNavigation.foto }} />
+      {
+        doctor != null && user != null
+          ? (
+            <Header>
+              <BoxHome>
+                <ImagemHome source={{ uri: doctor != undefined ? doctor.idNavigation.foto : "../../assets/ImageCard.png" }} />
 
-          <BoxDataHome>
-            <WelcomeTitle textTitle={"Bem vindo"} />
+                <BoxDataHome>
+                  <WelcomeTitle textTitle={"Bem vindo"} />
 
-            <NameTitle textTitle={user.name} />
-          </BoxDataHome>
-        </BoxHome>
+                  <NameTitle textTitle={user.name} />
+                </BoxDataHome>
+              </BoxHome>
 
-        <MoveIconBell>
-          <Ionicons name="notifications" size={25} color="white" />
-        </MoveIconBell>
-      </Header>
+              <MoveIconBell>
+                <Ionicons name="notifications" size={25} color="white" />
+              </MoveIconBell>
+            </Header>
+          ) : null
+      }
 
       <Calendar setSelectedDate={setSelectedDate} />
 
@@ -147,18 +162,19 @@ export const DoctorConsultation = ({ navigation }) => {
         />
       </ButtonHomeContainer>
 
+
       <FlatContainer
         data={consults}
-        renderItem={({ item }) =>
-          item.situacao.situacao == consultStatus &&
-          (
+        renderItem={({ item }) => (
+          item.situacao.situacao == consultStatus
+          && (
             <Card
               navigation={navigation}
               hour={'02:33'}
               name={item.paciente.idNavigation.nome}
               age={getAge(item.paciente.dataNascimento)}
               routine={item.situacao.situacao}
-              url={image}
+              url={item.paciente.idNavigation.foto}
               status={consultStatus}
               // Botão cancelar
               onPressCancel={() => {
@@ -176,7 +192,8 @@ export const DoctorConsultation = ({ navigation }) => {
                 setShowModalAppointment(item.situacao.situacao === "agendada" ? true : false); // Mostrar Modal
               }}
             />
-          )}
+          )
+        )}
         keyExtractor={(item) => item.id}
         showsVerticalScrollIndicator={false}
       />
@@ -200,6 +217,6 @@ export const DoctorConsultation = ({ navigation }) => {
                 <Card url={require('../../assets/ImageCardMale.png')} name={"Richard Kosta"} age={"28 anos"} routine={"Urgência"} hour={"15:00"}/>
 
                 <Card url={require('../../assets/ney.webp')} name={"Neymar Jr"} age={"33 anos"} routine={"Rotina"} hour={"17:00"}/> */}
-    </Container>
+    </Container >
   );
 };

@@ -14,7 +14,7 @@ import { useEffect, useState } from "react";
 import api from "../../services/Services";
 
 export const SelectClinic = ({ navigation, onCardClick, route }) => {
-  const [clinics, setClinics] = useState([]); // Lista de clínicas
+  const [clinics, setClinics] = useState(); // Lista de clínicas
   const [selectedCardId, setSelectedCardId] = useState({
     clinicaId: null,
     clinicaLabel: null
@@ -23,6 +23,9 @@ export const SelectClinic = ({ navigation, onCardClick, route }) => {
   async function getAllClinics() {
     await api.get(`/Clinica/BuscarPorCidade?cidade=${route.params.agendamento.localizacao}`)
       .then(response => {
+        console.log();
+        console.log('CLINICAAAAAAAAAAAAAAAAAAAAAA');
+        console.log(response.data);
         setClinics(response.data);
       })
       .catch((error) => {
@@ -61,7 +64,7 @@ export const SelectClinic = ({ navigation, onCardClick, route }) => {
 
   return (
     <Container>
-      {clinics != null
+      {clinics != null || clinics != []
         ? (
           <>
             <StatusBar
@@ -99,7 +102,7 @@ export const SelectClinic = ({ navigation, onCardClick, route }) => {
           </>
         )
         : (
-          <ActivityIndicator />
+          <Text>Não há nenhuma clínica na cidade informada.</Text>
         )
       }
     </Container>

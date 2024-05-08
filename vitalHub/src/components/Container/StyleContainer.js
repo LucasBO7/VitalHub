@@ -54,7 +54,7 @@ export const BoxDescription = styled.SafeAreaView`
 export const BoxDataHome = styled.SafeAreaView`
   flex-direction: column;
 
-  width: 120px;
+  width: 100%;
   height: 55px;
 
   align-items: center;
