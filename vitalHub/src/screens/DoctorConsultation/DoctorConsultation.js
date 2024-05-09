@@ -97,6 +97,19 @@ export const DoctorConsultation = ({ navigation, route }) => {
     }
   }, [selectedDate]);
 
+  // useEffect(() => {
+  //   console.log();
+  //   console.log('CONSULTAASS AQUIIIIII');
+  //   console.log(consults);
+  // }, [consults])
+
+  useEffect(() => {
+    console.log();
+    console.log('MÉDICOOOOOOOO AQUIIIIII');
+
+    console.log(consults);
+  }, [consults])
+
   // useFocusEffect(
   //   React.useCallback(() => {
   //     profileLoad();
@@ -183,7 +196,16 @@ export const DoctorConsultation = ({ navigation, route }) => {
               }}
               // Botão ver prescricão
               onPressAppointment={() => {
-                navigation.navigate("ViewPrescription");
+                navigation.navigate("ViewPrescription", {
+                  doctorName: user.name,
+                  // doctorEspecialidade: item.medicoClinica.medico.especialidade.especialidade1,
+                  doctorCrm: user.crm,
+                  consultDescricao: item.descricao,
+                  consultDiagnostico: item.diagnostico,
+                  // consultPrescription: item.receita.medicamento,
+                  consultId: item.id,
+                  doctorId: item.medicoClinica.medicoId
+                });
               }}
 
               // Clique no card

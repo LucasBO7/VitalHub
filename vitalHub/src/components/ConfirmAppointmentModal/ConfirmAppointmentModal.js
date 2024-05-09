@@ -55,12 +55,9 @@ export const ConfirmAppointmentModal = ({
             ...agendamento,
             pacienteId: profile.id,
             situacaoId: 'A3139466-853B-434B-928D-8AA58CC8C2D0',
-
-
         }).then(async () => {
             await setShowModal(false);
-
-            navigation.replace("Main")
+            navigation.replace("Main");
         }).catch(error => {
             console.log(error);
         })

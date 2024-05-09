@@ -132,6 +132,7 @@ export const PatientConsultation = ({ navigation, route }) => {
   // STATES PARA OS MODAIS
   const [showModalCancel, setShowModalCancel] = useState(false);
   const [showModalStethoscope, setShowModalStethoscope] = useState(false);
+  const [modalConsultId, setModalConsultId] = useState();
 
   const [showModal, setShowModal] = useState(false);
 
@@ -203,17 +204,17 @@ export const PatientConsultation = ({ navigation, route }) => {
               routine={item.situacao.situacao}
               url={item.medicoClinica.medico.idNavigation.foto}
               status={consultStatus}
-              onPressCancel={() => setShowModalCancel(true)}
+              onPressCancel={() => { setShowModalCancel(true); setModalConsultId(item.id) }}
               onPressAppointment={() => {
                 navigation.navigate("ViewPrescription", {
                   prescriptionId: item.id,
                   doctorId: item.medicoClinica.medico.id,
                   doctorName: item.medicoClinica.medico.idNavigation.nome,
-                  doctorEspecialidade: item.medicoClinica.medico.especialidade.especialidade1,
                   doctorCrm: item.medicoClinica.medico.crm,
                   consultId: item.id,
                   consultDescricao: item.descricao,
                   consultDiagnostico: item.diagnostico,
+                  doctorEspecialidade: item.medicoClinica.medico.especialidade.especialidade1,
                   consultPrescription: item.receita.medicamento
                 });
               }}
@@ -233,6 +234,7 @@ export const PatientConsultation = ({ navigation, route }) => {
       </Stethoscope>
 
       <CancellationModal
+        consultId={modalConsultId}
         visible={showModalCancel}
         setShowModalCancel={setShowModalCancel}
       />

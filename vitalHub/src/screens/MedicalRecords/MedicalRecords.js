@@ -28,6 +28,13 @@ export const MedicalRecords = ({ navigation, route }) => {
         }
     }, [route.params])
 
+
+    useEffect(() => {
+        console.log();
+        console.log("CONSULTAAAAAAAAA");
+        console.log(consult);
+    }, [consult])
+
     // Controle do valor do editable: controla se os inputs estarão editáveis ou não
     function handleIsInputsEditable(inputsEditableStats, setInputsEditableStats) {
         // Se estiverem editáveis, desativar
@@ -47,19 +54,31 @@ export const MedicalRecords = ({ navigation, route }) => {
 
     // Salva as alterações
     async function saveDataChanges() {
+        updateStatusConsult()
         // Aguardando alterações da API
         await api.put('/Consultas/Prontuario', {
-            id: consult.consultData.id,
+            consultaId: consult.consultData.id,
             descricao: consult.consultData.descricao,
             diagnostico: consult.consultData.diagnostico,
-        }).catch(error => {
+            medicamento: consult.consultData.receita.medicamento
+        }).then(alert("Prescrição salva com sucesso!")).catch(error => {
             console.log(`Um erro ocorreu: ${error}`);
         });
+        handleIsInputsEditable(editable, setEditable);
     }
+
+     // Setta o status da consulta para "cancelado"
+     async function updateStatusConsult() {
+        await api.put(`/Consultas/Status`, {
+            id: consult.consultData.id,
+            situacaoId: '77C5A039-2BE0-4519-A3AF-C9D381168DF1',
+        }).catch(error => console.log(error));
+    }
+
 
     return (
         <ScrollContainer>
-            <ImagemPerfilPaciente source={require('../../assets/ney.webp')} />
+            <ImagemPerfilPaciente source={{ uri: route.params.photoUri }} />
 
             {route.params != null && consult.consultData != null ? (
                 <Container>
@@ -104,7 +123,7 @@ export const MedicalRecords = ({ navigation, route }) => {
                         placeholderTextColor={"#34898F"}
                         textLabel={"Prescrição médica"}
                         placeholder={"Prescriçao médica"}
-                        editable={false}
+                        editable={editable}
                         fieldWidth={90}
                         fieldValue={consult.consultData.receita.medicamento}
                         onChangeText={(text) => {

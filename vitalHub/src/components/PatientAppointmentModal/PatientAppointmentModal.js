@@ -41,7 +41,7 @@ export const PatientAppointmentModal = ({
               <TitleModalRecord>{consulta.medico.idNavigation.nome}</TitleModalRecord>
 
               <BoxAgeEmailModal>
-                <DescriptionModalRecord>{ }</DescriptionModalRecord>
+                <DescriptionModalRecord>{consulta.medico.especialidade.especialidade1}</DescriptionModalRecord>
                 <DescriptionModalRecord>CRM: {consulta.medico.crm}</DescriptionModalRecord>
               </BoxAgeEmailModal>
 

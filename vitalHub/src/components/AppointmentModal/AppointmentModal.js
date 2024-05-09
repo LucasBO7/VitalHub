@@ -42,7 +42,8 @@ export const AppointmentModal = ({
                 patientName: consult.paciente.idNavigation.nome,
                 patientAge: consult.paciente.age,
                 patientEmail: consult.paciente.idNavigation.email,
-                consultId: consult.id
+                consultId: consult.id,
+                photoUri: consult.paciente.idNavigation.foto
             });
     }
 
@@ -88,3 +89,4 @@ export const AppointmentModal = ({
         </Modal>
     )
 }
+

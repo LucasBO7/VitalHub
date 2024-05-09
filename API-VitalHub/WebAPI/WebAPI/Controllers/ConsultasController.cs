@@ -91,6 +91,7 @@ namespace WebAPI.Controllers
             try
             {
                 consultaRepository.EditarStatus(consulta);
+                
 
                 return Ok();
 
@@ -100,6 +101,8 @@ namespace WebAPI.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+
 
         [HttpPut("Prontuario")]
         public IActionResult UpdateMedicalRecord(ProntuarioViewModel prontuarioviewModel)

@@ -53,7 +53,7 @@ export const ModalStethoscope = ({
                 onPress={() => {
                   setAgendamento({
                     ...agendamento, //Manter as informacoes que ja existem dentro do state (Agendamento)
-                    prioridade: 'CF8E1C18-EAD1-4D08-ABCF-84F7A0564E55',
+                    prioridadeId: 'CF8E1C18-EAD1-4D08-ABCF-84F7A0564E55',
                     prioridadeLabel: "Rotina"
 
                   })
@@ -68,7 +68,7 @@ export const ModalStethoscope = ({
                   setSelected({ exame: true });
                   setAgendamento({
                     ...agendamento, //Manter as informacoes que ja existem dentro do state (Agendamento)
-                    prioridade: '577F5DC6-BFD7-4432-9326-50FDB1E63B36',
+                    prioridadeId: '577F5DC6-BFD7-4432-9326-50FDB1E63B36',
                     prioridadeLabel: "Exame"
 
                   })
@@ -82,7 +82,7 @@ export const ModalStethoscope = ({
                   setSelected({ urgencia: true });
                   setAgendamento({
                     ...agendamento, //Manter as informacoes que ja existem dentro do state (Agendamento)
-                    prioridade: '8121BDC2-E3FB-4D70-AC26-3138C215D048',
+                    prioridadeId: '8121BDC2-E3FB-4D70-AC26-3138C215D048',
                     prioridadeLabel: "Urgencia"
 
                   })
