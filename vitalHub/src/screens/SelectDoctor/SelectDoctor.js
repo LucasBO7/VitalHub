@@ -85,7 +85,7 @@ export const SelectDoctor = ({ navigation, route }) => {
                     // Componente renderizado
                     <CardSelectDoctor
                         doctor={item}
-                        selectedDoctor={selectedDoctor.doctorClinicaId}
+                        selectedDoctor={selectedDoctor.medicoClinicaId}
                         setSelectedDoctor={setSelectedDoctor}
                     />
                 )}

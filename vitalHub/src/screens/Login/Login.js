@@ -1,4 +1,7 @@
-import { Title, TitleInvalidInputAlert } from "../../components/Title/StyleTitle";
+import {
+  Title,
+  TitleInvalidInputAlert,
+} from "../../components/Title/StyleTitle";
 import { Container } from "../../components/Container/StyleContainer";
 import { Logo } from "../../components/Images/StyleImages";
 import { Input } from "../../components/Input/Input";
@@ -11,7 +14,7 @@ import { useState } from "react";
 
 import api from "../../services/Services";
 
-import AsyncStorage from "@react-native-async-storage/async-storage"
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { userDecodeToken } from "../../utils/Auth";
 
 export const Login = ({ navigation }) => {
@@ -26,29 +29,29 @@ export const Login = ({ navigation }) => {
 
   async function Login() {
     // Desativa o retorno de input inválido
-    await api.post('/Login', {
-      email: email,
-      senha: senha
-    }).then(async response => {
-      setIsInputDataValid(true);
+    await api
+      .post("/Login", {
+        email: email,
+        senha: senha,
+      })
+      .then(async (response) => {
+        setIsInputDataValid(true);
 
-      await AsyncStorage.setItem("token", JSON.stringify(response.data))
+        await AsyncStorage.setItem("token", JSON.stringify(response.data));
 
-      const token = await userDecodeToken()
+        const token = await userDecodeToken();
 
-      if (token.role === "paciente") {
-        navigation.replace("Main")
-      }
-      else {
-        navigation.replace("DoctorMain")
-      }
-
-    }).catch(error => {
-      // Ativa o retorno de input inválido
-      setIsInputDataValid(false);
-      console.log(error)
-    })
-
+        if (token.role === "paciente") {
+          navigation.replace("Main");
+        } else {
+          navigation.replace("DoctorMain");
+        }
+      })
+      .catch((error) => {
+        // Ativa o retorno de input inválido
+        setIsInputDataValid(false);
+        console.log(error);
+      });
   }
 
   return (
@@ -63,20 +66,17 @@ export const Login = ({ navigation }) => {
 
       <Title>Entrar ou criar conta</Title>
 
-      {
-        isInputDataValid === false ?
-          <TitleInvalidInputAlert>Email ou senha inválidos!</TitleInvalidInputAlert>
-          :
-          null
-      }
+      {isInputDataValid === false ? (
+        <TitleInvalidInputAlert>
+          Email ou senha inválidos!
+        </TitleInvalidInputAlert>
+      ) : null}
 
       <Input
         placeholder={"Usuário ou E-mail"}
         placeholderTextColor={"#49B3BA"}
-
         fieldValue={email}
-        onChangeText={txt => setEmail(txt)}
-
+        onChangeText={(txt) => setEmail(txt)}
         isInsertedInputValid={isInputDataValid}
       />
 
@@ -84,10 +84,8 @@ export const Login = ({ navigation }) => {
         placeholder={"Senha"}
         placeholderTextColor={"#49B3BA"}
         secureTextEntry={true}
-
         fieldValue={senha}
         onChangeText={(txt) => setSenha(txt)}
-
         isInsertedInputValid={isInputDataValid}
       />
 
@@ -96,10 +94,7 @@ export const Login = ({ navigation }) => {
         onPress={() => navigation.navigate("ForgotPassword")}
       />
 
-      <ButtonNormal
-        onPress={(e) => Login()}
-        text={"Entrar"}
-      />
+      <ButtonNormal onPress={(e) => Login()} text={"Entrar"} />
 
       {/* Indicador de Loading */}
       <ActivityIndicator

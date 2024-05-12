@@ -10,7 +10,10 @@ import {
   DescripritionForgot,
 } from "../../components/Descriptions/StyledDescriptions";
 import { InputBox } from "../../components/InputBox/InputBox";
-import { ImageView, ImagemPerfilPaciente } from "../../components/Images/StyleImages";
+import {
+  ImageView,
+  ImagemPerfilPaciente,
+} from "../../components/Images/StyleImages";
 import { TitleProfile } from "../../components/Title/StyleTitle";
 import { LargeButton, NormalButton } from "../../components/Button/StyleButton";
 import { ButtonText } from "../../components/ButtonText/StyleButtonText";
@@ -25,7 +28,7 @@ import { tokenClear, userDecodeToken, userTokenLogout } from "../../utils/Auth";
 import moment from "moment";
 import { ActivityIndicator, Text, View } from "react-native";
 
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { ButtonCamera } from "../../components/Button/StyleButton";
 import { Camera } from "expo-camera";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -44,36 +47,37 @@ export const PatientProfile = ({ navigation, route }) => {
   async function getUser(userTaken) {
     setUserRole(userTaken.role);
 
-    if (userTaken.role == 'medico') {
+    if (userTaken.role == "medico") {
       // Busca médico
-      await api.get(`/Medicos/BuscarPorId?id=${userTaken.id}`)
-        .then(response => {
+      await api
+        .get(`/Medicos/BuscarPorId?id=${userTaken.id}`)
+        .then((response) => {
           setPatientUser(response.data);
 
           // Dados endereço
-          setCep(response.data.endereco.cep)
+          setCep(response.data.endereco.cep);
           setCidade(response.data.endereco.cidade);
           setLogradouro(response.data.endereco.logradouro);
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(`HOUVE UM ERRO: ${error}`);
         });
-
     } else {
       // Busca paciente
-      await api.get(`/Pacientes/BuscarPorId?id=${userTaken.id}`)
-        .then(response => {
+      await api
+        .get(`/Pacientes/BuscarPorId?id=${userTaken.id}`)
+        .then((response) => {
           // Dados usuário paciente
           setPatientUser(response.data);
 
           // Dados endereço
-          setCep(response.data.endereco.cep)
+          setCep(response.data.endereco.cep);
           setCidade(response.data.endereco.cidade);
           setLogradouro(response.data.endereco.logradouro);
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error);
-        })
+        });
     }
   }
 
@@ -92,25 +96,27 @@ export const PatientProfile = ({ navigation, route }) => {
     formData.append("Arquivo", {
       uri: route.params.photoUri,
       name: `image.${route.params.photoUri.split(".").pop()}`,
-      type: `image/${route.params.photoUri.split(".").pop()}`
-    })
+      type: `image/${route.params.photoUri.split(".").pop()}`,
+    });
 
-
-    await api.put(`/Usuario/AlterarFotoPerfil?id=${patientUser.id}`, formData, {
-      headers: {
-        "Content-Type": "multipart/form-data"
-      }
-    }).then(async response => {
-      setPatientUser(prevState => ({
-        ...prevState,
-        idNavigation: {
-          ...prevState.idNavigation,
-          foto: route.params.photoUri
-        }
-      }));
-    }).catch(error => {
-      console.log(`Erro na imagem: ${error}`);
-    })
+    await api
+      .put(`/Usuario/AlterarFotoPerfil?id=${patientUser.id}`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then(async (response) => {
+        setPatientUser((prevState) => ({
+          ...prevState,
+          idNavigation: {
+            ...prevState.idNavigation,
+            foto: route.params.photoUri,
+          },
+        }));
+      })
+      .catch((error) => {
+        console.log(`Erro na imagem: ${error}`);
+      });
   }
 
   // Carrega os dados contidos dentro do token
@@ -122,24 +128,25 @@ export const PatientProfile = ({ navigation, route }) => {
     if (route.params != null) {
       ChangePerfilPhoto();
     }
-  }, [route.params])
+  }, [route.params]);
 
   // Busca os dados da localização por meio do cep
   useEffect(() => {
     const getCep = async () => {
       if (cep !== "" && cep.length === 8) {
-        await axios.get(`https://viacep.com.br/ws/${cep}/json/`)
-          .then(response => {
-            console.log('CEP BUSCADO');
+        await axios
+          .get(`https://viacep.com.br/ws/${cep}/json/`)
+          .then((response) => {
+            console.log("CEP BUSCADO");
             console.log(response.data);
             setLogradouro(response.data.logradouro);
             setCidade(response.data.localidade);
           })
-          .catch(error => console.log(`Erro ao buscar cep: ${error}`));
+          .catch((error) => console.log(`Erro ao buscar cep: ${error}`));
       }
     };
 
-    cep != undefined ? getCep() : console.log('VAZIOOOOOOOOOOO');
+    cep != undefined ? getCep() : console.log("VAZIOOOOOOOOOOO");
   }, [cep]);
 
   // useEffect(() => {
@@ -154,121 +161,154 @@ export const PatientProfile = ({ navigation, route }) => {
   function handleIsInputsEditable(inputsEditableStats, setInputsEditableStats) {
     // Se estiverem editáveis, desativar
     // Se estiverem desativados, ativar
-    inputsEditableStats === true ? setInputsEditableStats(false) : setInputsEditableStats(true);
+    inputsEditableStats === true
+      ? setInputsEditableStats(false)
+      : setInputsEditableStats(true);
   }
 
   // PArou aqui
   async function saveProfileChanges() {
-    await api.put(`/Pacientes?idUsuario=${patientUser.id}`, {
-      dataNascimento: patientUser.dataNascimento,
-      cpf: patientUser.cpf,
-      logradouro,
-      cidade,
-      numero: 0,
-      cep,
-      foto: patientUser.idNavigation.foto
-    }).then(response => {
-      alert("Alterações salvas com sucesso!");
-      handleIsInputsEditable(editable, setEditable);
-    })
-      .catch(error => console.log(`Erro no salvamento das alteraões: ${error}`));
+    await api
+      .put(`/Pacientes?idUsuario=${patientUser.id}`, {
+        dataNascimento: patientUser.dataNascimento,
+        cpf: patientUser.cpf,
+        logradouro,
+        cidade,
+        numero: 0,
+        cep,
+        foto: patientUser.idNavigation.foto,
+      })
+      .then((response) => {
+        alert("Alterações salvas com sucesso!");
+        handleIsInputsEditable(editable, setEditable);
+      })
+      .catch((error) =>
+        console.log(`Erro no salvamento das alteraões: ${error}`)
+      );
   }
 
   return (
     <ScrollContainer>
-      {
-        patientUser != null ? (
-          <Container>
-            <ImageView>
-              <ImagemPerfilPaciente source={{ uri: patientUser.idNavigation.foto }} />
-              <ButtonCamera onPress={() => navigation.navigate("Camera", { navigation: navigation, viewData: route.params, viewToOpen: "Profile" })}>
-                <MaterialCommunityIcons name="camera-plus" size={20} color="#FBFBFB" />
-              </ButtonCamera>
-            </ImageView>
+      {patientUser != null ? (
+        <Container>
+          <ImageView>
+            <ImagemPerfilPaciente
+              source={{ uri: patientUser.idNavigation.foto }}
+            />
+            <ButtonCamera
+              onPress={() =>
+                navigation.navigate("Camera", {
+                  navigation: navigation,
+                  viewData: route.params,
+                  viewToOpen: "Profile",
+                })
+              }
+            >
+              <MaterialCommunityIcons
+                name="camera-plus"
+                size={20}
+                color="#FBFBFB"
+              />
+            </ButtonCamera>
+          </ImageView>
 
-            <TitleProfile>{patientUser.idNavigation.nome}</TitleProfile>
+          <TitleProfile>{patientUser.idNavigation.nome}</TitleProfile>
 
-            <DescriptionPassword description={userRole === 'medico' ? patientUser.crm : patientUser.idNavigation.email} />
+          <DescriptionPassword
+            description={
+              userRole === "medico"
+                ? patientUser.crm
+                : patientUser.idNavigation.email
+            }
+          />
 
+          <InputBox
+            placeholderTextColor={"#A1A1A1"}
+            textLabel={"Data de nascimento:"}
+            placeholder={"Ex. 04/05/1999"}
+            keyboardType="numeric"
+            editable={editable}
+            fieldWidth={90}
+            fieldValue={
+              patientUser.dataNascimento &&
+              moment(patientUser.dataNascimento).format("DD-MM-YYYY")
+            }
+            // fieldValue={patientUser.dataNascimento}
+            onChangeText={(text) => {
+              setPatientUser({ ...patientUser, dataNascimento: text });
+            }}
+          />
+          <InputBox
+            placeholderTextColor={"#A1A1A1"}
+            textLabel={"CPF"}
+            placeholder={"CPF..."}
+            keyboardType="numeric"
+            maxLength={11}
+            editable={editable}
+            fieldWidth={90}
+            fieldValue={patientUser.cpf}
+            onChangeText={(text) => {
+              setPatientUser({ ...patientUser, cpf: text });
+            }}
+          />
+          <InputBox
+            placeholderTextColor={"#A1A1A1"}
+            textLabel={"Endereço"}
+            placeholder={"Endereço..."}
+            editable={editable}
+            fieldWidth={90}
+            fieldValue={logradouro}
+          />
+
+          <ContainerCepCidade>
             <InputBox
               placeholderTextColor={"#A1A1A1"}
-              textLabel={"Data de nascimento:"}
-              placeholder={"Ex. 04/05/1999"}
+              textLabel={"CEP"}
+              placeholder={"CEP..."}
+              maxLength={8}
               keyboardType="numeric"
               editable={editable}
-              fieldWidth={90}
-              fieldValue={patientUser.dataNascimento && moment(patientUser.dataNascimento).format('DD-MM-YYYY')}
-              // fieldValue={patientUser.dataNascimento}
+              fieldWidth={40}
+              fieldValue={cep}
               onChangeText={(text) => {
-                setPatientUser({ ...patientUser, dataNascimento: text });
+                setCep(text);
               }}
             />
             <InputBox
               placeholderTextColor={"#A1A1A1"}
-              textLabel={"CPF"}
-              placeholder={"CPF..."}
-              keyboardType="numeric"
-              maxLength={11}
+              textLabel={"Cidade"}
+              placeholder={"Cidade..."}
               editable={editable}
-              fieldWidth={90}
-              fieldValue={patientUser.cpf}
-              onChangeText={(text) => {
-                setPatientUser({ ...patientUser, cpf: text });
-              }}
+              fieldWidth={40}
+              fieldValue={cidade}
             />
-            <InputBox
-              placeholderTextColor={"#A1A1A1"}
-              textLabel={"Endereço"}
-              placeholder={"Endereço..."}
-              editable={editable}
-              fieldWidth={90}
-              fieldValue={logradouro}
-            />
+          </ContainerCepCidade>
 
-            <ContainerCepCidade>
-              <InputBox
-                placeholderTextColor={"#A1A1A1"}
-                textLabel={"CEP"}
-                placeholder={"CEP..."}
-                maxLength={8}
-                keyboardType="numeric"
-                editable={editable}
-                fieldWidth={40}
-                fieldValue={cep}
-                onChangeText={(text) => {
-                  setCep(text)
-                }}
-              />
-              <InputBox
-                placeholderTextColor={"#A1A1A1"}
-                textLabel={"Cidade"}
-                placeholder={"Cidade..."}
-                editable={editable}
-                fieldWidth={40}
-                fieldValue={cidade}
-              />
-            </ContainerCepCidade>
-
-            <ButtonLarge text={"Salvar"} onPress={() => {
+          <ButtonLarge
+            text={"Salvar"}
+            onPress={() => {
               saveProfileChanges();
-            }} />
+            }}
+          />
 
-
-
-            <ButtonLarge text={"Editar"} onPress={() => {
+          <ButtonLarge
+            text={"Editar"}
+            onPress={() => {
               handleIsInputsEditable(editable, setEditable);
-            }} />
+            }}
+          />
 
-            <BlockedSmallButton
-              text={"Sair do app"}
-              onPress={() => { userTokenLogout(); navigation.replace("Login"); }}
-            />
-          </Container>
-        ) : (
-          <ActivityIndicator />
-        )
-      }
-
+          <BlockedSmallButton
+            text={"Sair do app"}
+            onPress={() => {
+              userTokenLogout();
+              navigation.replace("Login");
+            }}
+          />
+        </Container>
+      ) : (
+        <ActivityIndicator />
+      )}
     </ScrollContainer>
   );
 };

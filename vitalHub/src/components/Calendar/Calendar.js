@@ -59,7 +59,7 @@ const Calendar = ({ setSelectedDate }) => {
             // Data inicial permitida no calendário
             startingDate={moment()}
             // Data mínima permitida no calendário
-            minDate={startingDate}
+            minDate={startingDate.toString()}
             // Data máxima permitida no calendário
             maxDate={endingDate}
             // Estilo do cabeçalho do calendário

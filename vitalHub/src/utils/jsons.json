@@ -1050,3 +1050,42 @@
         "situacaoId": "77c5a039-2be0-4519-a3af-c9d381168df1"
     }
 ]
+// 
+[
+    {
+        "dataConsulta": "2024-05-11T22:20:00",
+        "exames": [],
+        "id": "1a57aadc-6ef1-4d7a-8994-0ea4626a542b",
+        "medicoClinica": {
+            "clinicaId": "226173c3-43c6-4f30-8778-0a9fc292191d",
+            "consulta": [Array
+            ],
+            "id": "51fde147-158b-44ca-8944-54a097804556",
+            "medico": [Object
+            ],
+            "medicoId": "8bd32b49-6744-4a71-8db1-62ae7dd7b008"
+        },
+        "medicoClinicaId": "51fde147-158b-44ca-8944-54a097804556",
+        "pacienteId": "a6b97dd3-0054-488c-bda2-5c88775940a8",
+        "prioridade": {
+            "consulta": [Array
+            ],
+            "id": "cf8e1c18-ead1-4d08-abcf-84f7a0564e55",
+            "prioridade": 0
+        },
+        "prioridadeId": "cf8e1c18-ead1-4d08-abcf-84f7a0564e55",
+        "receita": {
+            "consulta": [Array
+            ],
+            "id": "002c8c24-7f58-4268-be2d-38c498abd951"
+        },
+        "receitaId": "002c8c24-7f58-4268-be2d-38c498abd951",
+        "situacao": {
+            "consulta": [Array
+            ],
+            "id": "a3139466-853b-434b-928d-8aa58cc8c2d0",
+            "situacao": "agendada"
+        },
+        "situacaoId": "a3139466-853b-434b-928d-8aa58cc8c2d0"
+    }
+]
