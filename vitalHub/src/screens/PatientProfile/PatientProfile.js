@@ -34,7 +34,7 @@ import { Camera } from "expo-camera";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 // import Inputmask from 'inputmask';
-import { MaskedInput } from 'react-native-masked-text';
+// import { MaskedInput } from 'react-native-masked-text';
 
 
 export const PatientProfile = ({ navigation, route }) => {
@@ -168,7 +168,6 @@ export const PatientProfile = ({ navigation, route }) => {
   }
 
   async function saveProfileChanges() {
-<<<<<<< HEAD
     userRole === 'paciente'
       ? (
         await api.put(`/Pacientes?idUsuario=${patientUser.id}`, {
@@ -195,25 +194,6 @@ export const PatientProfile = ({ navigation, route }) => {
           foto: patientUser.idNavigation.foto
         })
       )
-=======
-    await api
-      .put(`/Pacientes?idUsuario=${patientUser.id}`, {
-        dataNascimento: patientUser.dataNascimento,
-        cpf: patientUser.cpf,
-        logradouro,
-        cidade,
-        numero: 0,
-        cep,
-        foto: patientUser.idNavigation.foto,
-      })
-      .then((response) => {
-        alert("Alterações salvas com sucesso!");
-        handleIsInputsEditable(editable, setEditable);
-      })
-      .catch((error) =>
-        console.log(`Erro no salvamento das alteraões: ${error}`)
-      );
->>>>>>> 5f5ba9666951ad5db4744d398d6724a0755d56db
   }
 
   return (
@@ -251,115 +231,77 @@ export const PatientProfile = ({ navigation, route }) => {
             }
           />
 
-<<<<<<< HEAD
-            {
-              userRole === 'medico'
-                ? (
-                  <>
-                    {/* Input da Especialidade */}
-                    <InputBox
-                      placeholderTextColor={"#A1A1A1"}
-                      textLabel={"Especialidade:"}
-                      placeholder={"Especialidade..."}
-                      keyboardType="numeric"
-                      editable={editable}
-                      fieldWidth={90}
-                      // fieldValue={patientUser.especialidade}
-                      onChangeText={(text) => {
-                        setPatientUser({ ...patientUser, especialidade: text });
-                      }}
-                    />
+          {
+            userRole === 'medico'
+              ? (
+                <>
+                  {/* Input da Especialidade */}
+                  <InputBox
+                    placeholderTextColor={"#A1A1A1"}
+                    textLabel={"Especialidade:"}
+                    placeholder={"Especialidade..."}
+                    keyboardType="numeric"
+                    editable={editable}
+                    fieldWidth={90}
+                    // fieldValue={patientUser.especialidade}
+                    onChangeText={(text) => {
+                      setPatientUser({ ...patientUser, especialidade: text });
+                    }}
+                  />
 
-                    {/* Input do CRM */}
-                    <InputBox
-                      placeholderTextColor={"#A1A1A1"}
-                      textLabel={"CRM"}
-                      placeholder={"CRM..."}
-                      keyboardType="numeric"
-                      maxLength={11}
-                      editable={editable}
-                      fieldWidth={90}
-                      fieldValue={patientUser.crm}
-                      onChangeText={(text) => {
-                        setPatientUser({ ...patientUser, crm: text });
-                      }}
-                    />
+                  {/* Input do CRM */}
+                  <InputBox
+                    placeholderTextColor={"#A1A1A1"}
+                    textLabel={"CRM"}
+                    placeholder={"CRM..."}
+                    keyboardType="numeric"
+                    maxLength={11}
+                    editable={editable}
+                    fieldWidth={90}
+                    fieldValue={patientUser.crm}
+                    onChangeText={(text) => {
+                      setPatientUser({ ...patientUser, crm: text });
+                    }}
+                  />
 
-                  </>
-                )
-                : (
-                  <>
-                    {/* Input da Data de nascimento */}
-                    <InputBox
-                      placeholderTextColor={"#A1A1A1"}
-                      textLabel={"Data de nascimento:"}
-                      placeholder={"Ex. 04/05/1999"}
-                      keyboardType="numeric"
-                      editable={editable}
-                      fieldWidth={90}
-                      fieldValue={patientUser.dataNascimento && moment(patientUser.dataNascimento).format('DD-MM-YYYY')}
-                      // fieldValue={patientUser.dataNascimento}
-                      onChangeText={(text) => {
-                        setPatientUser({ ...patientUser, dataNascimento: text });
-                      }}
-                    />
+                </>
+              )
+              : (
+                <>
+                  {/* Input da Data de nascimento */}
+                  <InputBox
+                    placeholderTextColor={"#A1A1A1"}
+                    textLabel={"Data de nascimento:"}
+                    placeholder={"Ex. 04/05/1999"}
+                    keyboardType="numeric"
+                    editable={editable}
+                    fieldWidth={90}
+                    fieldValue={patientUser.dataNascimento && moment(patientUser.dataNascimento).format('DD-MM-YYYY')}
+                    // fieldValue={patientUser.dataNascimento}
+                    onChangeText={(text) => {
+                      setPatientUser({ ...patientUser, dataNascimento: text });
+                    }}
+                  />
 
 
-                    {/* Input do CPF */}
-                    <InputBox
-                      placeholderTextColor={"#A1A1A1"}
-                      textLabel={"CPF"}
-                      placeholder={"CPF..."}
-                      keyboardType="numeric"
-                      maxLength={11}
-                      editable={editable}
-                      fieldWidth={90}
-                      fieldValue={patientUser.cpf}
-                      onChangeText={(text) => {
-                        setPatientUser({ ...patientUser, cpf: text });
-                      }}
-                    />
-                  </>
-                )
-            }
+                  {/* Input do CPF */}
+                  <InputBox
+                    placeholderTextColor={"#A1A1A1"}
+                    textLabel={"CPF"}
+                    placeholder={"CPF..."}
+                    keyboardType="numeric"
+                    maxLength={11}
+                    editable={editable}
+                    fieldWidth={90}
+                    fieldValue={patientUser.cpf}
+                    onChangeText={(text) => {
+                      setPatientUser({ ...patientUser, cpf: text });
+                    }}
+                  />
+                </>
+              )
+          }
 
-            <InputBox
-              placeholderTextColor={"#A1A1A1"}
-              textLabel={"Endereço"}
-              placeholder={"Endereço..."}
-              editable={editable}
-              fieldWidth={90}
-              fieldValue={logradouro}
-=======
-          <InputBox
-            placeholderTextColor={"#A1A1A1"}
-            textLabel={"Data de nascimento:"}
-            placeholder={"Ex. 04/05/1999"}
-            keyboardType="numeric"
-            editable={editable}
-            fieldWidth={90}
-            fieldValue={
-              patientUser.dataNascimento &&
-              moment(patientUser.dataNascimento).format("DD-MM-YYYY")
-            }
-            // fieldValue={patientUser.dataNascimento}
-            onChangeText={(text) => {
-              setPatientUser({ ...patientUser, dataNascimento: text });
-            }}
-          />
-          <InputBox
-            placeholderTextColor={"#A1A1A1"}
-            textLabel={"CPF"}
-            placeholder={"CPF..."}
-            keyboardType="numeric"
-            maxLength={11}
-            editable={editable}
-            fieldWidth={90}
-            fieldValue={patientUser.cpf}
-            onChangeText={(text) => {
-              setPatientUser({ ...patientUser, cpf: text });
-            }}
-          />
           <InputBox
             placeholderTextColor={"#A1A1A1"}
             textLabel={"Endereço"}
@@ -374,14 +316,11 @@ export const PatientProfile = ({ navigation, route }) => {
               placeholderTextColor={"#A1A1A1"}
               textLabel={"CEP"}
               placeholder={"CEP..."}
-              maxLength={8}
-              keyboardType="numeric"
               editable={editable}
               fieldWidth={40}
+              keyboardType="numeric"
               fieldValue={cep}
-              onChangeText={(text) => {
-                setCep(text);
-              }}
+              onChangeText={(text) => setCep(text)}
             />
             <InputBox
               placeholderTextColor={"#A1A1A1"}
@@ -390,39 +329,12 @@ export const PatientProfile = ({ navigation, route }) => {
               editable={editable}
               fieldWidth={40}
               fieldValue={cidade}
->>>>>>> 5f5ba9666951ad5db4744d398d6724a0755d56db
             />
           </ContainerCepCidade>
 
-<<<<<<< HEAD
-            <ContainerCepCidade>
-              <MaskedInput
-                placeholder={"CEP..."}
-                placeholderTextColor={"#A1A1A1"}
-                keyboardType="numeric"
-                editable={editable}
-                value={cep}
-                onChangeText={(text) => setCep(text)}
-                MaskedInput={"[00000]-[000]"}
-              />
-              <InputBox
-                placeholderTextColor={"#A1A1A1"}
-                textLabel={"Cidade"}
-                placeholder={"Cidade..."}
-                editable={editable}
-                fieldWidth={40}
-                fieldValue={cidade}
-              />
-            </ContainerCepCidade>
-
-            <ButtonLarge text={"Salvar"} onPress={() => {
-=======
-          <ButtonLarge
-            text={"Salvar"}
-            onPress={() => {
->>>>>>> 5f5ba9666951ad5db4744d398d6724a0755d56db
-              saveProfileChanges();
-            }}
+          <ButtonLarge text={"Salvar"} onPress={() => {
+            saveProfileChanges();
+          }}
           />
 
           <ButtonLarge
@@ -443,6 +355,6 @@ export const PatientProfile = ({ navigation, route }) => {
       ) : (
         <ActivityIndicator />
       )}
-    </ScrollContainer>
+    </ScrollContainer >
   );
 };

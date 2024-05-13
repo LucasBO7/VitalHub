@@ -1050,7 +1050,6 @@
         "situacaoId": "77c5a039-2be0-4519-a3af-c9d381168df1"
     }
 ]
-<<<<<<< HEAD
 // _________________________________BUSCARPORID - MEDICO
 {
     "crm": "1234567890",
@@ -1103,7 +1102,6 @@
     },
     "medicosClinicas": []
 }
-=======
 // 
 [
     {
@@ -1143,4 +1141,18 @@
         "situacaoId": "a3139466-853b-434b-928d-8aa58cc8c2d0"
     }
 ]
->>>>>>> 5f5ba9666951ad5db4744d398d6724a0755d56db
+
+
+{
+    "clinicaId": "73f6a64d-6d3c-45fe-beea-a1fa418b9742",
+    "clinicaLabel": "VitalHub",
+    "dataConsulta": "2024-05-13 17:00",
+    "doctorEspecialidade": "Pneumologista",
+    "doctorLabel": "Caroline Novaes",
+    "localizacao": "São Paulo",
+    "medicoClinicaId": "0af5cadf-6063-4dbf-9ed2-2a3d44acaba7",
+    "pacienteId": "390af2da-03c6-4b64-8a08-af9f16971963",
+    "prioridadeId": "CF8E1C18-EAD1-4D08-ABCF-84F7A0564E55",
+    "prioridadeLabel": "Rotina",
+    "situacaoId": "A3139466-853B-434B-928D-8AA58CC8C2D0"
+}

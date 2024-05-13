@@ -42,11 +42,6 @@ export const ConfirmAppointmentModal = ({
     }, [])
 
     async function handleContinue() {
-        console.log({
-            ...agendamento,
-            pacienteId: profile.id,
-            situacaoId: 'A3139466-853B-434B-928D-8AA58CC8C2D0',
-        });
         await api.post(`/Consultas/Cadastrar`, {
             ...agendamento,
             pacienteId: profile.id,

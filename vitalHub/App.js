@@ -1,6 +1,6 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { StatusBar } from "react-native";
+import { LogBox, StatusBar } from "react-native";
 import { Navegacao } from "./src/screens/Navegacao/Navegacao";
 import { Login } from "./src/screens/Login/Login";
 import { ForgotPassword } from "./src/screens/ForgotPassword/ForgotPassword";
@@ -41,8 +41,7 @@ const Stack = createNativeStackNavigator();
 
 
 export default function App() {
-
-  
+  LogBox.ignoreAllLogs();
 
   async function requestGaleria() {
     await MediaLibrary.requestPermissionsAsync();

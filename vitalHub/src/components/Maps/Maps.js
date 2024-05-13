@@ -114,7 +114,7 @@ export default function Maps({ finalLatitude, finalLongitude }) {
                   latitude: -23.615018,
                   longitude: -46.570744
                 }}
-                title='Exemplo de  outro local'
+                title='Localização atual'
                 description='Qualquer lugar no meu mapa'
                 pinColor='#77CACF'
               />
@@ -122,8 +122,8 @@ export default function Maps({ finalLatitude, finalLongitude }) {
               <MapViewDirections
                 origin={initialPosition.coords}
                 destination={{
-                  latitude: -23.629205,
-                  longitude: -46.471853,
+                  latitude: finalPosition.latitude,
+                  longitude: finalPosition.longitude,
                   latitudeDelta: 0.001,
                   longitudeDelta: 0.001
                 }}
@@ -137,9 +137,9 @@ export default function Maps({ finalLatitude, finalLongitude }) {
                   latitude: finalPosition.latitude,
                   longitude: finalPosition.longitude
                 }}
-                title='Exemplo de  outro local'
+                title='Clínica VitalHub'
                 description='Qualquer lugar no meu mapa'
-                pinColor='hotpink'
+                pinColor='pink'
               />
 
             </MapView>

@@ -6,12 +6,13 @@ import { BarContent, TextBar } from "./StyleMain";
 
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
-import { PatientProfile } from "../../screens/PatientProfile/PatientProfile";
+// import { PatientProfile } from "../../screens/PatientProfile/PatientProfile";
 
 import { PatientConsultation } from "../../screens/PatientConsultation/PatientConsultation";
 
 import { DoctorConsultation } from "../../screens/DoctorConsultation/DoctorConsultation";
 import { useEffect } from "react";
+import { PatientProfile } from "../../screens/PatientProfile/PatientProfile";
 
 const bottomTab = createBottomTabNavigator();
 
@@ -77,9 +78,13 @@ export const Main = ({ navigation, route }) => {
       />
       {/* : */}
 
-      <bottomTab.Screen
+      {/* <bottomTab.Screen
         name="PatientProfile"
       >
+        {(props) => <PatientProfile route={route} navigation={navigation} />}
+      </bottomTab.Screen> */}
+
+      <bottomTab.Screen name="PatientProfile">
         {(props) => <PatientProfile route={route} navigation={navigation} />}
       </bottomTab.Screen>
 
@@ -88,7 +93,7 @@ export const Main = ({ navigation, route }) => {
 };
 
 // Main do Doctor
-export const DoctorMain = ({route, navigation}) => {
+export const DoctorMain = ({ route, navigation }) => {
 
   return (
 
@@ -131,24 +136,15 @@ export const DoctorMain = ({route, navigation}) => {
       })}
     >
 
-      {/* Depois fazer ternário para levar para home doutor ou ImagemPerfilPaciente
-
-    ? */}
-
       <bottomTab.Screen
         name="DoctorConsultation"
         component={DoctorConsultation}
       />
 
-      {/* : */}
-
-      <bottomTab.Screen
-        name="PatientProfile"
-      >
+      <bottomTab.Screen name="PatientProfile">
         {(props) => <PatientProfile route={route} navigation={navigation} />}
       </bottomTab.Screen>
 
     </bottomTab.Navigator >
   );
 };
-
