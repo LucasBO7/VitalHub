@@ -24,34 +24,35 @@ import { ModalStethoscope } from "../../components/Stethoscope/ModalStethoscope"
 import { PatientAppointmentModal } from "../../components/PatientAppointmentModal/PatientAppointmentModal";
 import { userDecodeToken } from "../../utils/Auth";
 
-import api from "../../services/Services"
+import api from "../../services/Services";
 import moment from "moment";
 import { useFocusEffect } from "@react-navigation/native";
 
 export const PatientConsultation = ({ navigation, route }) => {
   const [user, setUser] = useState({
-    name: '',
-    id: '',
-    role: ''
+    name: "",
+    id: "",
+    role: "",
   });
   const [consults, setConsults] = useState({}); // Guarda todas as Consultas que estierem salvas no banco de dados
   const [selectedDate, setSelectedDate] = useState();
 
-  const [consultStatus, setConsultStatus] = useState('agendada');
+  const [consultStatus, setConsultStatus] = useState("agendada");
   const defaultImage = require("../../assets/CardDoctorImage.png");
   const [selectedConsultDoctor, setSelectedConsultDoctor] = useState(null);
   const [patientUser, setPatientUser] = useState(null);
 
   async function getUser(userTaken) {
     // Busca paciente
-    await api.get(`/Pacientes/BuscarPorId?id=${userTaken.id}`)
-      .then(response => {
+    await api
+      .get(`/Pacientes/BuscarPorId?id=${userTaken.id}`)
+      .then((response) => {
         // Dados usuário paciente
         setPatientUser(response.data);
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
-      })
+      });
   }
 
   async function profileLoad() {
@@ -61,19 +62,26 @@ export const PatientConsultation = ({ navigation, route }) => {
       setUser(token);
       getUser(token);
 
-      setSelectedDate(moment().format('YYYY-MM-DD'));
+      setSelectedDate(moment().format("YYYY-MM-DD"));
     }
   }
 
   // Busca as Consultas do banco e guarda na const consults
   async function getAllConsults() {
-    await api.get(`/Pacientes/BuscarPorData?data=${selectedDate}&id=${user.id}`)
-      .then(
-        response => {
-          setConsults(response.data);
-        }
-      )
-      .catch(error => console.log(error));
+    await api
+      .get(`/Pacientes/BuscarPorData?data=${selectedDate}&id=${user.id}`)
+      .then((response) => {
+        setConsults(response.data);
+
+        // Muda o status da consulta para 'realizada', se a data já tiver passado
+        response.data.forEach((consult) => {
+          // Se a data/horário da consulta já passou
+          if (consult.dataConsulta < Date.now()) {
+            consult.situacao.situacao = "realizada";
+          }
+        });
+      })
+      .catch((error) => console.log(error));
   }
 
   // Função para alterar a imagem do usuário no banco de dados
@@ -82,52 +90,52 @@ export const PatientConsultation = ({ navigation, route }) => {
     formData.append("Arquivo", {
       uri: route.params.photoUri,
       name: `image.${route.params.photoUri.split(".").pop()}`,
-      type: `image/${route.params.photoUri.split(".").pop()}`
-    })
+      type: `image/${route.params.photoUri.split(".").pop()}`,
+    });
 
-
-    await api.put(`/Usuario/AlterarFotoPerfil?id=${patientUser.id}`, formData, {
-      headers: {
-        "Content-Type": "multipart/form-data"
-      }
-    }).then(async response => {
-      setPatientUser({ ...patientUser, foto: route.params.photoUri })
-
-    }).catch(error => {
-      console.log(`Erro na imagem: ${error}`);
-    })
+    await api
+      .put(`/Usuario/AlterarFotoPerfil?id=${patientUser.id}`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then(async (response) => {
+        setPatientUser({ ...patientUser, foto: route.params.photoUri });
+      })
+      .catch((error) => {
+        console.log(`Erro na imagem: ${error}`);
+      });
   }
 
   useEffect(() => {
     if (route.params != null) {
       ChangePerfilPhoto();
     }
-  }, [route.params])
+  }, [route.params]);
 
   useEffect(() => {
     profileLoad();
     getAllConsults();
   }, []); // AQUI user
 
-
   useEffect(() => {
-    getUser(user) // Pega os dados do paciente
-  }, [route.params])
+    getUser(user); // Pega os dados do paciente
+  }, [route.params]);
 
   useEffect(() => {
     getAllConsults();
-  }, [selectedDate])
+  }, [selectedDate]);
 
   useFocusEffect(
     React.useCallback(() => {
       profileLoad();
-    }, []), // Empty dependency array means this callback will only run once on mount and not on updates
+    }, []) // Empty dependency array means this callback will only run once on mount and not on updates
   );
 
   useEffect(() => {
-    console.log('CONSULTAAAAAAAAAAAAAAAAAAAAAS');
+    console.log("CONSULTAAAAAAAAAAAAAAAAAAAAAS");
     console.log(consults);
-  }, [consults])
+  }, [consults]);
 
   // STATES PARA OS MODAIS
   const [showModalCancel, setShowModalCancel] = useState(false);
@@ -138,55 +146,50 @@ export const PatientConsultation = ({ navigation, route }) => {
 
   return (
     <Container>
-      {
-        patientUser != null && user != null
-          ? (
-            <Header>
-              <StatusBar translucent backgroundColor="transparent" />
+      {patientUser != null && user != null ? (
+        <Header>
+          <StatusBar translucent backgroundColor="transparent" />
 
-              <BoxHome>
-                <ImagemHome source={{ uri: patientUser.idNavigation.foto }} />
+          <BoxHome>
+            <ImagemHome source={{ uri: patientUser.idNavigation.foto }} />
 
-                <BoxDataHome>
-                  <WelcomeTitle textTitle={"Bem vindo"} />
+            <BoxDataHome>
+              <WelcomeTitle textTitle={"Bem vindo"} />
 
-                  <NameTitle textTitle={user.name} />
-                </BoxDataHome>
-              </BoxHome>
+              <NameTitle textTitle={user.name} />
+            </BoxDataHome>
+          </BoxHome>
 
-              <MoveIconBell>
-                <Ionicons name="notifications" size={25} color="white" />
-              </MoveIconBell>
-            </Header>
-          )
-          : null
-      }
-
+          <MoveIconBell>
+            <Ionicons name="notifications" size={25} color="white" />
+          </MoveIconBell>
+        </Header>
+      ) : null}
 
       <Calendar setSelectedDate={setSelectedDate} />
 
       <ButtonHomeContainer>
         <FilterButton
           onPress={() => {
-            setConsultStatus('agendada')
+            setConsultStatus("agendada");
           }}
-          selected={consultStatus == 'agendada' ? true : false}
+          selected={consultStatus == "agendada" ? true : false}
           text={"Agendadas"}
         />
 
         <FilterButton
           onPress={() => {
-            setConsultStatus('realizada')
+            setConsultStatus("realizada");
           }}
-          selected={consultStatus == 'realizada' ? true : false}
+          selected={consultStatus == "realizada" ? true : false}
           text={"Realizadas"}
         />
 
         <FilterButton
           onPress={() => {
-            setConsultStatus('cancelada')
+            setConsultStatus("cancelada");
           }}
-          selected={consultStatus == 'cancelada' ? true : false}
+          selected={consultStatus == "cancelada" ? true : false}
           text={"Canceladas"}
         />
       </ButtonHomeContainer>
@@ -194,17 +197,19 @@ export const PatientConsultation = ({ navigation, route }) => {
       <FlatContainer
         data={consults}
         renderItem={({ item }) =>
-          item.situacao.situacao == consultStatus &&
-          (
+          item.situacao.situacao == consultStatus && (
             <Card
               navigation={navigation}
-              hour={'02:33'}
+              hour={"02:33"}
               name={item.medicoClinica.medico.idNavigation.nome}
               age={item.medicoClinica.medico.crm}
               routine={item.situacao.situacao}
               url={item.medicoClinica.medico.idNavigation.foto}
               status={consultStatus}
-              onPressCancel={() => { setShowModalCancel(true); setModalConsultId(item.id) }}
+              onPressCancel={() => {
+                setShowModalCancel(true);
+                setModalConsultId(item.id);
+              }}
               onPressAppointment={() => {
                 navigation.navigate("ViewPrescription", {
                   prescriptionId: item.id,
@@ -214,17 +219,20 @@ export const PatientConsultation = ({ navigation, route }) => {
                   consultId: item.id,
                   consultDescricao: item.descricao,
                   consultDiagnostico: item.diagnostico,
-                  doctorEspecialidade: item.medicoClinica.medico.especialidade.especialidade1,
-                  consultPrescription: item.receita.medicamento
+                  doctorEspecialidade:
+                    item.medicoClinica.medico.especialidade.especialidade1,
+                  consultPrescription: item.receita.medicamento,
                 });
               }}
-
               onPressAppointmentCard={() => {
                 setSelectedConsultDoctor(item.medicoClinica);
-                setShowModal(item.situacao.situacao === "agendada" ? true : false);
+                setShowModal(
+                  item.situacao.situacao === "agendada" ? true : false
+                );
               }}
             />
-          )}
+          )
+        }
         keyExtractor={(item) => item.id}
         showsVerticalScrollIndicator={false}
       />

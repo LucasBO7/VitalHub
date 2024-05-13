@@ -17,15 +17,15 @@ export const SelectClinic = ({ navigation, onCardClick, route }) => {
   const [clinics, setClinics] = useState(); // Lista de clínicas
   const [selectedCardId, setSelectedCardId] = useState({
     clinicaId: null,
-    clinicaLabel: null
+    clinicaLabel: null,
   });
 
   async function getAllClinics() {
-    await api.get(`/Clinica/BuscarPorCidade?cidade=${route.params.agendamento.localizacao}`)
-      .then(response => {
-        console.log();
-        console.log('CLINICAAAAAAAAAAAAAAAAAAAAAA');
-        console.log(response.data);
+    await api
+      .get(
+        `/Clinica/BuscarPorCidade?cidade=${route.params.agendamento.localizacao}`
+      )
+      .then((response) => {
         setClinics(response.data);
       })
       .catch((error) => {
@@ -37,74 +37,60 @@ export const SelectClinic = ({ navigation, onCardClick, route }) => {
     navigation.replace("SelectDoctor", {
       agendamento: {
         ...route.params.agendamento,
-        ...selectedCardId
-      }
-    })
-
+        ...selectedCardId,
+      },
+    });
   }
 
   useEffect(() => {
     getAllClinics();
-    console.log();
-    console.log('Selecionar Clínica - OBJETO TRAZIDO:');
-    console.log(route.params);
   }, []);
-
-  useEffect(() => {
-    console.log(`CLINICA SELECIONADA`);
-    console.log(selectedCardId);
-  }, [selectedCardId])
-
 
   // Guarda o id da clínica selecionada no state
   // const handleSelectedCard = (id) => {
   //   setSelectedCardId(id);
   // };
 
-
   return (
     <Container>
-      {clinics != null || clinics != []
-        ? (
-          <>
-            <StatusBar
-              translucent
-              backgroundColor="transparent"
-              barStyle="dark-content"
-            />
+      {clinics != null || clinics != [] ? (
+        <>
+          <StatusBar
+            translucent
+            backgroundColor="transparent"
+            barStyle="dark-content"
+          />
 
-            <TitleSelect>Selecionar clínica</TitleSelect>
+          <TitleSelect>Selecionar clínica</TitleSelect>
 
-            <FlatContainerSelect
-              data={clinics}
-              keyExtractor={(item) => item.id}
-              renderItem={({ item }) => (
-                <CardSelectClinic
-                  clinic={item}
-                  selectedCardId={selectedCardId.clinicaId}
-                  setSelectedCardId={setSelectedCardId}
-                />
-              )}
-              showsVerticalScrollIndicator={false}
-            />
+          <FlatContainerSelect
+            data={clinics}
+            keyExtractor={(item) => item.id}
+            renderItem={({ item }) => (
+              <CardSelectClinic
+                clinic={item}
+                selectedCardId={selectedCardId.clinicaId}
+                setSelectedCardId={setSelectedCardId}
+              />
+            )}
+            showsVerticalScrollIndicator={false}
+          />
 
-            <ButtonLargeSelect
-              onPress={() => {
-                handleContinue();
-              }}
-              text={"Continuar"}
-            />
+          <ButtonLargeSelect
+            onPress={() => {
+              handleContinue();
+            }}
+            text={"Continuar"}
+          />
 
-            <CardCancelLess
-              onPressCancel={() => navigation.replace("Main")}
-              text={"Cancelar"}
-            />
-          </>
-        )
-        : (
-          <Text>Não há nenhuma clínica na cidade informada.</Text>
-        )
-      }
+          <CardCancelLess
+            onPressCancel={() => navigation.replace("Main")}
+            text={"Cancelar"}
+          />
+        </>
+      ) : (
+        <Text>Não há nenhuma clínica na cidade informada.</Text>
+      )}
     </Container>
   );
 };

@@ -41,10 +41,6 @@ export const ConfirmAppointmentModal = ({
         profileLoad();
     }, [])
 
-    useEffect(() => {
-        console.log(profile);
-    }, [])
-
     async function handleContinue() {
         console.log({
             ...agendamento,
