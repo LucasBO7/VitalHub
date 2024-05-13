@@ -30,6 +30,9 @@ import { ButtonCamera } from "../../components/Button/StyleButton";
 import { Camera } from "expo-camera";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
+// import Inputmask from 'inputmask';
+import { MaskedInput } from 'react-native-masked-text';
+
 
 export const PatientProfile = ({ navigation, route }) => {
   const [cep, setCep] = useState("");
@@ -143,12 +146,10 @@ export const PatientProfile = ({ navigation, route }) => {
   }, [cep]);
 
   // useEffect(() => {
-  //   async () => {
-
-  //     const token = await userDecodeToken();
-  //     await AsyncStorage.setItem("token", JSON.stringify(...token, token.photo = route.params.idNavigation.foto));
-  //   }
-  // }, [route.params])
+  //   console.log();
+  //   console.log('__USUÁRIO__');
+  //   console.log(patientUser);
+  // }, [patientUser])
 
   // Controle do valor do editable: controla se os inputs estarão editáveis ou não
   function handleIsInputsEditable(inputsEditableStats, setInputsEditableStats) {
@@ -157,21 +158,33 @@ export const PatientProfile = ({ navigation, route }) => {
     inputsEditableStats === true ? setInputsEditableStats(false) : setInputsEditableStats(true);
   }
 
-  // PArou aqui
   async function saveProfileChanges() {
-    await api.put(`/Pacientes?idUsuario=${patientUser.id}`, {
-      dataNascimento: patientUser.dataNascimento,
-      cpf: patientUser.cpf,
-      logradouro,
-      cidade,
-      numero: 0,
-      cep,
-      foto: patientUser.idNavigation.foto
-    }).then(response => {
-      alert("Alterações salvas com sucesso!");
-      handleIsInputsEditable(editable, setEditable);
-    })
-      .catch(error => console.log(`Erro no salvamento das alteraões: ${error}`));
+    userRole === 'paciente'
+      ? (
+        await api.put(`/Pacientes?idUsuario=${patientUser.id}`, {
+          dataNascimento: patientUser.dataNascimento,
+          cpf: patientUser.cpf,
+          logradouro,
+          cidade,
+          numero: 0,
+          cep,
+          foto: patientUser.idNavigation.foto
+        }).then(response => {
+          alert("Alterações salvas com sucesso!");
+          handleIsInputsEditable(editable, setEditable);
+        })
+          .catch(error => console.log(`Erro no salvamento das alteraões: ${error}`))
+      )
+      : (
+        await api.put(`/Medicos`, {
+          crm: patientUser.crm,
+          logradouro,
+          cidade,
+          numero: 0,
+          cep,
+          foto: patientUser.idNavigation.foto
+        })
+      )
   }
 
   return (
@@ -190,32 +203,77 @@ export const PatientProfile = ({ navigation, route }) => {
 
             <DescriptionPassword description={userRole === 'medico' ? patientUser.crm : patientUser.idNavigation.email} />
 
-            <InputBox
-              placeholderTextColor={"#A1A1A1"}
-              textLabel={"Data de nascimento:"}
-              placeholder={"Ex. 04/05/1999"}
-              keyboardType="numeric"
-              editable={editable}
-              fieldWidth={90}
-              fieldValue={patientUser.dataNascimento && moment(patientUser.dataNascimento).format('DD-MM-YYYY')}
-              // fieldValue={patientUser.dataNascimento}
-              onChangeText={(text) => {
-                setPatientUser({ ...patientUser, dataNascimento: text });
-              }}
-            />
-            <InputBox
-              placeholderTextColor={"#A1A1A1"}
-              textLabel={"CPF"}
-              placeholder={"CPF..."}
-              keyboardType="numeric"
-              maxLength={11}
-              editable={editable}
-              fieldWidth={90}
-              fieldValue={patientUser.cpf}
-              onChangeText={(text) => {
-                setPatientUser({ ...patientUser, cpf: text });
-              }}
-            />
+            {
+              userRole === 'medico'
+                ? (
+                  <>
+                    {/* Input da Especialidade */}
+                    <InputBox
+                      placeholderTextColor={"#A1A1A1"}
+                      textLabel={"Especialidade:"}
+                      placeholder={"Especialidade..."}
+                      keyboardType="numeric"
+                      editable={editable}
+                      fieldWidth={90}
+                      // fieldValue={patientUser.especialidade}
+                      onChangeText={(text) => {
+                        setPatientUser({ ...patientUser, especialidade: text });
+                      }}
+                    />
+
+                    {/* Input do CRM */}
+                    <InputBox
+                      placeholderTextColor={"#A1A1A1"}
+                      textLabel={"CRM"}
+                      placeholder={"CRM..."}
+                      keyboardType="numeric"
+                      maxLength={11}
+                      editable={editable}
+                      fieldWidth={90}
+                      fieldValue={patientUser.crm}
+                      onChangeText={(text) => {
+                        setPatientUser({ ...patientUser, crm: text });
+                      }}
+                    />
+
+                  </>
+                )
+                : (
+                  <>
+                    {/* Input da Data de nascimento */}
+                    <InputBox
+                      placeholderTextColor={"#A1A1A1"}
+                      textLabel={"Data de nascimento:"}
+                      placeholder={"Ex. 04/05/1999"}
+                      keyboardType="numeric"
+                      editable={editable}
+                      fieldWidth={90}
+                      fieldValue={patientUser.dataNascimento && moment(patientUser.dataNascimento).format('DD-MM-YYYY')}
+                      // fieldValue={patientUser.dataNascimento}
+                      onChangeText={(text) => {
+                        setPatientUser({ ...patientUser, dataNascimento: text });
+                      }}
+                    />
+
+
+                    {/* Input do CPF */}
+                    <InputBox
+                      placeholderTextColor={"#A1A1A1"}
+                      textLabel={"CPF"}
+                      placeholder={"CPF..."}
+                      keyboardType="numeric"
+                      maxLength={11}
+                      editable={editable}
+                      fieldWidth={90}
+                      fieldValue={patientUser.cpf}
+                      onChangeText={(text) => {
+                        setPatientUser({ ...patientUser, cpf: text });
+                      }}
+                    />
+                  </>
+                )
+            }
+
             <InputBox
               placeholderTextColor={"#A1A1A1"}
               textLabel={"Endereço"}
@@ -226,18 +284,14 @@ export const PatientProfile = ({ navigation, route }) => {
             />
 
             <ContainerCepCidade>
-              <InputBox
-                placeholderTextColor={"#A1A1A1"}
-                textLabel={"CEP"}
+              <MaskedInput
                 placeholder={"CEP..."}
-                maxLength={8}
+                placeholderTextColor={"#A1A1A1"}
                 keyboardType="numeric"
                 editable={editable}
-                fieldWidth={40}
-                fieldValue={cep}
-                onChangeText={(text) => {
-                  setCep(text)
-                }}
+                value={cep}
+                onChangeText={(text) => setCep(text)}
+                MaskedInput={"[00000]-[000]"}
               />
               <InputBox
                 placeholderTextColor={"#A1A1A1"}

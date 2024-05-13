@@ -1050,3 +1050,55 @@
         "situacaoId": "77c5a039-2be0-4519-a3af-c9d381168df1"
     }
 ]
+// _________________________________BUSCARPORID - MEDICO
+{
+    "crm": "1234567890",
+    "endereco": {
+        "cep": "05785150",
+        "clinicas": [],
+        "id": "130333dc-8a9f-4e89-ab64-0958737dd4ca",
+        "logradouro": "Rua João Lunardelli",
+        "medicos": [],
+        "numero": 660,
+        "pacientes": []
+    },
+    "enderecoId": "130333dc-8a9f-4e89-ab64-0958737dd4ca",
+    "especialidadeId": "f7e419b7-d2d4-451a-8287-ef7c8b37800b",
+    "id": "5031ee4c-424c-43ce-b0ae-834ba80faab0",
+    "idNavigation": {
+        "codRecupSenha": 4076,
+        "email": "Caroline@gmail.com",
+        "foto": "https://blobvitalhubgrupo9lucas.blob.core.windows.net/containervitalhubtardeg9/94122e77c0434558b17fa02b15accb66.jpg",
+        "id": "5031ee4c-424c-43ce-b0ae-834ba80faab0",
+        "nome": "Caroline Novaes",
+        "senha": "$2a$11$qHXmk.TLUf7ocXtKxD796uvC9IXciWqRXaXkuV173ue3TRnJjIVya",
+        "tipoUsuarioId": "7f1da5a2-4935-4156-9efc-ca707bd21d37"
+    },
+    "medicosClinicas": []
+}
+// 
+{
+    "crm": "1234567890",
+    "endereco": {
+        "cep": "05785150",
+        "clinicas": [],
+        "id": "130333dc-8a9f-4e89-ab64-0958737dd4ca",
+        "logradouro": "Rua João Lunardelli",
+        "medicos": [],
+        "numero": 660,
+        "pacientes": []
+    },
+    "enderecoId": "130333dc-8a9f-4e89-ab64-0958737dd4ca",
+    "especialidadeId": "f7e419b7-d2d4-451a-8287-ef7c8b37800b",
+    "id": "5031ee4c-424c-43ce-b0ae-834ba80faab0",
+    "idNavigation": {
+        "codRecupSenha": 4076,
+        "email": "Caroline@gmail.com",
+        "foto": "https://blobvitalhubgrupo9lucas.blob.core.windows.net/containervitalhubtardeg9/94122e77c0434558b17fa02b15accb66.jpg",
+        "id": "5031ee4c-424c-43ce-b0ae-834ba80faab0",
+        "nome": "Caroline Novaes",
+        "senha": "$2a$11$qHXmk.TLUf7ocXtKxD796uvC9IXciWqRXaXkuV173ue3TRnJjIVya",
+        "tipoUsuarioId": "7f1da5a2-4935-4156-9efc-ca707bd21d37"
+    },
+    "medicosClinicas": []
+}

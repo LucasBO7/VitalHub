@@ -142,7 +142,7 @@ export const MedicalRecords = ({ navigation, route }) => {
                     <RecordsCancelButton onPress={() => {
                         navigation.replace("DoctorMain");
                     }}
-                        text={"Cancelar"}
+                        text={"Voltar"}
                     />
 
                 </Container>

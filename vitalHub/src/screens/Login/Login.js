@@ -15,10 +15,10 @@ import AsyncStorage from "@react-native-async-storage/async-storage"
 import { userDecodeToken } from "../../utils/Auth";
 
 export const Login = ({ navigation }) => {
-  // const [email, setEmail] = useState("Caroline@gmail.com");
-  // const [senha, setSenha] = useState("Caroline123");
-  const [email, setEmail] = useState("teixeirapaladino921@gmail.com");
-  const [senha, setSenha] = useState("Paladino123");
+  const [email, setEmail] = useState("Caroline@gmail.com");
+  const [senha, setSenha] = useState("Caroline123");
+  // const [email, setEmail] = useState("teixeirapaladino921@gmail.com");
+  // const [senha, setSenha] = useState("Paladino123");
   // const [email, setEmail] = useState("Tiago@gmail.com");
   // const [senha, setSenha] = useState("Tiago123");
   const [isLoading, setIsLoading] = useState(false);

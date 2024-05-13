@@ -11,16 +11,21 @@ import { ImportImages, Line, TitleImage } from "./Style"
 
 import * as MediaLibrary from "expo-media-library"
 import api from "../../services/Services"
+import { ActivityIndicator } from "react-native"
 
 // import { useRoute } from '@react-navigation/native';
 
 export const ViewPrescription = ({ navigation, route }) => {
     const [descricaoExame, setDescricaoExame] = useState();
     const [uriCameraCapture, setUriCameraCapture] = useState();
+    const [consultDoctor, setConsultDoctor] = useState();
 
     // Busca os dados do médico da API (s)
     async function getDoctorInfos() {
         await api.get(`/Medicos/BuscarPorId?id=${route.params.doctorId}`)
+            .then(response => {
+                setConsultDoctor(response.data);
+            })
             .catch(error => {
                 console.log(error);
             });
@@ -29,10 +34,10 @@ export const ViewPrescription = ({ navigation, route }) => {
     useEffect(() => {
         route.params.photoUri != undefined ? setDescricaoExame(route.params.photoUri) : undefined;
         getDoctorInfos();
+        BuscarExame();
         // GetScreen();
     }, [])
 
-    // route.params.photoUri
     async function InserirExame() {
         const formData = new FormData();
         formData.append("ConsultaId", route.params.consultId);
@@ -42,25 +47,26 @@ export const ViewPrescription = ({ navigation, route }) => {
             type: `image/${uriCameraCapture.split('.').pop()}`,
         });
 
-        console.log({
-            uri: uriCameraCapture,
-            name: `image.${uriCameraCapture.split('.').pop()}`,
-            type: `image/${uriCameraCapture.split('.').pop()}`,
-        });
-        console.log(route.params.consultId);
-
         await api.post(`/Exame/Cadastrar`, formData, {
             headers: {
                 "Content-Type": "multipart/form-data"
             }
         }).then(response => {
-            console.log('OBJETO');
-            console.log(response.data);
             setDescricaoExame(descricaoExame + "\n" + response.data.descricao)
 
         }).catch(error => {
             console.log(error);
         })
+    }
+
+    async function BuscarExame() {
+        await api.get(`/Exame/BuscarPorIdConsulta?idConsulta=${route.params.consultId}`)
+            .then(response => {
+                setDescricaoExame(response.data[0].descricao);
+            })
+            .catch(error => {
+                console.log(`Erro ao Buscar Exame: ${error}`);
+            })
     }
 
     useEffect(() => {
@@ -73,91 +79,90 @@ export const ViewPrescription = ({ navigation, route }) => {
         }
     }, [uriCameraCapture])
 
-    // async function GetScreen() {
-    //     route.params.viewToOpen = "ViewPrescription";
-    // }
-
-    // useEffect(() => {
-    //     console.log(route.params);
-    // }, [route.params])
-
     return (
         <>
             <ScrollContainer>
+                {
+                    consultDoctor != null
+                        ? (
+                            <Container>
 
-                <Container>
+                                <ViewImage source={{ uri: consultDoctor.idNavigation.foto }} />
 
-                    <ViewImage source={require("../../assets/ney.webp")} />
+                                <TitleProfile>{route.params.doctorName}</TitleProfile>
 
-                    <TitleProfile>{route.params.doctorName}</TitleProfile>
+                                <BoxDescription>
+                                    <DescriptionDoc description={route.params.doctorEspecialidade} />
+                                    <DescriptionDoc description={consultDoctor.crm} />
+                                </BoxDescription>
 
-                    <BoxDescription>
-                        <DescriptionDoc description={route.params.doctorEspecialidade} />
-                        <DescriptionDoc description={route.params.doctorCrm} />
-                    </BoxDescription>
+                                <HighInputBoxGrey
+                                    fieldHeight={350}
+                                    placeholderTextColor={"#A1A1A1"}
+                                    textLabel={"Descrição da consulta"}
+                                    placeholder={"Descrição"}
+                                    editable={false}
+                                    fieldWidth={90}
+                                    fieldValue={route.params.consultDescricao}
+                                />
 
-                    <HighInputBoxGrey
-                        fieldHeight={350}
-                        placeholderTextColor={"#A1A1A1"}
-                        textLabel={"Descrição da consulta"}
-                        placeholder={"Descrição"}
-                        editable={false}
-                        fieldWidth={90}
-                        fieldValue={route.params.consultDescricao}
-                    />
+                                <InputBox
+                                    placeholderTextColor={"#A1A1A1"}
+                                    textLabel={"Diagnóstico do paciente"}
+                                    placeholder={"Diagnóstico"}
+                                    editable={false}
+                                    fieldWidth={90}
+                                    fieldValue={route.params.consultDiagnostico}
+                                />
 
-                    <InputBox
-                        placeholderTextColor={"#A1A1A1"}
-                        textLabel={"Diagnóstico do paciente"}
-                        placeholder={"Diagnóstico"}
-                        editable={false}
-                        fieldWidth={90}
-                        fieldValue={route.params.consultDiagnostico}
-                    />
+                                <HighInputBoxGrey
+                                    // fieldHeight={350}
+                                    placeholderTextColor={"#A1A1A1"}
+                                    textLabel={"Prescrição médica"}
+                                    placeholder={"Prescrição"}
+                                    editable={false}
+                                    fieldWidth={90}
+                                    fieldValue={route.params.consultPrescription}
+                                />
 
-                    <HighInputBoxGrey
-                        // fieldHeight={350}
-                        placeholderTextColor={"#A1A1A1"}
-                        textLabel={"Prescrição médica"}
-                        placeholder={"Prescrição"}
-                        editable={false}
-                        fieldWidth={90}
-                        // RESTA INSERIR NA API
-                        fieldValue={route.params.consultPrescription}
-                    />
+                                <BoxViewImageImport>
 
-                    <BoxViewImageImport>
+                                    <Label textLabel={"Exames médicos"} />
 
-                        <Label textLabel={"Exames médicos"} />
+                                    <ImportImages>
+                                        {route.params ? <ImagePrescription source={{ uri: route.params.photoUri }} /> : <TitleImage>{"[ ! ] Nenhuma foto informada"}</TitleImage>}
+                                    </ImportImages>
 
-                        <ImportImages>
-                            {route.params ? <ImagePrescription source={{ uri: route.params.photoUri }} /> : <TitleImage>{"[ ! ] Nenhuma foto informada"}</TitleImage>}
-                        </ImportImages>
+                                </BoxViewImageImport>
 
-                    </BoxViewImageImport>
+                                <BoxBtn>
+                                    <SendButton onPress={() => {
+                                        // route.params.viewToOpen = "ViewPrescription";
+                                        navigation.navigate("Camera", { viewData: route.params, viewToOpen: "ViewPrescription" });
+                                    }} text={"Enviar"}
+                                    />
+                                    <CardCancel onPressCancel={() => { navigation.replace("Main") }} text={"Cancelar"} />
+                                </BoxBtn>
 
-                    <BoxBtn>
-                        <SendButton onPress={() => {
-                            // route.params.viewToOpen = "ViewPrescription";
-                            navigation.navigate("Camera", { viewData: route.params, viewToOpen: "ViewPrescription" });
-                        }} text={"Enviar"}
-                        />
-                        <CardCancel onPressCancel={() => { navigation.replace("Main") }} text={"Cancelar"} />
-                    </BoxBtn>
+                                <Line />
 
-                    <Line />
+                                <HighInputBoxGrey
+                                    // fieldHeight={350}
+                                    placeholderTextColor={"#A1A1A1"}
+                                    placeholder={"Resultado do exame"}
+                                    editable={false}
+                                    fieldWidth={90}
+                                    fieldValue={descricaoExame}
+                                />
 
-                    <HighInputBoxGrey
-                        // fieldHeight={350}
-                        placeholderTextColor={"#A1A1A1"}
-                        placeholder={"Resultado do exame"}
-                        editable={false}
-                        fieldWidth={90}
-                        fieldValue={descricaoExame}
-                    />
+                                <CardBackLess onPressCancel={() => { navigation.goBack() }} text={"Voltar"} />
+                            </Container>
+                        )
+                        : (
+                            <ActivityIndicator />
+                        )
+                }
 
-                    <CardBackLess onPressCancel={() => { navigation.goBack() }} text={"Voltar"} />
-                </Container>
 
             </ScrollContainer>
         </>
