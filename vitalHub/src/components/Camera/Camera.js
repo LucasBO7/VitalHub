@@ -6,7 +6,8 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { Camera } from "expo-camera";
+import { CameraView, useCameraPermissions } from "expo-camera";
+
 import { useEffect, useRef, useState } from "react";
 
 import {
@@ -46,6 +47,10 @@ export default function Cam({ navigation, route }) {
   const [lastPhoto, setLastPhoto] = useState(null);
   const [user, setUser] = useState();
 
+
+  const [permission, requestPermission] = useCameraPermissions();
+
+
   // Realiza a requisição de permissões de acesso ao usuário
   async function requestPermissions() {
     const cameraStatus = await MediaLibrary.requestPermissionsAsync();
@@ -53,7 +58,27 @@ export default function Cam({ navigation, route }) {
   }
 
   useEffect(() => {
-    requestPermissions();
+    (async () => {
+      // PERMIÇÃO USO DE CAMERA
+      //  const { status : cameraStatus } = await Camera.requestCameraPermissionsAsync()
+      if (permission && !permission.granted) {
+        await requestPermission()
+      }
+
+      // PERMISSÃO DE GRAVAR ÁUDIO
+      //  const { status : microphoneStatus } = await Camera.requestMicrophonePermissionsAsync()
+
+      // PERMISSÃO DE ARMAZENAR FOTO
+      const { status: mediaStatus } = await MediaLibrary.requestPermissionsAsync()
+
+    }
+    )
+  }, []);
+
+  useEffect(() => {
+
+
+    // requestPermissions();
     GetLatestPhoto();
     profileLoad();
   }, []);
@@ -148,15 +173,15 @@ export default function Cam({ navigation, route }) {
         }}
       >
         <View style={styles.container}>
-          <Camera
+          <CameraView
             ref={cameraRef}
             zoom={zoom}
             style={styles.camera}
-            type={tipoCamera}
+            facing={tipoCamera}
             ratio="16:9"
             autoFocus={true}
             whiteBalance={"shadow"}
-            flashMode={flashMode}
+            flash={flashMode}
           >
             <TouchableOpacity
               style={styles.btnClear}
@@ -262,7 +287,7 @@ export default function Cam({ navigation, route }) {
                 </View>
               </Modal>
             </View>
-          </Camera>
+          </CameraView>
         </View>
       </PinchGestureHandler>
     </GestureHandlerRootView>

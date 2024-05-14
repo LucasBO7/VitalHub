@@ -96,10 +96,12 @@ export const ModalStethoscope = ({
           <LargeInputTextBoxStet
             placeholderTextColor={"#34898F"}
             value={agendamento ? agendamento.localizacao : null}
-            onChangeText={(txt) => setAgendamento({
-              ...agendamento,
-              localizacao: txt
-            })}
+            onChangeText={(txt) => {
+              setAgendamento({
+                ...agendamento,
+                localizacao: txt
+              })
+            }}
             textLabel={"Informe a localização desejada"}
             placeholder={"Informe a localização"}
             editable={true}

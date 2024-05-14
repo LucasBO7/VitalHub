@@ -70,11 +70,61 @@ export const DoctorConsultation = ({ navigation, route }) => {
         .then(
           response => {
             setConsults(response.data);
+
+            // Muda o status da consulta para 'realizada', se a data já tiver passado
+            response.data.forEach((consult) => {
+              const currentHourDate = new Date();
+              const currentHourDateFormated = currentHourDate.toISOString();
+
+              // Se for agendada
+              if (consult.situacaoId != "77C5A039-2BE0-4519-A3AF-C9D381168DF1") {
+                // Se a data/horário passou
+                if (isDateTimePassed(consult.dataConsulta)) {
+                  // Executar o "realizada"
+                  api.put(`/Consultas/Status`, {
+                    id: consult.id,
+                    situacaoId: "77C5A039-2BE0-4519-A3AF-C9D381168DF1"
+                  }).catch(error => console.log(error));
+                }
+              }
+            });
           }
         )
         .catch(error => console.log(error));
     }
   }
+
+  function isDateTimePassed(dateTime) {
+    // Obter o momento atual
+    const now = new Date();
+
+    // Subtrair o valor DateTime fornecido do momento atual
+    const differenceInMilliseconds = now.getTime() - dateTime.getTime();
+
+    // Verificar se o valor DateTime fornecido é anterior ao momento atual
+    if (differenceInMilliseconds < 0) {
+      return true; // O valor DateTime já passou
+    }
+
+    // Se o valor DateTime é o mesmo dia, verificar o horário
+    if (differenceInMilliseconds === 0) {
+      const nowHour = now.getHours();
+      const nowMinutes = now.getMinutes();
+      const nowSeconds = now.getSeconds();
+      const dateTimeHour = dateTime.getHours();
+      const dateTimeMinutes = dateTime.getMinutes();
+      const dateTimeSeconds = dateTime.getSeconds();
+
+      // Comparar os horários
+      if ((nowHour > dateTimeHour || (nowHour === dateTimeHour && nowMinutes > dateTimeMinutes)) ||
+        (nowHour === dateTimeHour && nowMinutes === dateTimeMinutes && nowSeconds >= dateTimeSeconds)) {
+        return true; // O horário já passou
+      }
+    }
+
+    return false; // O valor DateTime não passou
+  }
+
 
   useEffect(() => {
     if (route.params != null) {
@@ -103,18 +153,18 @@ export const DoctorConsultation = ({ navigation, route }) => {
   //   console.log(consults);
   // }, [consults])
 
-  useEffect(() => {
-    console.log();
-    console.log('MÉDICOOOOOOOO AQUIIIIII');
+  // useEffect(() => {
+  //   console.log();
+  //   console.log('MÉDICOOOOOOOO AQUIIIIII');
 
-    console.log(consults);
-  }, [consults])
+  //   console.log(consults);
+  // }, [consults])
 
-  // useFocusEffect(
-  //   React.useCallback(() => {
-  //     profileLoad();
-  //   }, []), // Empty dependency array means this callback will only run once on mount and not on updates
-  // );
+  useFocusEffect(
+    React.useCallback(() => {
+      profileLoad();
+    }, []), // Empty dependency array means this callback will only run once on mount and not on updates
+  );
 
   // STATES PARA OS MODAIS
 
@@ -205,9 +255,9 @@ export const DoctorConsultation = ({ navigation, route }) => {
                   // consultPrescription: item.receita.medicamento,
                   consultId: item.id,
                   doctorId: item.medicoClinica.medicoId
-                 
+
                 });
-               
+
               }}
 
               // Clique no card

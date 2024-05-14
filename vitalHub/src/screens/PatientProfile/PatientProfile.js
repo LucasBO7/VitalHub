@@ -243,7 +243,7 @@ export const PatientProfile = ({ navigation, route }) => {
                     keyboardType="numeric"
                     editable={editable}
                     fieldWidth={90}
-                    // fieldValue={patientUser.especialidade}
+                    fieldValue={patientUser.especialidade}
                     onChangeText={(text) => {
                       setPatientUser({ ...patientUser, especialidade: text });
                     }}

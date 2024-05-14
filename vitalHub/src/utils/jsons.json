@@ -1156,3 +1156,46 @@
     "prioridadeLabel": "Rotina",
     "situacaoId": "A3139466-853B-434B-928D-8AA58CC8C2D0"
 }
+
+{
+    "dataConsulta": "2024-05-13T17:00:00",
+    "exames": [],
+    "id": "4eb83790-72e2-4cba-9703-17cf3067fdc0",
+    "medicoClinica": {
+        "clinicaId": "73f6a64d-6d3c-45fe-beea-a1fa418b9742",
+        "consulta": [],
+        "id": "0af5cadf-6063-4dbf-9ed2-2a3d44acaba7",
+        "medico": {
+            "crm": "1234567890",
+            "enderecoId": "130333dc-8a9f-4e89-ab64-0958737dd4ca",
+            "especialidade": [Object
+            ],
+            "especialidadeId": "f7e419b7-d2d4-451a-8287-ef7c8b37800b",
+            "id": "5031ee4c-424c-43ce-b0ae-834ba80faab0",
+            "idNavigation": [Object
+            ],
+            "medicosClinicas": [Array
+            ]
+        },
+        "medicoId": "5031ee4c-424c-43ce-b0ae-834ba80faab0"
+    },
+    "medicoClinicaId": "0af5cadf-6063-4dbf-9ed2-2a3d44acaba7",
+    "pacienteId": "390af2da-03c6-4b64-8a08-af9f16971963",
+    "prioridade": {
+        "consulta": [],
+        "id": "cf8e1c18-ead1-4d08-abcf-84f7a0564e55",
+        "prioridade": 0
+    },
+    "prioridadeId": "cf8e1c18-ead1-4d08-abcf-84f7a0564e55",
+    "receita": {
+        "consulta": [],
+        "id": "121c1698-0043-4d4e-9c86-770d2d55f275"
+    },
+    "receitaId": "121c1698-0043-4d4e-9c86-770d2d55f275",
+    "situacao": {
+        "consulta": [],
+        "id": "a3139466-853b-434b-928d-8aa58cc8c2d0",
+        "situacao": "agendada"
+    },
+    "situacaoId": "a3139466-853b-434b-928d-8aa58cc8c2d0"
+}

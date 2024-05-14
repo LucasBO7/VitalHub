@@ -109,7 +109,6 @@ export const Card = ({ url, name, age, routine, hour, status, onPressCancel, onP
 export const CardSelectDoctor = ({ doctor, selectedDoctor, setSelectedDoctor }) => {
 
     return (
-
         <CardContainerClinic
             isSelected={selectedDoctor == doctor.id ? true : false}
             onPress={() => {
@@ -121,8 +120,7 @@ export const CardSelectDoctor = ({ doctor, selectedDoctor, setSelectedDoctor }) 
             }}
         >
             <BoxCardDoctor>
-
-                <ImageCard source={require("../../assets/ImageCard.png")} />
+                <ImageCard source={{ uri: doctor.idNavigation.foto }} />
 
                 <BoxCard>
 

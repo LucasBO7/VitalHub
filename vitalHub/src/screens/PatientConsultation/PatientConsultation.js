@@ -75,9 +75,16 @@ export const PatientConsultation = ({ navigation, route }) => {
 
         // Muda o status da consulta para 'realizada', se a data já tiver passado
         response.data.forEach((consult) => {
-          // Se a data/horário da consulta já passou
-          if (consult.dataConsulta < Date.now()) {
-            consult.situacao.situacao = "realizada";
+          const currentHourDate = new Date();
+          const currentHourDateFormated = currentHourDate.toISOString();
+
+          if (consult.situacaoId != "77C5A039-2BE0-4519-A3AF-C9D381168DF1") {
+            if (consult.dataConsulta < currentHourDateFormated) {
+              api.put(`/Consultas/Status`, {
+                id: consult.id,
+                situacaoId: "77C5A039-2BE0-4519-A3AF-C9D381168DF1"
+              }).catch(error => console.log(error));
+            }
           }
         });
       })
@@ -132,10 +139,10 @@ export const PatientConsultation = ({ navigation, route }) => {
     }, []) // Empty dependency array means this callback will only run once on mount and not on updates
   );
 
-  useEffect(() => {
-    console.log("CONSULTAAAAAAAAAAAAAAAAAAAAAS");
-    console.log(consults);
-  }, [consults]);
+  // useEffect(() => {
+  //   console.log("CONSULTAAAAAAAAAAAAAAAAAAAAAS");
+  //   console.log(consults);
+  // }, [consults]);
 
   // STATES PARA OS MODAIS
   const [showModalCancel, setShowModalCancel] = useState(false);
