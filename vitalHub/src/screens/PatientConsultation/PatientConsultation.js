@@ -157,7 +157,7 @@ export const PatientConsultation = ({ navigation, route }) => {
         <Header>
           <StatusBar translucent backgroundColor="transparent" />
 
-          <BoxHome>
+          <BoxHome >
             <ImagemHome source={{ uri: patientUser.idNavigation.foto }} />
 
             <BoxDataHome>

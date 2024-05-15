@@ -47,6 +47,7 @@
     "react-native-masked-text": "^1.13.0",
     "react-native-picker-select": "^9.0.1",
     "react-native-svg": "15.2.0",
+    "remask": "^1.2.2",
     "styled-components": "^6.1.8",
     "yup": "^1.4.0"
   },

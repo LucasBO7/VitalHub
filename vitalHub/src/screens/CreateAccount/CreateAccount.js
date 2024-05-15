@@ -1,5 +1,5 @@
 
-import { StatusBar } from 'react-native'
+import { ActivityIndicator, StatusBar } from 'react-native'
 import { ButtonNormal } from '../../components/Button/Button'
 import { NormalButton } from '../../components/Button/StyleButton'
 import { ButtonText } from '../../components/ButtonText/StyleButtonText'
@@ -7,12 +7,13 @@ import { Container, ScrollContainer } from '../../components/Container/StyleCont
 import { DescriptionPassword } from '../../components/Descriptions/Descriptions'
 import { Input } from '../../components/Input/Input'
 import { Cancel } from '../../components/Link/Link'
-import { Title } from '../../components/Title/StyleTitle'
+import { Title, TitleInvalidInputAlert } from '../../components/Title/StyleTitle'
 import { LogoCreateAccount } from '../../components/Images/StyleImages'
 import { useState } from 'react'
 
 import * as yup from 'yup';
 import api from '../../services/Services'
+import { mascararRg, maskData } from '../../utils/InputMasks'
 
 
 export const CreateAccount = ({ navigation, route }) => {
@@ -23,24 +24,34 @@ export const CreateAccount = ({ navigation, route }) => {
 
 
     // const [confirmPassword, setConfirmPassword] = useState(null);
-    const [confirmPassword, setConfirmPassword] = useState('Paladino123');
+    const [isLoading, setIsLoading] = useState(false);
+    const [isInputDataValid, setIsInputDataValid] = useState(true); // Guardo o estado do input (se estiver errado, mostrar mensagem de erro)
+
+    const [confirmPassword, setConfirmPassword] = useState("");
     const [user, setUser] = useState({
         idTipoUsuario: "FE373DEC-3E52-4DF5-B3B2-5A94865467E7",
-        nome: 'Paladino',
-        email: 'teixeirapaladino921@gmail.com',
-        senha: 'Paladino123',
-        dataNascimento: "2005-04-22",
-        rg: '5234606253',
-        cpf: '52282675736',
-        // cep: '0337500',
-        // foto: 'string',
-        // numero: '510',
-        // cidade: 'Sao Paulo',
-        // logradouro: 'Rua Hemisferio'
+        nome: "",
+        email: "",
+        senha: "",
+        dataNascimento: "",
+        rg: "",
+        cpf: "",
     });
+
+    function getInvalidInputsName(inputs, inputsName) {
+        let names = "";
+
+        for (let index = 0; index < inputs.length; index++) {
+            if (inputs[index] == "" || inputs[index] == " " || inputs[index] == undefined || inputs[index] == null) {
+                names = `${names} ${inputsName[index]}`;
+            }
+        }
+        return (`${names} inválidos`);
+    }
 
     async function HandleCadastro() {
         console.log(user);
+        setIsLoading(true); // Aciona animação de carregando
 
         var form = new FormData();
         form.append("idTipoUsuario", user.idTipoUsuario);
@@ -50,54 +61,26 @@ export const CreateAccount = ({ navigation, route }) => {
         form.append("dataNascimento", user.dataNascimento);
         form.append("rg", user.rg);
         form.append("cpf", user.cpf);
-        // form.append("cep", user.cep);
-        // form.append("numero", user.numero);
-        // form.append("cidade", user.cidade);
-        // form.append("logradouro", user.logradouro);
-        // form.append("foto", user.foto);
 
         // Aqui
-        await schema.validate({ senha: user.senha, confirmPassword }, { abortEarly: false });
-        // await api.post("/Pacientes", {
+        // await schema.validate({ senha: user.senha, confirmPassword }, { abortEarly: false });
+        if (user.senha == confirmPassword) {
 
-        // }).then(response => {
-        //     console.log(response);
-        // }).catch(error => {
-        //     console.log(error);
-        // })
-
-
-
-        await api.post("/Pacientes", form, {
-            headers: {
-                "Content-Type": "multipart/form-data"
+            await api.post("/Pacientes", form, {
+                headers: {
+                    "Content-Type": "multipart/form-data"
+                }
+            }).then(response => {
+                setIsInputDataValid(true); // Valida o input
+                console.log('Sucesso!');
+                navigation.replace('Login');
             }
-        }).then(response => {
-            console.log('Sucesso!')
-            console.log(response);
-            navigation.replace('Login');
+            ).catch(error => {
+                console.log(error);
+                setIsInputDataValid(false); // Invalida o input (retornando o visual de inserção inválida)
+            });
         }
-        ).catch(error => console.log(error));
-        // await api.post("/Pacientes", {
-        //     idTipoUsuario: user.idTipoUsuario,
-        //     nome: user.nome,
-        //     email: user.email,
-        //     senha: user.senha,
-        //     dataNascimento: user.dataNascimento,
-        //     rg: user.rg,
-        //     cpf: user.cpf,
-        //     cep: user.cep,
-        //     foto: 'string',
-        //     logradouro: user.logradouro,
-        //     numero: user.numero,
-        //     cidade: user.cidade
-
-        // }).then(response => {
-        //     console.log('Sucesso!')
-        //     console.log(response);
-        //     navigation.replace('Login');
-        // }
-        // ).catch(error => console.log(error));
+        setIsLoading(false); // Desativa animação de carregando
     }
 
     return (
@@ -113,21 +96,27 @@ export const CreateAccount = ({ navigation, route }) => {
 
                 <DescriptionPassword description={"Insira seu endereço de e-mail e senha para realizar seu cadastro."} />
 
+                {isInputDataValid === false ? (
+                    <TitleInvalidInputAlert>
+                        {getInvalidInputsName([user.nome, user.email, user.senha, user.dataNascimento, user.rg, user.cpf], ['nome', 'email', 'senha', 'dataNascimento', 'rg', 'cpf'])}
+                    </TitleInvalidInputAlert>
+                ) : null}
+
                 <Input
                     placeholder={"Usuário"}
                     placeholderTextColor={'#49B3BA'}
+                    isInsertedInputValid={isInputDataValid}
                     onChangeText={(text) => {
-                        // setUser({ user, nome: text })
-                        setUser({ ...user }, user.nome = text)
+                        setUser({ ...user, nome: text })
                     }}
                 />
 
                 <Input
                     placeholder={"E-mail"}
                     placeholderTextColor={'#49B3BA'}
+                    isInsertedInputValid={isInputDataValid}
                     onChangeText={(text) => {
-                        // setUser({ user, email: text })
-                        setUser({ ...user }, user.email = text)
+                        setUser({ ...user, email: text })
 
                     }}
                 />
@@ -135,15 +124,16 @@ export const CreateAccount = ({ navigation, route }) => {
                     placeholder={"Senha"}
                     placeholderTextColor={'#49B3BA'}
                     secureTextEntry={true}
+                    isInsertedInputValid={isInputDataValid}
                     onChangeText={(text) => {
-                        // setUser({ user, senha: text })
-                        setUser({ ...user }, user.senha = text)
+                        setUser({ ...user, senha: text })
                     }}
                 />
                 <Input
                     placeholder={"Confirmar senha"}
                     placeholderTextColor={'#49B3BA'}
                     secureTextEntry={true}
+                    isInsertedInputValid={isInputDataValid}
                     onChangeText={(text) => {
                         setConfirmPassword(text)
                     }}
@@ -153,8 +143,10 @@ export const CreateAccount = ({ navigation, route }) => {
                     placeholder={"Data de nascimento"}
                     placeholderTextColor={'#49B3BA'}
                     // secureTextEntry={true}
+                    isInsertedInputValid={isInputDataValid}
+                    // fieldValue={maskData(user.dataNascimento)}
                     onChangeText={(text) => {
-                        setUser({ ...user }, user.dataNascimento = text)
+                        setUser({ ...user, dataNascimento: text })
                     }}
                 />
 
@@ -162,9 +154,10 @@ export const CreateAccount = ({ navigation, route }) => {
                     placeholder={"RG"}
                     placeholderTextColor={'#49B3BA'}
                     // secureTextEntry={true}
+                    isInsertedInputValid={isInputDataValid}
+                    // fieldValue={mascararRg(user.rg)}
                     onChangeText={(text) => {
-                        // setUser({ user, rg: text })
-                        setUser({ ...user }, user.rg = text)
+                        setUser({ ...user, rg: text })
 
                     }}
                 />
@@ -172,13 +165,13 @@ export const CreateAccount = ({ navigation, route }) => {
                     placeholder={"CPF"}
                     placeholderTextColor={'#49B3BA'}
                     // secureTextEntry={true}
+                    isInsertedInputValid={isInputDataValid}
                     onChangeText={(text) => {
-                        // setUser({ ...user, cpf: text })
-                        setUser({ ...user }, user.cpf = text)
+                        setUser({ ...user, cpf: text })
                     }}
                 />
 
-                <Input
+                {/* <Input
                     placeholder={"CEP"}
                     placeholderTextColor={'#49B3BA'}
                     // secureTextEntry={true}
@@ -213,6 +206,12 @@ export const CreateAccount = ({ navigation, route }) => {
                         // setUser({ user, cep: text })
                         setUser({ ...user }, user.numero = text)
                     }}
+                /> */}
+
+                <ActivityIndicator
+                    animating={isLoading}
+                    hidesWhenStopped={false}
+                    size="large"
                 />
 
                 <ButtonNormal text={"Cadastrar"} onPress={() => HandleCadastro()} />
