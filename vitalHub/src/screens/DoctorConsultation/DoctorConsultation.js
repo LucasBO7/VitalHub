@@ -152,19 +152,6 @@ export const DoctorConsultation = ({ navigation, route }) => {
     }
   }, [selectedDate]);
 
-  // useEffect(() => {
-  //   console.log();
-  //   console.log('CONSULTAASS AQUIIIIII');
-  //   console.log(consults);
-  // }, [consults])
-
-  // useEffect(() => {
-  //   console.log();
-  //   console.log('MÉDICOOOOOOOO AQUIIIIII');
-
-  //   console.log(consults);
-  // }, [consults])
-
   useFocusEffect(
     React.useCallback(() => {
       profileLoad();
@@ -240,7 +227,7 @@ export const DoctorConsultation = ({ navigation, route }) => {
           item.situacao.situacao == consultStatus && (
             <Card
               navigation={navigation}
-              hour={moment(item.dataConsulta).format("HH:mm:ss")}
+              hour={moment(item.dataConsulta).format("HH:mm")}
               name={item.paciente.idNavigation.nome}
               age={getAge(item.paciente.dataNascimento)}
               routine={item.situacao.situacao}

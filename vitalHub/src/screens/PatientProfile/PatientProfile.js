@@ -189,7 +189,7 @@ export const PatientProfile = ({ navigation, route }) => {
           })
           .then((response) => {
             alert("Alterações salvas com sucesso!");
-            handleIsInputsEditable(editable, setEditable);
+            handleIsInputsEditable(true, setEditable);
           })
           .catch((error) =>
             console.log(`Erro no salvamento das alteraões: ${error}`)

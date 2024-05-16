@@ -23,12 +23,6 @@ export const ConfirmAppointmentModal = ({
 
     const [profile, setProfile] = useState();
 
-    // useEffect(() => {
-    //     console.log();
-    //     console.log(`CONFIRM`);
-    //     console.log(agendamento);
-    // }, [agendamento])
-
     async function profileLoad() {
         const token = await userDecodeToken();
 

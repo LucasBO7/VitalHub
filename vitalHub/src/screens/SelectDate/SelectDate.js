@@ -67,6 +67,7 @@ export const SelectDate = ({ navigation, route }) => {
 
                 <CardCancelLess onPressCancel={() => {
                     navigation.navigate("SelectDoctor");
+                    // navigation.goBack(``);
                 }} text={"Cancelar"} />
             </BoxButtons>
 

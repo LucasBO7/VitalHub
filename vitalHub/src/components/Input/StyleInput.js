@@ -25,6 +25,7 @@ padding: 20px;
 margin-top: 10px;
 margin-bottom: 5px;
 font-size: 18px;
+${(props) => (props.isInsertedInputValid ? `border: 2px solid #49B3BA` : `border: 2px solid red`)};
 `
 
 export const InputProfile = styled.TextInput`

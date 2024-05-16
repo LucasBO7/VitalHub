@@ -4,7 +4,7 @@ import { BoxNumeric, Container } from "../../components/Container/StyleContainer
 import { CodeResend, EmailDescription, } from "../../components/Descriptions/Descriptions"
 import { NumericInput } from "../../components/Input/Input"
 import { Close, Logo } from "../../components/Images/StyleImages"
-import { Title } from "../../components/Title/StyleTitle"
+import { Title, TitleInvalidInputAlert } from "../../components/Title/StyleTitle"
 import { useRef, useState } from "react"
 import api from "../../services/Services"
 
@@ -14,6 +14,7 @@ export const CheckEmail = ({ navigation, route }) => {
     const [load, setLoad] = useState(false);
     const [codigo, setCodigo] = useState("");
     const inputs = [useRef(null), useRef(null), useRef(null), useRef(null)]
+    const [isInputDataValid, setIsInputDataValid] = useState(true); // Guardo o estado do input (se estiver errado, mostrar mensagem de erro)
 
     function focusNextInput(index) {
         // Verificar se o index é menor do que a quantidade de campos
@@ -35,9 +36,11 @@ export const CheckEmail = ({ navigation, route }) => {
             .then(() => {
                 // navigation.replace("Main", { uriPhoto: uri, screen: "PatientConsultation" });
                 navigation.replace("RedefinePassword", { emailRecuperacao: route.params.emailRecuperacao });
+                setIsInputDataValid(true);
             })
             .catch(error => {
                 console.log('Erro aqui: ' + error);
+                setIsInputDataValid(false);
             });
     }
 
@@ -55,6 +58,12 @@ export const CheckEmail = ({ navigation, route }) => {
 
             <EmailDescription route={route} />
 
+            {isInputDataValid === false ? (
+                <TitleInvalidInputAlert>
+                    Preencha todos os campos!
+                </TitleInvalidInputAlert>
+            ) : null}
+
             <BoxNumeric>
                 {/* <NumericInput placeholder={"0"} placeholderTextColor={"#34898F"} /> */}
 
@@ -64,6 +73,7 @@ export const CheckEmail = ({ navigation, route }) => {
                             key={index}
                             ref={inputs[index]}
 
+                            isInsertedInputValid={isInputDataValid}
                             placeholder={"0"}
                             placeholderTextColor={"#34898F"}
 

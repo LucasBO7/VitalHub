@@ -149,7 +149,8 @@ export function NumericInput({
     keyboardType = 'numeric',
     maxLength,
     placeholderTextColor,
-    editable = true
+    editable = true,
+    isInsertedInputValid = true
 }) {
     return (
         <InputNumeric
@@ -160,6 +161,7 @@ export function NumericInput({
             maxLength={maxLength}
             value={fieldValue}
             onChangeText={onChangeText}
+            isInsertedInputValid={isInsertedInputValid}
         />
     )
 }

@@ -22,6 +22,7 @@ import {
   mascararRg,
   maskCpf,
   maskData,
+  maskDate,
   maskRg,
   unmaskCpf,
   unmaskRg,
@@ -183,7 +184,7 @@ export const CreateAccount = ({ navigation, route }) => {
           placeholderTextColor={"#49B3BA"}
           // secureTextEntry={true}
           isInsertedInputValid={isInputDataValid}
-          fieldValue={maskData(user.dataNascimento)}
+          fieldValue={maskDate(user.dataNascimento)}
           onChangeText={(text) => {
             setUser({ ...user, dataNascimento: text });
           }}
