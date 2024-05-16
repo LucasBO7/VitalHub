@@ -9,7 +9,8 @@ const externalApiUrl = "4466";
 const ip = "172.16.39.100";
 
 //definir a url padrao
-const apiUrlLocal = `http://172.16.39.100:4466/api`;
+// const apiUrlLocal = `http://172.16.39.100:4466/api`;
+const apiUrlLocal = `http://192.168.15.183:4466/api`;
 
 //trazer a configuracao do axios
 

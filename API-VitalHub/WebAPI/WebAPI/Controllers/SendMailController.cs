@@ -49,7 +49,7 @@ namespace WebAPI.Controllers
                 <h1 style=""color: #333333; text-align: center;"">Bem-vindo ao VitalHub!</h1>
                 <p style=""color: #666666; text-align: center;"">Olá <strong>" + userName + @"</strong>,</p>
                 <p style=""color: #666666;text-align: center"">Estamos muito felizes por você ter se inscrito na plataforma VitalHub.</p>
-                <p style=""color: #666666;text-align: center"">Explore todas as funcionalidades que oferecemos e encontre os melhores médicos.</p>
+                <p style=""color: #666666;text-align: center"">Explore e aproveite todas as funções que necessitar.</p>
                 <p style=""color: #666666;text-align: center"">Se tiver alguma dúvida ou precisar de assistência, nossa equipe de suporte está sempre pronta para ajudar.</p>
                 <p style=""color: #666666;text-align: center"">Aproveite sua experiência conosco!</p>
                 <p style=""color: #666666;text-align: center"">Atenciosamente,<br>Equipe VitalHub</p>

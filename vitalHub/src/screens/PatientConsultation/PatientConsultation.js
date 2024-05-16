@@ -75,20 +75,68 @@ export const PatientConsultation = ({ navigation, route }) => {
 
         // Muda o status da consulta para 'realizada', se a data já tiver passado
         response.data.forEach((consult) => {
-          const currentHourDate = new Date();
-          const currentHourDateFormated = currentHourDate.toISOString();
-
+          // if (consult.situacaoId != "77C5A039-2BE0-4519-A3AF-C9D381168DF1") {
+          //   if (consult.dataConsulta < currentHourDateFormated) {
+          //     api
+          //       .put(`/Consultas/Status`, {
+          //         id: consult.id,
+          //         situacaoId: "77C5A039-2BE0-4519-A3AF-C9D381168DF1",
+          //       })
+          //       .catch((error) => console.log(error));
+          //   }
+          // }
           if (consult.situacaoId != "77C5A039-2BE0-4519-A3AF-C9D381168DF1") {
-            if (consult.dataConsulta < currentHourDateFormated) {
-              api.put(`/Consultas/Status`, {
-                id: consult.id,
-                situacaoId: "77C5A039-2BE0-4519-A3AF-C9D381168DF1"
-              }).catch(error => console.log(error));
+            if (isDateTimePassed(consult.dataConsulta)) {
+              api
+                .put(`/Consultas/Status`, {
+                  id: consult.id,
+                  situacaoId: "77C5A039-2BE0-4519-A3AF-C9D381168DF1",
+                })
+                .catch((error) => console.log(error));
             }
           }
         });
       })
       .catch((error) => console.log(error));
+  }
+
+  function isDateTimePassed(dateTime) {
+    // Convertendo a string de data/hora para um objeto Date
+    const timestamp = new Date(Date.parse(dateTime));
+
+    // Obter o momento atual
+    const now = new Date();
+
+    // Subtrair o valor DateTime fornecido do momento atual
+    const differenceInMilliseconds = now.getTime() - timestamp.getTime();
+
+    // Verificar se o valor DateTime fornecido é anterior ao momento atual
+    if (differenceInMilliseconds > 0) {
+      return true; // O valor DateTime já passou
+    }
+
+    // Se o valor DateTime é o mesmo dia, verificar o horário
+    if (differenceInMilliseconds === 0) {
+      const nowHour = now.getHours();
+      const nowMinutes = now.getMinutes();
+      const nowSeconds = now.getSeconds();
+      const dateTimeHour = timestamp.getHours();
+      const dateTimeMinutes = timestamp.getMinutes();
+      const dateTimeSeconds = timestamp.getSeconds();
+
+      // Comparar os horários
+      if (
+        nowHour > dateTimeHour ||
+        (nowHour === dateTimeHour && nowMinutes > dateTimeMinutes) ||
+        (nowHour === dateTimeHour &&
+          nowMinutes === dateTimeMinutes &&
+          nowSeconds >= dateTimeSeconds)
+      ) {
+        return true; // O horário já passou
+      }
+    }
+
+    return false; // O valor DateTime não passou
   }
 
   // Função para alterar a imagem do usuário no banco de dados
@@ -157,7 +205,7 @@ export const PatientConsultation = ({ navigation, route }) => {
         <Header>
           <StatusBar translucent backgroundColor="transparent" />
 
-          <BoxHome >
+          <BoxHome>
             <ImagemHome source={{ uri: patientUser.idNavigation.foto }} />
 
             <BoxDataHome>
@@ -207,7 +255,7 @@ export const PatientConsultation = ({ navigation, route }) => {
           item.situacao.situacao == consultStatus && (
             <Card
               navigation={navigation}
-              hour={moment(item.dataConsulta).format('HH:mm:ss')}
+              hour={moment(item.dataConsulta).format("HH:mm:ss")}
               name={item.medicoClinica.medico.idNavigation.nome}
               age={item.medicoClinica.medico.crm}
               routine={item.situacao.situacao}

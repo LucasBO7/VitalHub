@@ -1,15 +1,33 @@
 import { mask, unMask } from "remask";
 
-export const mascararCep = (cepText) => mask(cepText, "99999-999")
+// CEP
+export const maskCep = (cepText) => mask(cepText, "99999-999");
+export const unmaskCep = (cepTextMasked) => unMask(cepTextMasked);
 
-export const desmascararCep = (cepTextMasked) => unMask(cepTextMasked)
+// RG
+export const maskRg = (rgText) => mask(rgText, "99.999.999-9");
+export const unmaskRg = (rgTextMasked) => unMask(rgTextMasked);
 
-export const mascararRg = (rgText) => mask(rgText, "99.999.999-9")
+// CPF
+export const maskCpf = (cpfText) => mask(cpfText, "999.999.999-99");
+export const unmaskCpf = (cpfTextMasked) => unMask(cpfTextMasked);
 
-export const desmascararRg = (rgTextMasked) => unMask(rgTextMasked)
+// Data Nascimento
+// export const maskDate = (dataText) => mask(dataText, "99/99/9999");
+export const maskDate = (dataText) => mask(dataText, "9999/99/99");
+export const unmaskDate = (dataTextMasked) => unMask(dataTextMasked);
 
-export const mascararCpf = (cpfText) => mask(cpfText, "999.999.999-99")
+// 0000-00-00 --> 00/00/0000
+// export const maskDateFormat = (dataText) => {
+//   if (dataText.includes("-")) {
+//     let [year, month, day] = dataText.split("-");
+//     dataText = `${day}/${month}/${year}`;
+//   } else {
+//     mask(dataText, "99/99/9999");
+//   }
+// };
 
-export const desmascararCpf = (cpfTextMasked) => unMask(cpfTextMasked)
-
-export const maskData = (dataText) => mask(dataText, "99/99/9999")
+// 0000/00/00 --> 0000-00-00
+export const unmaskDateToApi = (dataTextMasked) => {
+  return dataTextMasked.replace(/\//g, "-");
+};

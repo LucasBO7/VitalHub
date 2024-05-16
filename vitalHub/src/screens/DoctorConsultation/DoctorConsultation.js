@@ -27,7 +27,7 @@ import moment from "moment";
 
 export const DoctorConsultation = ({ navigation, route }) => {
   const [consults, setConsults] = useState([]); // Guarda todas as Consultas que estierem salvas no banco de dados
-  const [consultStatus, setConsultStatus] = useState('agendada');
+  const [consultStatus, setConsultStatus] = useState("agendada");
   const [selectedDate, setSelectedDate] = useState();
   const [selectedPatient, setSelectedPatient] = useState(null);
   const [doctor, setDoctor] = useState();
@@ -36,18 +36,19 @@ export const DoctorConsultation = ({ navigation, route }) => {
   const [cancelConsultId, setCancelConsultId] = useState();
 
   const [user, setUser] = useState({
-    name: '',
-    id: ''
+    name: "",
+    id: "",
   });
 
   const image = require("../../assets/ImageCard.png");
 
   async function getDoctor(userTaken) {
-    await api.get(`/Medicos/BuscarPorId?id=${userTaken.id}`)
-      .then(response => {
+    await api
+      .get(`/Medicos/BuscarPorId?id=${userTaken.id}`)
+      .then((response) => {
         setDoctor(response.data);
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(`HOUVE UM ERRO: ${error}`);
       });
   }
@@ -59,50 +60,51 @@ export const DoctorConsultation = ({ navigation, route }) => {
       setUser(token);
       getDoctor(token);
 
-      setSelectedDate(moment().format('YYYY-MM-DD'));
+      setSelectedDate(moment().format("YYYY-MM-DD"));
     }
   }
 
   // Busca as Consultas do banco e guarda na const consults
   async function getAllConsults() {
     if (user.id && selectedDate) {
-      await api.get(`/Medicos/BuscarPorData?data=${selectedDate}&id=${user.id}`)
-        .then(
-          response => {
-            setConsults(response.data);
+      await api
+        .get(`/Medicos/BuscarPorData?data=${selectedDate}&id=${user.id}`)
+        .then((response) => {
+          setConsults(response.data);
 
-            // Muda o status da consulta para 'realizada', se a data já tiver passado
-            response.data.forEach((consult) => {
-              const currentHourDate = new Date();
-              const currentHourDateFormated = currentHourDate.toISOString();
-
-              // Se for agendada
-              if (consult.situacaoId != "77C5A039-2BE0-4519-A3AF-C9D381168DF1") {
-                // Se a data/horário passou
-                if (isDateTimePassed(consult.dataConsulta)) {
-                  // Executar o "realizada"
-                  api.put(`/Consultas/Status`, {
+          // Muda o status da consulta para 'realizada', se a data já tiver passado
+          response.data.forEach((consult) => {
+            // Se for agendada
+            if (consult.situacaoId != "77C5A039-2BE0-4519-A3AF-C9D381168DF1") {
+              // Se a data/horário passou
+              if (isDateTimePassed(consult.dataConsulta)) {
+                // Executar o "realizada"
+                api
+                  .put(`/Consultas/Status`, {
                     id: consult.id,
-                    situacaoId: "77C5A039-2BE0-4519-A3AF-C9D381168DF1"
-                  }).catch(error => console.log(error));
-                }
+                    situacaoId: "77C5A039-2BE0-4519-A3AF-C9D381168DF1",
+                  })
+                  .catch((error) => console.log(error));
               }
-            });
-          }
-        )
-        .catch(error => console.log(error));
+            }
+          });
+        })
+        .catch((error) => console.log(error));
     }
   }
 
   function isDateTimePassed(dateTime) {
+    // Convertendo a string de data/hora para um objeto Date
+    const timestamp = new Date(Date.parse(dateTime));
+
     // Obter o momento atual
     const now = new Date();
 
     // Subtrair o valor DateTime fornecido do momento atual
-    const differenceInMilliseconds = now.getTime() - dateTime.getTime();
+    const differenceInMilliseconds = now.getTime() - timestamp.getTime();
 
     // Verificar se o valor DateTime fornecido é anterior ao momento atual
-    if (differenceInMilliseconds < 0) {
+    if (differenceInMilliseconds > 0) {
       return true; // O valor DateTime já passou
     }
 
@@ -111,13 +113,18 @@ export const DoctorConsultation = ({ navigation, route }) => {
       const nowHour = now.getHours();
       const nowMinutes = now.getMinutes();
       const nowSeconds = now.getSeconds();
-      const dateTimeHour = dateTime.getHours();
-      const dateTimeMinutes = dateTime.getMinutes();
-      const dateTimeSeconds = dateTime.getSeconds();
+      const dateTimeHour = timestamp.getHours();
+      const dateTimeMinutes = timestamp.getMinutes();
+      const dateTimeSeconds = timestamp.getSeconds();
 
       // Comparar os horários
-      if ((nowHour > dateTimeHour || (nowHour === dateTimeHour && nowMinutes > dateTimeMinutes)) ||
-        (nowHour === dateTimeHour && nowMinutes === dateTimeMinutes && nowSeconds >= dateTimeSeconds)) {
+      if (
+        nowHour > dateTimeHour ||
+        (nowHour === dateTimeHour && nowMinutes > dateTimeMinutes) ||
+        (nowHour === dateTimeHour &&
+          nowMinutes === dateTimeMinutes &&
+          nowSeconds >= dateTimeSeconds)
+      ) {
         return true; // O horário já passou
       }
     }
@@ -125,21 +132,19 @@ export const DoctorConsultation = ({ navigation, route }) => {
     return false; // O valor DateTime não passou
   }
 
-
   useEffect(() => {
     if (route.params != null) {
       ChangePerfilPhoto();
     }
-  }, [route.params])
+  }, [route.params]);
 
   useEffect(() => {
     profileLoad();
   }, []);
 
   useEffect(() => {
-    getDoctor(user) // Pega os dados do paciente
-  }, [route.params])
-
+    getDoctor(user); // Pega os dados do paciente
+  }, [route.params]);
 
   useEffect(() => {
     if (selectedDate) {
@@ -163,7 +168,7 @@ export const DoctorConsultation = ({ navigation, route }) => {
   useFocusEffect(
     React.useCallback(() => {
       profileLoad();
-    }, []), // Empty dependency array means this callback will only run once on mount and not on updates
+    }, []) // Empty dependency array means this callback will only run once on mount and not on updates
   );
 
   // STATES PARA OS MODAIS
@@ -174,66 +179,68 @@ export const DoctorConsultation = ({ navigation, route }) => {
 
   // RETURN
   return (
-    < Container >
+    <Container>
       <StatusBar translucent backgroundColor="transparent" />
-      {
-        doctor != null && user != null
-          ? (
-            <Header>
-              <BoxHome>
-                <ImagemHome source={{ uri: doctor != undefined ? doctor.idNavigation.foto : "../../assets/ImageCard.png" }} />
+      {doctor != null && user != null ? (
+        <Header>
+          <BoxHome>
+            <ImagemHome
+              source={{
+                uri:
+                  doctor != undefined
+                    ? doctor.idNavigation.foto
+                    : "../../assets/ImageCard.png",
+              }}
+            />
 
-                <BoxDataHome>
-                  <WelcomeTitle textTitle={"Bem vindo"} />
+            <BoxDataHome>
+              <WelcomeTitle textTitle={"Bem vindo"} />
 
-                  <NameTitle textTitle={user.name} />
-                </BoxDataHome>
-              </BoxHome>
+              <NameTitle textTitle={user.name} />
+            </BoxDataHome>
+          </BoxHome>
 
-              <MoveIconBell>
-                <Ionicons name="notifications" size={25} color="white" />
-              </MoveIconBell>
-            </Header>
-          ) : null
-      }
+          <MoveIconBell>
+            <Ionicons name="notifications" size={25} color="white" />
+          </MoveIconBell>
+        </Header>
+      ) : null}
 
       <Calendar setSelectedDate={setSelectedDate} />
 
       <ButtonHomeContainer>
         <FilterButton
           onPress={() => {
-            setConsultStatus('agendada');
+            setConsultStatus("agendada");
           }}
-          selected={consultStatus == 'agendada' ? true : false}
+          selected={consultStatus == "agendada" ? true : false}
           text={"Agendadas"}
         />
 
         <FilterButton
           onPress={() => {
-            setConsultStatus('realizada');
+            setConsultStatus("realizada");
           }}
-          selected={consultStatus == 'realizada' ? true : false}
+          selected={consultStatus == "realizada" ? true : false}
           text={"Realizadas"}
         />
 
         <FilterButton
           onPress={() => {
-            setConsultStatus('cancelada');
+            setConsultStatus("cancelada");
           }}
-          selected={consultStatus == 'cancelada' ? true : false}
+          selected={consultStatus == "cancelada" ? true : false}
           text={"Canceladas"}
         />
       </ButtonHomeContainer>
 
-
       <FlatContainer
         data={consults}
-        renderItem={({ item }) => (
-          item.situacao.situacao == consultStatus
-          && (
+        renderItem={({ item }) =>
+          item.situacao.situacao == consultStatus && (
             <Card
               navigation={navigation}
-              hour={'02:33'}
+              hour={moment(item.dataConsulta).format("HH:mm:ss")}
               name={item.paciente.idNavigation.nome}
               age={getAge(item.paciente.dataNascimento)}
               routine={item.situacao.situacao}
@@ -254,22 +261,20 @@ export const DoctorConsultation = ({ navigation, route }) => {
                   consultDiagnostico: item.diagnostico,
                   // consultPrescription: item.receita.medicamento,
                   consultId: item.id,
-                  doctorId: item.medicoClinica.medicoId
-
+                  doctorId: item.medicoClinica.medicoId,
                 });
-
               }}
-
               // Clique no card
               onPressAppointmentCard={() => {
                 setSelectedPatient(item);
-                setShowModalAppointment(item.situacao.situacao === "realizada" ? true : false); // Mostrar Modal
+                setShowModalAppointment(
+                  item.situacao.situacao === "realizada" ? true : false
+                ); // Mostrar Modal
                 // navigation.navigate("")
-
               }}
             />
           )
-        )}
+        }
         keyExtractor={(item) => item.id}
         showsVerticalScrollIndicator={false}
       />
@@ -293,6 +298,6 @@ export const DoctorConsultation = ({ navigation, route }) => {
                 <Card url={require('../../assets/ImageCardMale.png')} name={"Richard Kosta"} age={"28 anos"} routine={"Urgência"} hour={"15:00"}/>
 
                 <Card url={require('../../assets/ney.webp')} name={"Neymar Jr"} age={"33 anos"} routine={"Rotina"} hour={"17:00"}/> */}
-    </Container >
+    </Container>
   );
 };
