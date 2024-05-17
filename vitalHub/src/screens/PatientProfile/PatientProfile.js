@@ -42,8 +42,6 @@ import {
   unmaskDate,
   unmaskDateToApi,
 } from "../../utils/InputMasks";
-// import Inputmask from 'inputmask';
-// import { MaskedInput } from 'react-native-masked-text';
 
 export const PatientProfile = ({ navigation, route }) => {
   const [cep, setCep] = useState("");

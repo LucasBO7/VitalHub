@@ -1,72 +1,99 @@
-import { StatusBar } from 'react-native'
-import { ButtonNormal } from '../../components/Button/Button'
-import { NormalButton } from '../../components/Button/StyleButton'
-import { ButtonText } from '../../components/ButtonText/StyleButtonText'
-import { Container } from '../../components/Container/StyleContainer'
-import { DescriptionPassword } from '../../components/Descriptions/Descriptions'
-import { Input } from '../../components/Input/Input'
-import { Close, Logo } from '../../components/Images/StyleImages'
-import { Title } from '../../components/Title/StyleTitle'
-import { useState } from 'react'
-import api from '../../services/Services'
+import { StatusBar } from "react-native";
+import { ButtonNormal } from "../../components/Button/Button";
+import { NormalButton } from "../../components/Button/StyleButton";
+import { ButtonText } from "../../components/ButtonText/StyleButtonText";
+import { Container } from "../../components/Container/StyleContainer";
+import { DescriptionPassword } from "../../components/Descriptions/Descriptions";
+import { Input } from "../../components/Input/Input";
+import { Close, Logo } from "../../components/Images/StyleImages";
+import {
+  Title,
+  TitleInvalidInputAlert,
+} from "../../components/Title/StyleTitle";
+import { useState } from "react";
+import api from "../../services/Services";
 
 export const RedefinePassword = ({ navigation, route }) => {
-    const [senha, setSenha] = useState();
-    const [confirmar, setConfirmar] = useState();
+  const [senha, setSenha] = useState();
+  const [confirmar, setConfirmar] = useState();
+  const [isInputDataValid, setIsInputDataValid] = useState(); // Guardo o estado do input (se estiver errado, mostrar mensagem de erro)
+  const [inputsInvalidName, setInputsInvalidName] = useState(null);
 
-    async function ChangePassword() {
-        if (senha === confirmar) {
-            await api.put(`/Usuario/AlterarSenha?email=${route.params.emailRecuperacao}`, {
-                senhaNova: senha
-            }).then(() => {
-                navigation.replace("Login")
-            }).catch(error => {
-                console.log(error);
-            })
-        } else {
-            alert("Senhas incompatíveis!");
-        }
+  async function ChangePassword() {
+    if (senha === confirmar) {
+      setInputsInvalidName(null);
+      await api
+        .put(`/Usuario/AlterarSenha?email=${route.params.emailRecuperacao}`, {
+          senhaNova: senha,
+        })
+        .then(() => {
+          setIsInputDataValid(true);
+          navigation.replace("Login");
+        })
+        .catch((error) => {
+          setIsInputDataValid(false);
+          console.log(error);
+        });
+    } else {
+      setIsInputDataValid(false);
+      setInputsInvalidName("Senhas incompatíveis!");
     }
+  }
 
-    return (
+  return (
+    <Container>
+      <StatusBar
+        translucent
+        backgroundColor="transparent"
+        barStyle="dark-content"
+      />
 
-        <Container>
-            <StatusBar translucent backgroundColor="transparent" barStyle="dark-content" />
+      {/* <Close source={require('../../assets/x-top-screen.png')}/> */}
 
-            {/* <Close source={require('../../assets/x-top-screen.png')}/> */}
+      <Logo source={require("../../assets/VitalHub_Logo1.png")} />
 
-            <Logo source={require('../../assets/VitalHub_Logo1.png')} />
+      <Title>Redefinir Senha</Title>
 
-            <Title>Redefinir Senha</Title>
+      <DescriptionPassword description={"Insira e confirme a sua nova senha"} />
 
-            <DescriptionPassword description={"Insira e confirme a sua nova senha"} />
+      {isInputDataValid === false ? (
+        <TitleInvalidInputAlert>
+          {inputsInvalidName == null ? "Campos inválidos!" : inputsInvalidName}
+        </TitleInvalidInputAlert>
+      ) : null}
 
-            <Input
-                placeholder={"Nova Senha"}
-                placeholderTextColor={'#49B3BA'}
-                secureTextEntry={true}
+      <Input
+        placeholder={"Nova Senha"}
+        placeholderTextColor={"#49B3BA"}
+        secureTextEntry={true}
+        isInsertedInputValid={isInputDataValid}
+        fieldValue={senha}
+        onChangeText={(text) => {
+          senha != " " || senha != ""
+            ? setIsInputDataValid(true)
+            : setIsInputDataValid(false);
+          setSenha(text);
+        }}
+      />
 
-                fieldValue={senha}
-                onChangeText={(text) => {
-                    setSenha(text)
-                }}
-            />
+      <Input
+        placeholder={"Confirmar nova senha"}
+        placeholderTextColor={"#49B3BA"}
+        secureTextEntry={true}
+        isInsertedInputValid={isInputDataValid}
+        fieldValue={confirmar}
+        onChangeText={(text) => {
+          confirmar != " " || confirmar != ""
+            ? setIsInputDataValid(true)
+            : setIsInputDataValid(false);
+          setConfirmar(text);
+        }}
+      />
 
-            <Input
-                placeholder={"Confirmar nova senha"}
-                placeholderTextColor={'#49B3BA'}
-                secureTextEntry={true}
-
-                fieldValue={confirmar}
-                onChangeText={(text) => {
-                    setConfirmar(text)
-                }}
-            />
-
-            <ButtonNormal onPress={() => ChangePassword()} text={"Confirmar nova senha"} />
-
-        </Container>
-
-    )
-
-}
+      <ButtonNormal
+        onPress={() => ChangePassword()}
+        text={"Confirmar nova senha"}
+      />
+    </Container>
+  );
+};

@@ -1199,3 +1199,107 @@
     },
     "situacaoId": "a3139466-853b-434b-928d-8aa58cc8c2d0"
 }
+
+
+{
+    "config": {
+        "adapter": [
+            "xhr",
+            "http"
+        ],
+        "baseURL": "http://192.168.15.183:4466/api",
+        "data": undefined,
+        "env": {
+            "Blob": [Function Blob
+            ],
+            "FormData": [Function FormData
+            ]
+        },
+        "headers": [Object
+        ],
+        "maxBodyLength": -1,
+        "maxContentLength": -1,
+        "method": "post",
+        "timeout": 0,
+        "transformRequest": [
+            [Function transformRequest
+            ]
+        ],
+        "transformResponse": [
+            [Function transformResponse
+            ]
+        ],
+        "transitional": {
+            "clarifyTimeoutError": false,
+            "forcedJSONParsing": true,
+            "silentJSONParsing": true
+        },
+        "url": "/RecuperarSenha/ValidarCodigoRecuperacaoSenha?email=lucasbianchezzi700@gmail.com&codigo=2536",
+        "validateStatus": [Function validateStatus
+        ],
+        "xsrfCookieName": "XSRF-TOKEN",
+        "xsrfHeaderName": "X-XSRF-TOKEN"
+    },
+    "data": "Código de recuperação inválido!",
+    "headers": {
+        "content-type": "text/plain; charset=utf-8",
+        "date": "Fri, 17 May 2024 01:04:57 GMT",
+        "server": "Kestrel",
+        "transfer-encoding": "chunked"
+    },
+    "request": {
+        "DONE": 4,
+        "HEADERS_RECEIVED": 2,
+        "LOADING": 3,
+        "OPENED": 1,
+        "UNSENT": 0,
+        "_aborted": false,
+        "_cachedResponse": undefined,
+        "_hasError": false,
+        "_headers": {
+            "accept": "application/json, text/plain, */*"
+        },
+        "_incrementalEvents": false,
+        "_lowerCaseResponseHeaders": {
+            "content-type": "text/plain; charset=utf-8",
+            "date": "Fri, 17 May 2024 01:04:57 GMT",
+            "server": "Kestrel",
+            "transfer-encoding": "chunked"
+        },
+        "_method": "POST",
+        "_perfKey": "network_XMLHttpRequest_http://192.168.15.183:4466/api/RecuperarSenha/ValidarCodigoRecuperacaoSenha?email=lucasbianchezzi700@gmail.com&codigo=2536",
+        "_performanceLogger": {
+            "_closed": false,
+            "_extras": [Object
+            ],
+            "_pointExtras": [Object
+            ],
+            "_points": [Object
+            ],
+            "_timespans": [Object
+            ]
+        },
+        "_requestId": null,
+        "_response": "Código de recuperação inválido!",
+        "_responseType": "",
+        "_sent": true,
+        "_subscriptions": [],
+        "_timedOut": false,
+        "_trackingName": "unknown",
+        "_url": "http://192.168.15.183:4466/api/RecuperarSenha/ValidarCodigoRecuperacaoSenha?email=lucasbianchezzi700@gmail.com&codigo=2536",
+        "readyState": 4,
+        "responseHeaders": {
+            "Content-Type": "text/plain; charset=utf-8",
+            "Date": "Fri, 17 May 2024 01:04:57 GMT",
+            "Server": "Kestrel",
+            "Transfer-Encoding": "chunked"
+        },
+        "responseURL": "http://192.168.15.183:4466/api/RecuperarSenha/ValidarCodigoRecuperacaoSenha?email=lucasbianchezzi700@gmail.com&codigo=2536",
+        "status": 400,
+        "timeout": 0,
+        "upload": {},
+        "withCredentials": true
+    },
+    "status": 400,
+    "statusText": undefined
+}

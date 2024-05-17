@@ -1,78 +1,82 @@
-import { ActivityIndicator, StatusBar } from "react-native"
-import { ButtonNormal } from "../../components/Button/Button"
-import { Container } from "../../components/Container/StyleContainer"
-import { DescriptionPassword } from "../../components/Descriptions/Descriptions"
-import { Input } from "../../components/Input/Input"
-import { Logo, Seta } from "../../components/Images/StyleImages"
-import { Title, TitleInvalidInputAlert } from "../../components/Title/StyleTitle"
+import { ActivityIndicator, StatusBar } from "react-native";
+import { ButtonNormal } from "../../components/Button/Button";
+import { Container } from "../../components/Container/StyleContainer";
+import { DescriptionPassword } from "../../components/Descriptions/Descriptions";
+import { Input } from "../../components/Input/Input";
+import { Logo, Seta } from "../../components/Images/StyleImages";
+import {
+  Title,
+  TitleInvalidInputAlert,
+} from "../../components/Title/StyleTitle";
 import api from "../../services/Services";
-import { useState } from "react"
-
+import { useState } from "react";
 
 export const ForgotPassword = ({ navigation }) => {
-    const [isLoading, setIsLoading] = useState(false);
-    const [email, setEmail] = useState("");
-    const [isInputDataValid, setIsInputDataValid] = useState(true); // Guardo o estado do input (se estiver errado, mostrar mensagem de erro)
+  const [isLoading, setIsLoading] = useState(false);
+  const [email, setEmail] = useState("");
+  const [isInputDataValid, setIsInputDataValid] = useState(true); // Guardo o estado do input (se estiver errado, mostrar mensagem de erro)
 
-    async function SendEmail() {
-        setIsLoading(true);
-        await api.post(`/RecuperarSenha?email=${email}`)
-            .then(() => {
-                setIsInputDataValid(true);
-                navigation.navigate("CheckEmail", {
-                    emailRecuperacao: email
-                });
-            })
-            .catch(error => {
-                console.log(error);
-                setIsInputDataValid(false);
-            })
-        setIsLoading(false);
-    }
+  async function SendEmail() {
+    setIsLoading(true);
+    await api
+      .post(`/RecuperarSenha?email=${email}`)
+      .then(() => {
+        setIsInputDataValid(true);
+        navigation.navigate("CheckEmail", {
+          emailRecuperacao: email,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+        setIsInputDataValid(false);
+      });
+    setIsLoading(false);
+  }
 
-    return (
+  return (
+    <Container>
+      {/* <Seta source={require('../../assets/Seta.png')} /> */}
 
-        <Container>
+      <Logo source={require("../../assets/VitalHub_Logo1.png")} />
 
-            {/* <Seta source={require('../../assets/Seta.png')} /> */}
+      <Title>Recuperar senha</Title>
 
-            <Logo source={require('../../assets/VitalHub_Logo1.png')} />
+      <DescriptionPassword
+        description={
+          "Digite abaixo seu email cadastrado que enviaremos um link para recuperação de senha"
+        }
+      />
 
-            <Title>Recuperar senha</Title>
+      {isInputDataValid === false ? (
+        <TitleInvalidInputAlert>Email inválido!</TitleInvalidInputAlert>
+      ) : null}
 
-            <DescriptionPassword description={"Digite abaixo seu email cadastrado que enviaremos um link para recuperação de senha"} />
+      <Input
+        placeholder={"Usuário ou E-mail"}
+        placeholderTextColor={"#49B3BA"}
+        isInsertedInputValid={isInputDataValid}
+        fieldValue={email}
+        onChangeText={(text) => {
+          email != " " || email != ""
+            ? setIsInputDataValid(true)
+            : setIsInputDataValid(false);
+          setEmail(text);
+        }}
+      />
 
-            {isInputDataValid === false ? (
-                <TitleInvalidInputAlert>
-                    Email inválido!
-                </TitleInvalidInputAlert>
-            ) : null}
+      {/* Indicador de Loading */}
+      <ActivityIndicator
+        animating={isLoading}
+        hidesWhenStopped={false}
+        size="large"
+      />
 
-
-            <Input
-                placeholder={"Usuário ou E-mail"}
-                placeholderTextColor={'#49B3BA'}
-
-                isInsertedInputValid={isInputDataValid}
-                fieldValue={email}
-                onChangeText={(text) => setEmail(text)}
-            />
-
-            {/* Indicador de Loading */}
-            <ActivityIndicator
-                animating={isLoading}
-                hidesWhenStopped={false}
-                size="large"
-                
-            />
-
-            <ButtonNormal text={"Continuar"} onPress={() => {
-                SendEmail();
-            }} />
-
-
-        </Container>
-
-    )
-
-}
+      <ButtonNormal
+        text={"Continuar"}
+        onPress={() => {
+          SendEmail();
+        }}
+      />
+    </Container>
+  );
+};

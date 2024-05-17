@@ -261,10 +261,12 @@ export const PatientConsultation = ({ navigation, route }) => {
               routine={item.situacao.situacao}
               url={item.medicoClinica.medico.idNavigation.foto}
               status={consultStatus}
+               // Botão 'cancelar'
               onPressCancel={() => {
                 setShowModalCancel(true);
                 setModalConsultId(item.id);
               }}
+              // Botão 'ver prescricão'
               onPressAppointment={() => {
                 navigation.navigate("ViewPrescription", {
                   prescriptionId: item.id,
@@ -279,6 +281,7 @@ export const PatientConsultation = ({ navigation, route }) => {
                   consultPrescription: item.receita.medicamento,
                 });
               }}
+              // Clique no card
               onPressAppointmentCard={() => {
                 setSelectedConsultDoctor(item.medicoClinica);
                 setShowModal(
