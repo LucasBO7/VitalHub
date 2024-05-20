@@ -40,7 +40,7 @@ export const ModalStethoscope = ({
   async function handleContinue() {
     await setShowModalStethoscope(false)
 
-    navigation.replace("SelecClinic", {agendamento : agendamento})
+    navigation.replace("SelectClinic", {agendamento : agendamento})
   }
 
   return (
