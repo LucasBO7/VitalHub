@@ -180,7 +180,7 @@ export const CreateAccount = ({ navigation, route }) => {
         />
 
         <Input
-          placeholder={"Data de nascimento"}
+          placeholder={"Data de nascimento. Ex... 0000/00/00"}
           placeholderTextColor={"#49B3BA"}
           // secureTextEntry={true}
           isInsertedInputValid={isInputDataValid}
